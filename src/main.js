@@ -5,7 +5,9 @@ import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
 
+Vue.use(Vuex)
 Vue.use(VueRouter)
 
 FastClick.attach(document.body)
