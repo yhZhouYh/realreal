@@ -5,7 +5,7 @@
               :right-options="{showMore: header.showMore}">
         <span slot="default"
               :style="{color: header.titleColor}">{{header.title}}</span>
-        <span slot="right">{{header.rightDom}}</span>
+        <div slot="right"><slot name="zright"></slot></div>
     </x-header>
 </template>
 <style>
@@ -22,7 +22,6 @@ export default {
     },
     computed: {
         header() {
-            console.log(this.headerFix)
             return Object.assign({}, this.headerDefault, this.headerFix) //将默认属性 和 props传入合并成一个对象
         }
     },

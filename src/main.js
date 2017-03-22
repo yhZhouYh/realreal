@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+import './assets/fonts/iconfont'
 
 Vue.use(Vuex)
 Vue.use(VueRouter)

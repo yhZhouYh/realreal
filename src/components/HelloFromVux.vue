@@ -13,8 +13,6 @@ export default {
   data () {
     return {
       headerFix: {
-        titleColor: '#ccc',
-        rightDom: '<span>2222</span>'
       }
     }
   }
