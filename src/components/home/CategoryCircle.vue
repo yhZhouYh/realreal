@@ -1,11 +1,14 @@
 <template>
-    <a class="z-category-circle zflex zflex-center"
-         :style="{background: backcolor}">
-        <svg class="zicon zheader-icon"
-             aria-hidden="true">
-            <use v-bind:xlink:href="svgsrc"></use>
-        </svg>
-    </a>
+    <div class="z-categroty-contianer">
+        <a class="z-category-circle zflex zflex-center"
+           :style="{background: backcolor}">
+            <svg class="zicon zheader-icon"
+                 aria-hidden="true">
+                <use v-bind:xlink:href="svgsrc"></use>
+            </svg>
+        </a>
+        <p>家电维修</p>
+    </div>
 </template>
 <script>
 export default {
@@ -13,11 +16,18 @@ export default {
 }
 </script>
 <style lang="less">
+.z-categroty-contianer{
+    font-size: 13px;
+    text-align: center;
+}
 .z-category-circle {
     width: 0.8rem;
     height: 0.8rem;
-    .zicon{
+    border-radius: 50%;
+    margin: auto;
+    .zicon {
         display: block;
+        color: #fff;
     }
 }
 </style>

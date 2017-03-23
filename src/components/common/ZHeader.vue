@@ -59,7 +59,7 @@
 }
 
 .z-header-middle {
-    width: 4rem;
+    width: 3.8rem;
 }
 
 .zheader-icon-word {

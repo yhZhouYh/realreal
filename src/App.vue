@@ -17,6 +17,8 @@ export default {
 @import '~vux/src/styles/1px.less';
 body, html{
   height:100%;
+  font-size: 15px;
+  background-color: #f4f4f4;
 }
 #app{
   position: absolute;
