@@ -7,12 +7,12 @@
                 <use v-bind:xlink:href="svgsrc"></use>
             </svg>
         </a>
-        <p>家电维修</p>
+        <p>{{categoryname}}</p>
     </div>
 </template>
 <script>
 export default {
-    props: ['backcolor', 'svgsrc']
+    props: ['backcolor', 'svgsrc', 'categoryname']
 }
 </script>
 <style lang="less">

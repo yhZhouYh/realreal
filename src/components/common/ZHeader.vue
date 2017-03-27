@@ -2,19 +2,18 @@
     <div class="z-header zflex"
          :class="{'vux-1px-b': showBorder}">
         <span class="z-header-left zflex zflex1">
-                <div class="z-arrow zflex" :style="{color: arrowColor}">
-                    <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
-                        <use xlink:href="#real-icon-jiantou"></use>
-                    </svg>
-        <span class="leftwords" v-show="showBack">返回</span>
-       
+                    <div class="z-arrow zflex" :style="{color: arrowColor}">
+                        <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
+                            <use xlink:href="#real-icon-jiantou"></use>
+                        </svg>
+                         <span class="leftwords" v-show="showBack">返回</span>
     </div>
-     <slot name="leftitems"></slot>
+    <slot name="leftitems"></slot>
     </span>
     <span class="z-header-middle">{{title}}</span>
     <span class="z-header-right zflex zflex1 zflex-center">
-                <slot name="rightitems"></slot>
-            </span>
+            <slot name="rightitems"></slot>
+        </span>
     </div>
 </template>
 
@@ -44,6 +43,7 @@
     width: 100%;
     top: 0;
     z-index: 100;
+    left:0;
 }
 
 .z-header-left {

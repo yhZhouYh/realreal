@@ -53,4 +53,20 @@ body, html{
   overflow: hidden;
   position: relative;
 }
+@media screen and (min-width:321px) and (max-width:375px){body{font-size:13px}}
+@media screen and (min-width:376px) and (max-width:414px){body{font-size:15px}}
+@media screen and (min-width:415px) and (max-width:639px){body{font-size:17px}}
+@media screen and (min-width:640px) and (max-width:719px){body{font-size:22px}}
+@media screen and (min-width:720px) and (max-width:749px){body{font-size:24.5px}}
+@media screen and (min-width:750px) and (max-width:799px){body{font-size:25.5px}}
+@media screen and (min-width:800px){body{font-size:25px}}
+
+a img {
+    width:100%;
+    border: 0;
+}
+
+a {
+    color: #000;
+}
 </style>
