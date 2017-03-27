@@ -5,29 +5,30 @@
             <div class="zflex1">家电服务</div>
             <div class="">更多 <span class="z-arrow-right"></span></div>
         </a>
-        <div class="category-scroll zflex">
-            <a href="javascript:;"
-               class="category-items">
-                <!--<img src="../../assets/imgs/img1.jpg" alt="">-->
-                <x-img :src="img"
-                       container=".z-index-category"></x-img>
-                <p class="items-title">专业师傅维修电视</p>
-                <p class="items-price">30元/次</p>
-                <p class="items-store zflex">
-                    <svg class="zicon zheader-icon zflex"
-                         aria-hidden="true">
-                        <use xlink:href="#real-icon-dianpu"></use>
-                    </svg>
-                    <span class="store-name zflex1">迅捷维修</span>
-                </p>
-            </a>
-        </div>
+        <scrollbar>
+            <div class="category-scroll zflex">
+                <a href="javascript:;"
+                class="category-items" v-for= " i in 5">
+                    <img src="../../assets/imgs/img1.jpg" alt="">
+                    <!--<x-img :src="img"
+                        container=".z-index-category"></x-img>-->
+                    <p class="items-title">专业师傅维修电视</p>
+                    <p class="items-price">30元/次</p>
+                    <p class="items-store zflex">
+                        <svg class="zicon zheader-icon zflex"
+                            aria-hidden="true">
+                            <use xlink:href="#real-icon-dianpu"></use>
+                        </svg>
+                        <span class="store-name zflex1">迅捷维修</span>
+                    </p>
+                </a>
+            </div>
+        </scrollbar>
     </div>
 </template>
 <script>
-import Transform from '../../assets/lib/transform'
-import AlloyTouch from '../../assets/lib/alloy_touch'
-import XImg from 'vux/src/components/x-img'
+import Scrollbar from 'smooth-scrollbar'
+//import XImg from 'vux/src/components/x-img'
 export default {
     name: 'index-category',
     data() {
@@ -36,15 +37,30 @@ export default {
         }
     },
     components: {
-        XImg
+      //  XImg
+    },
+    mounted () {
+        this.$nextTick(()=>{
+            Scrollbar.initAll({ overscrollEffect: 'glow' });
+        })
     }
 
 }
 </script>
 <style lang="less">
 @import '../../assets/styles/fn.less';
+@import '~smooth-scrollbar/dist/smooth-scrollbar.css';
+.scrollbar-track-x {
+  display: none !important;
+}
 .z-index-category {
+    //overflow: hidden;
     .category-items {
+        width:2.3rem;
+        padding-right: 0.2rem;
+        &:last-child{
+            padding-right: 0
+        }
         img {
             border-radius: 6px;
             width: 2.3rem;
@@ -52,14 +68,14 @@ export default {
         }
     }
     .items-title {
-        .ellipsis(2.3rem)
+        .ellipsis()
     }
     .items-price {
         color: #ee5e56;
     }
-    .items-store{
+    .items-store {
         color: #b8b8b8;
-        .store-name{
+        .store-name {
             padding-left: 0.05rem;
         }
     }

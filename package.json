@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "fastclick": "^1.0.6",
+    "smooth-scrollbar": "^7.2.10",
     "vue": "^2.2.2",
     "vue-router": "^2.2.0",
     "vuex": "^2.2.1",
