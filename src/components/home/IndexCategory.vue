@@ -2,68 +2,105 @@
     <div class="z-index-category">
         <a href="javascript:;"
            class="zflex z-category-header">
-            <div class="zflex1">家电服务</div>
+            <div class="zflex1">{{cates.catesName}}</div>
             <div class="">更多 <span class="z-arrow-right"></span></div>
         </a>
-        <scrollbar>
-            <div class="category-scroll zflex">
-                <a href="javascript:;"
-                class="category-items" v-for= " i in 5">
-                    <img src="../../assets/imgs/img1.jpg" alt="">
-                    <!--<x-img :src="img"
-                        container=".z-index-category"></x-img>-->
-                    <p class="items-title">专业师傅维修电视</p>
-                    <p class="items-price">30元/次</p>
-                    <p class="items-store zflex">
-                        <svg class="zicon zheader-icon zflex"
-                            aria-hidden="true">
-                            <use xlink:href="#real-icon-dianpu"></use>
-                        </svg>
-                        <span class="store-name zflex1">迅捷维修</span>
-                    </p>
-                </a>
-            </div>
-        </scrollbar>
+        <!--<scrollbar>-->
+        <div class="category-scroll zflex"
+             ref="scroll">
+            <a href="javascript:;"
+               class="category-items"
+               ref="item" v-for=" item in cates.items">
+                <img :src="item.card"
+                     alt="">
+                <!--<x-img :src="img"
+                                container=".z-index-category"></x-img>-->
+                <p class="items-title">{{item.title}}</p>
+                <p class="items-price">{{item.price}}元/{{item.unit}}</p>
+                <p class="items-store zflex">
+                    <svg class="zicon zheader-icon zflex"
+                         aria-hidden="true">
+                        <use xlink:href="#real-icon-dianpu"></use>
+                    </svg>
+                    <span class="store-name zflex1">{{item.name}}</span>
+                </p>
+            </a>
+        </div>
+        <!--</scrollbar>-->
     </div>
 </template>
 <script>
-import Scrollbar from 'smooth-scrollbar'
+// import Scrollbar from 'smooth-scrollbar'
 //import XImg from 'vux/src/components/x-img'
+import Transform from '../../assets/lib/transform'
+import AlloyTouch from '../../assets/lib/alloy_touch'
 export default {
     name: 'index-category',
+    props: {
+        cates: {
+            type: Object
+        }
+    },
     data() {
         return {
             img: require('../../assets/imgs/img1.jpg')
         }
     },
     components: {
-      //  XImg
+        //  XImg
     },
-    mounted () {
-        this.$nextTick(()=>{
-            Scrollbar.initAll({ overscrollEffect: 'glow' });
-        })
-    }
+    // mounted() {
+    //     this.$nextTick(() => {
+    //         const { scroll, item } = this.$refs
+    //         //Transform(scroll, true)
+    //         let scrollWidth = scroll.getBoundingClientRect().width
+    //         let itemWidths = -item[0].getBoundingClientRect().width * 5 + scrollWidth + 16
+    //         let at = new AlloyTouch({
+    //             touch: scroll,
+    //             vertical: false,
+    //             property: 'rotate',
+    //             sensitivity: 1,
+    //             min: itemWidths, // 16是最后一个没有padding    
+    //             max: 0,
+    //             bindSelf: true,
+    //             touchStart(evt, value) {
+    //                 console.log(value)
+    //                 evt.stopPropagation();
+    //             },
+    //             touchMove: function (evt, value) {
+    //                 // console.log(value)
+    //                 // evt.stopPropagation();
+    //                 // scroll.style.cssText = 'transformtranslate('+ value+'px)'
+    //                 this.to(value)
+    //                 if(value <= itemWidths){
+    //                     return false
+    //                 }
+    //             }
+    //         })
+    //     })
+    // }
 
 }
 </script>
 <style lang="less">
 @import '../../assets/styles/fn.less';
-@import '~smooth-scrollbar/dist/smooth-scrollbar.css';
+//@import '~smooth-scrollbar/dist/smooth-scrollbar.css';
 .scrollbar-track-x {
-  display: none !important;
+    display: none !important;
 }
+
 .z-index-category {
     //overflow: hidden;
     .category-items {
-        width:2.3rem;
-        padding-right: 0.2rem;
-        &:last-child{
+        //width: 2.3rem;
+        // padding-right: 16px;
+        padding-right: 0.1rem;
+        &:last-child {
             padding-right: 0
         }
         img {
-            border-radius: 6px;
-            width: 2.3rem;
+            border-radius: 6px; // width: 2.2rem;
+            width: 2.2rem;
             height: 2.3rem;
         }
     }

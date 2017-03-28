@@ -31,49 +31,51 @@
     </z-header>
     <!--头部结束-->
     <div class="z-container">
-    <!--轮播开始-->
-    <div class="z-carousel-box">
-      <tf-carousel :imgs="imgs"
-                   :delay="4000"></tf-carousel>
-    </div>
-    <!--轮播结束-->
-    <!--分类圈圈开始-->
-    <div class="z-cate-container">
-      <div class="z-cate-box zflex-center zflex"
-           v-for="items in cateSvgs">
-        <div class="z-cate-item zflex1"
-             v-for="item in items">
-          <z-category :backcolor="item.backcolor"
-                      :svgsrc="item.svgsrc"
-                      :categoryname="item.categoryname"></z-category>
+      <!--轮播开始-->
+      <div class="z-carousel-box">
+        <tf-carousel :imgs="imgs"
+                     :delay="4000"></tf-carousel>
+      </div>
+      <!--轮播结束-->
+      <!--分类圈圈开始-->
+      <div class="z-cate-container">
+        <div class="z-cate-box zflex-center zflex"
+             v-for="items in cateSvgs">
+          <div class="z-cate-item zflex1"
+               v-for="item in items">
+            <z-category :backcolor="item.backcolor"
+                        :svgsrc="item.svgsrc"
+                        :categoryname="item.categoryname"></z-category>
+          </div>
         </div>
       </div>
-    </div>
-    <!--分类圈圈结束-->
-    <!--news开始-->
-    <div class="z-box">
-      <div class="zflex">
-        <p style="color:#4fbafe">正证新闻：</p>
-        <marquee class="zflex1">
-          <marquee-item v-for="i in news"
-                        :key="i"
-                        class="align-middle">{{i}}</marquee-item>
-        </marquee>
+      <!--分类圈圈结束-->
+      <!--news开始-->
+      <div class="z-box">
+        <div class="zflex">
+          <p style="color:#4fbafe">正证新闻：</p>
+          <marquee class="zflex1">
+            <marquee-item v-for="i in news"
+                          :key="i"
+                          class="align-middle">{{i}}</marquee-item>
+          </marquee>
+        </div>
+        <div class="zflex">
+          <p style="color:#4fbafe">免费查询：</p>
+          <a href="javascript:;"
+             class="zflex1">电脑初步诊断查询>></a>
+          <a href="javascript:;"
+             class="zflex1">电脑型号查询>></a>
+        </div>
       </div>
-      <div class="zflex">
-        <p style="color:#4fbafe">免费查询：</p>
-        <a href="javascript:;"
-           class="zflex1">电脑初步诊断查询>></a>
-        <a href="javascript:;"
-           class="zflex1">电脑型号查询>></a>
+      <!--news结束-->
+      <!--各项分类开始-->
+  
+      <div class="z-box"
+           v-for="cates in catesItem">
+        <index-category :cates="cates"></index-category>
       </div>
-    </div>
-    <!--news结束-->
-    <!--各项分类开始-->
-    <div class="z-box">
-      <index-category></index-category>
-    </div>
-    <!--各项分类结束-->
+      <!--各项分类结束-->
     </div>
   </div>
 </template>
@@ -118,16 +120,85 @@ export default {
       catesItem: [{
         catesId: '1',
         catesName: '家电服务',
-        catesItems: [
+        items: [
           {
-            fengmian: require('../../assets/imgs/img1.jpg'),
-            theme: '专业师傅维修电视',
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
             price: '30',
             unit: '次',
-            dianming: '刚刚维修'
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
           }
         ]
-      }]
+      },
+      {
+        catesId: '2',
+        catesName: '家电服务',
+        items: [
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          }
+        ]
+      },
+      {
+        catesId: '3',
+        catesName: '家电服务',
+        items: [
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          },
+          {
+            card: require('../../assets/imgs/img1.jpg'),
+            title: '专业师傅维修电视',
+            price: '30',
+            unit: '次',
+            name: '刚刚维修'
+          }
+        ]
+      }
+      ]
     }
   },
   created() {
@@ -140,7 +211,7 @@ export default {
 </script>
 
 <style>
-.z-container{
+.z-container {
   box-sizing: border-box;
   height: 100%;
   overflow: auto;
@@ -148,11 +219,13 @@ export default {
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
 }
-.z-page{
+
+.z-page {
   position: absolute;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
 }
+
 .z-carousel-box {
   height: 3.85rem;
 }
@@ -170,5 +243,6 @@ export default {
   padding: 0.15rem 0.2rem;
   background-color: #fff;
   margin-top: 0.18rem;
+  overflow: hidden;
 }
 </style>
