@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/Index.vue'
-import Hello from '@/components/Hello.vue'
-
+import storeDetail from '@/components/store/Detail.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -13,9 +12,9 @@ export default new Router({
       component: Home
     },
      {
-      path: '/hello',
-      name: 'Home',
-      component: Hello
+      path: '/storeDetail',
+      name: 'storeDetail',
+      component: storeDetail
     }
   ]
 })

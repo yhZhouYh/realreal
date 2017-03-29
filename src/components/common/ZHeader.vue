@@ -6,12 +6,12 @@
                         <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
                             <use xlink:href="#real-icon-jiantou"></use>
                         </svg>
-                         <span class="leftwords" v-show="showBack">返回</span>
+                         <span class="leftwords" v-show="showBack">{{backWords}}</span>
     </div>
     <slot name="leftitems"></slot>
     </span>
     <span class="z-header-middle">{{title}}</span>
-    <span class="z-header-right zflex zflex1 zflex-center">
+    <span class="z-header-right zflex zflex1">
             <slot name="rightitems"></slot>
         </span>
     </div>
@@ -38,7 +38,8 @@
     text-align: center;
     padding: 0.08rem 0.2rem;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0);
+    //background: rgba(0, 0, 0, 0);
+    background: #fff;
     position: absolute;
     width: 100%;
     top: 0;
@@ -51,9 +52,10 @@
     position: relative;
 }
 
-// .z-header-right{
-//     text-align: right;
-// }
+.z-header-right{
+    // text-align: right;
+    justify-content: flex-end;
+}
 .zheader-icon {
     font-size: 25px;
 }
@@ -89,6 +91,10 @@ export default {
         arrowColor: {
             type: String,
             default: '#e74037'
+        },
+        backWords: {
+            type: String,
+            default: '返回'
         }
     }
 

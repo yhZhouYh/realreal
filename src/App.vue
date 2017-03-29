@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
@@ -18,7 +18,7 @@ export default {
 body,
 html {
   height: 100%;
-  font-size: 15px;
+  font-size: 0.25rem;
   background-color: #f4f4f4;
 }
 
@@ -30,18 +30,21 @@ html {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s
+  transition: all 0.3s ease 
 }
 
-.fade-enter,
-.fade-leave-active {
-  opacity: 0
+.fade-leave-active, .fade-enter{
+  opacity: 0;
 }
+// .fade-enter{
+//   opacity: 0;
+//   transform: translate3d(0, 20%, 0)
+// }
 // .fade-enter-active{
 //   animation: fadeInUp 0.5s; 
 // }
 // .fade-leave-active {
-//   animation: fadeInDown 0.5s;
+//   transition: opacity .2s
 // }
 
 .zflex {
@@ -65,47 +68,47 @@ html {
   position: relative;
 }
 
-@media screen and (min-width:321px) and (max-width:375px) {
-  body {
-    font-size: 13px
-  }
-}
+// @media screen and (min-width:321px) and (max-width:375px) {
+//   body {
+//     font-size: 13px
+//   }
+// }
 
-@media screen and (min-width:376px) and (max-width:414px) {
-  body {
-    font-size: 15px
-  }
-}
+// @media screen and (min-width:376px) and (max-width:414px) {
+//   body {
+//     font-size: 15px
+//   }
+// }
 
-@media screen and (min-width:415px) and (max-width:639px) {
-  body {
-    font-size: 17px
-  }
-}
+// @media screen and (min-width:415px) and (max-width:639px) {
+//   body {
+//     font-size: 17px
+//   }
+// }
 
-@media screen and (min-width:640px) and (max-width:719px) {
-  body {
-    font-size: 22px
-  }
-}
+// @media screen and (min-width:640px) and (max-width:719px) {
+//   body {
+//     font-size: 22px
+//   }
+// }
 
-@media screen and (min-width:720px) and (max-width:749px) {
-  body {
-    font-size: 24.5px
-  }
-}
+// @media screen and (min-width:720px) and (max-width:749px) {
+//   body {
+//     font-size: 24.5px
+//   }
+// }
 
-@media screen and (min-width:750px) and (max-width:799px) {
-  body {
-    font-size: 25.5px
-  }
-}
+// @media screen and (min-width:750px) and (max-width:799px) {
+//   body {
+//     font-size: 25.5px
+//   }
+// }
 
-@media screen and (min-width:800px) {
-  body {
-    font-size: 25px
-  }
-}
+// @media screen and (min-width:800px) {
+//   body {
+//     font-size: 25px
+//   }
+// }
 
 a img {
   width: 100%;
@@ -152,9 +155,10 @@ a {
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
-    -ms-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0)
+    -webkit-transform: translate3d(0, 5%, 0);
+    -ms-transform: translate3d(0, 5%, 0);
+    transform: translate3d(0, 5%, 0)
+    
   }
   100% {
     opacity: 1;

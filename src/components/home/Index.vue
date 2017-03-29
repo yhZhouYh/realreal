@@ -11,7 +11,7 @@
       </div>
       <div slot="leftitems"
            style="font-size:14px;">
-        南宁
+        合肥
       </div>
       <div slot="rightitems"
            style="margin-right: 5px;">
@@ -122,21 +122,21 @@ export default {
         catesName: '家电服务',
         items: [
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
@@ -149,21 +149,21 @@ export default {
         catesName: '家电服务',
         items: [
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
@@ -176,21 +176,21 @@ export default {
         catesName: '家电服务',
         items: [
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',
             name: '刚刚维修'
           },
           {
-            card: require('../../assets/imgs/img1.jpg'),
+            card: require('../../assets/imgs/test.png'),
             title: '专业师傅维修电视',
             price: '30',
             unit: '次',

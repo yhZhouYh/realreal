@@ -28,6 +28,10 @@ export default {
         delay: {
             type: Number,
             default: 2000
+        },
+        autoPlay: {
+            type: Boolean,
+            dafault: true
         }
     },
     //props: ['imgs', 'delay', 'dotcolor'],
@@ -67,7 +71,9 @@ export default {
                         _this.step = step_v - this.step
                     }
                     this.to(_this.step);
-                   _this.turnPlay(_this.step)
+                    if (this.autoPlay) {
+                        _this.turnPlay(this.step)
+                    }
                     return false
                 },
                 animationEnd(evt, v) {
@@ -76,7 +82,10 @@ export default {
             }
             Transform(box)
             _this.touch = new AlloyTouch(options)
-            _this.turnPlay(this.step)
+            if (this.autoPlay) {
+                _this.turnPlay(this.step)
+            }
+
         })
     },
     data() {
@@ -128,7 +137,7 @@ export default {
 .tf-carousel-box {
     height: 100%;
     position: absolute;
-    z-index:10;
+    z-index: 10;
 }
 
 .carousel-img {

@@ -32,8 +32,8 @@
 <script>
 // import Scrollbar from 'smooth-scrollbar'
 //import XImg from 'vux/src/components/x-img'
-import Transform from '../../assets/lib/transform'
-import AlloyTouch from '../../assets/lib/alloy_touch'
+// import Transform from '../../assets/lib/transform'
+// import AlloyTouch from '../../assets/lib/alloy_touch'
 export default {
     name: 'index-category',
     props: {
@@ -52,13 +52,13 @@ export default {
     // mounted() {
     //     this.$nextTick(() => {
     //         const { scroll, item } = this.$refs
-    //         //Transform(scroll, true)
+    //         Transform(scroll, true)
     //         let scrollWidth = scroll.getBoundingClientRect().width
     //         let itemWidths = -item[0].getBoundingClientRect().width * 5 + scrollWidth + 16
     //         let at = new AlloyTouch({
     //             touch: scroll,
     //             vertical: false,
-    //             property: 'rotate',
+    //             property: 'translateX',
     //             sensitivity: 1,
     //             min: itemWidths, // 16是最后一个没有padding    
     //             max: 0,
