@@ -194,5 +194,10 @@ a {
     transform: none
   }
 }
-
+.z-gray{
+  color:#C7C7C7;
+}
+.z-red{
+  color:#f9261d;
+}
 </style>
