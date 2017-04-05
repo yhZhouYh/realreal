@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/Index.vue'
-import storeDetail from '@/components/store/Detail.vue'
+import Store from '@/components/store/Index.vue'
+import Service from '@/components/service/Index.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -14,7 +15,12 @@ export default new Router({
      {
       path: '/storeDetail',
       name: 'storeDetail',
-      component: storeDetail
+      component: Store
+    },
+    {
+      path: '/service',
+      name: 'service',
+      component: Service
     }
   ]
 })

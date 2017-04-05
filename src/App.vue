@@ -18,7 +18,7 @@ export default {
 body,
 html {
   height: 100%;
-  font-size: 0.25rem;
+  font-size: 0.28rem;
   background-color: #f4f4f4;
 }
 
@@ -199,5 +199,8 @@ a {
 }
 .z-red{
   color:#f9261d;
+}
+.z-container .weui-cells{
+  margin-top: 0.2rem;
 }
 </style>

@@ -6,6 +6,10 @@ import VueRouter from 'vue-router'
 import App from './App'
 import router from './router'
 import store from './store'
+import Group from 'vux/src/components/group'
+import Cell from 'vux/src/components/cell'
+Vue.component('group', Group)
+Vue.component('cell', Cell)
 //import './assets/fonts/iconfont'
 
 

@@ -245,4 +245,10 @@ export default {
   margin-top: 0.18rem;
   overflow: hidden;
 }
+.gray{
+  color:rgb(150, 150, 150)
+}
+.red{
+  color:#f9261d;
+}
 </style>
