@@ -21,7 +21,7 @@
                                         <span class="price-big">{{data.price}}</span>元/{{data.unit}}
                     <span class="origin-price z-gray">原价100元</span></span>
                     </span>
-                    <z-number></z-number>
+                    <z-number :item="data"></z-number>
                 </div>
             </div>
     
@@ -52,7 +52,7 @@
                      active-color="#f9261d"
                      default-color="#969696"
                      bar-active-color="#f9261d">
-                    <tab-item :selected="index == 0"
+                    <tab-item :selected="index == 1"
                               v-for="(item, index) in tabItems"
                               :key="item"
                               @on-item-click="checkTabItem(index)">{{item.name}}</tab-item>
@@ -60,6 +60,7 @@
             </sticky>
             <comment v-show="currentView == 1"></comment>
         </div>
+        <service-bottom></service-bottom>
     </div>
 </template>
 <script>
@@ -70,6 +71,7 @@ import Sticky from 'vux/src/components/sticky'
 import Tab from 'vux/src/components/tab/tab.vue'
 import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Comment from '../store/Comment'
+import ServiceBottom from './ServiceBottom'
 export default {
     name: 'serviceDetail',
     components: {
@@ -79,7 +81,8 @@ export default {
         Sticky,
         Tab,
         TabItem,
-        Comment
+        Comment,
+        ServiceBottom
     },
     data() {
         return {
@@ -94,8 +97,9 @@ export default {
             data: {
                 price: '98',
                 unit: '次',
+                id: 3
             },
-            currentView: 0
+            currentView: 1
         }
     },
     methods: {

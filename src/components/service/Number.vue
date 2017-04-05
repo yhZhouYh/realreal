@@ -7,13 +7,14 @@
         <span class="number-box">{{num}}</span>
         <icon icon="real-icon-jikediancanicon09"
               class="number-add red"
-              @click.native="add"></icon>
+              @click.native="add()"></icon>
     </div>
 </template>
 <script>
 import Icon from '../common/Icon'
 export default {
     name: 'zNumber',
+    props: ['item'],
     components: {
         Icon
     },
@@ -25,15 +26,20 @@ export default {
     methods: {
         add() {
             this.num++
+            this.$store.dispatch('addToCart', this.item) //添加入购物车
             this.$emit('add', this.num)
         },
         minus() {
             if (this.num > 0) {
                 this.num--
+                this.$store.dispatch('minusfromCart', this.item)
                 this.$emit('minus', this.num)
             }
 
-        }
+        },
+        // addToCart (item) {
+           
+        // }
     }
 }
 </script>

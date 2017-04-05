@@ -1,5 +1,5 @@
 <template>
-    <svg class="zicon zheader-icon" aria-hidden="true">
+    <svg class="zicon zheader-icon zflex" aria-hidden="true">
         <use :xlink:href="iconName"></use>
     </svg>
 </template>

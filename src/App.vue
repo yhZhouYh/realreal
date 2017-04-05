@@ -66,6 +66,7 @@ html {
   fill: currentColor;
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
 }
 
 // @media screen and (min-width:321px) and (max-width:375px) {
