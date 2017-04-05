@@ -62,7 +62,7 @@ export default {
 </script>
 <style lang="less">
 .z-hori-menu {
-    margin-top: 0.16rem; //width:auto;
+    padding: 0.16rem 0; //width:auto;
     white-space: nowrap;
     .z-check-button {
         border-color: #C7C7C7;
