@@ -26,14 +26,14 @@ export default {
     methods: {
         add() {
             this.num++
-            this.$store.dispatch('addToCart', this.item) //添加入购物车
-            this.$emit('add', this.num)
+            //this.$store.dispatch('addToCart', this.item) //添加入购物车
+            this.$emit('add', this.item)
         },
         minus() {
             if (this.num > 0) {
                 this.num--
-                this.$store.dispatch('minusfromCart', this.item)
-                this.$emit('minus', this.num)
+                //this.$store.dispatch('minusfromCart', this.item)
+                this.$emit('minus', this.item)
             }
 
         },

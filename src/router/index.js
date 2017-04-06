@@ -18,7 +18,7 @@ export default new Router({
       component: Store
     },
     {
-      path: '/service',
+      path: '/service/:id',
       name: 'service',
       component: Service
     }

@@ -19,9 +19,9 @@
                 <div class="zflex">
                     <span class="service-price zflex1">
                                         <span class="price-big">{{data.price}}</span>元/{{data.unit}}
-                    <span class="origin-price z-gray">原价100元</span></span>
+                    <span class="origin-price gray">原价100元</span></span>
                     </span>
-                    <z-number :item="data"></z-number>
+                    <z-number :item="data" @add="add" @minus="minus"></z-number>
                 </div>
             </div>
     
@@ -97,7 +97,10 @@ export default {
             data: {
                 price: '98',
                 unit: '次',
-                id: 3
+                id: this.$route.params.id,
+                name: '高空干洗服务',
+                storeName: '小猪干洗电',
+                storeId: 58
             },
             currentView: 1
         }
@@ -105,6 +108,12 @@ export default {
     methods: {
         checkTabItem(index) {
             this.currentView = index
+        },
+        add(item){
+            this.$store.dispatch('addToCart', item)
+        },
+        minus(item){
+            this.$store.dispatch('minusfromCart', item)
         }
     }
 }
