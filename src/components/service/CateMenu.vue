@@ -1,19 +1,19 @@
 <template>
-    <div class="z-hori-menu zflex zmenu"
-         ref="scroll">
-        <button class="menu-item" v-for="(item, index) in items"
-              ref="item"  @click="checkItem(item, index)" :class="{red: isChecked == index}">{{item}}</button>
+    <div class="z-verti-menu"
+         ref="scroll" >
+        <button class="verti-item vux-1px-b" v-for="(item, index) in items"
+              ref="item"  @click="checkItem(item, index)" :class="{checked: isChecked == index}">{{item}}</button>
     </div>
 </template>
 <script>
 import Transform from '../../assets/lib/transform'
 import AlloyTouch from '../../assets/lib/alloy_touch'
 export default {
-    name: 'z-hori-menu',
+    name: 'z-verti-menu',
     // props: ['items'],
     data() {
         return {
-            items: ['全部', '待付款', '待取件', '维修中', '待评价', '退款'],
+            items: ['家电服务', '办公设备', '电商服务', '生活服务', '以旧换新', '同城交易','同城交易','同城交易','同城交易','同城交易','同城交易','同城交易','同城交易'],
             isChecked: 0
         }
     },
@@ -21,18 +21,18 @@ export default {
         this.$nextTick(() => {
             const { scroll, item } = this.$refs
             Transform(scroll, true)
-            // debugger
-            const scrollWidth = scroll.getBoundingClientRect().width
+            //debugger
+            const scrollWidth = scroll.getBoundingClientRect().height
             let itemWidths = 0
             for (var i = 0, l = item.length; i < l; i++) {
-                itemWidths += item[i].getBoundingClientRect().width
+                itemWidths += item[i].getBoundingClientRect().height
             }
-            const min = itemWidths - scrollWidth + 10 * (item.length - 1) //计算每个元素宽度 + 间距
+            const min =  itemWidths - scrollWidth  //计算每个元素宽度 + 间距
             if (min > 0) { //当元素少得时候不触发
                 let at = new AlloyTouch({
                     touch: scroll,
-                    vertical: false,
-                    property: 'translateX',
+                    vertical: true,
+                    property: 'translateY',
                     sensitivity: 1,
                     min: -min,
                     max: 0,
@@ -52,25 +52,23 @@ export default {
 }
 </script>
 <style lang="less">
-    .menu-item{
-        width: 1.4rem;
-        padding:0.2rem 0;
+    .z-verti-menu{
+        width:1.65rem;
+        background: #fff;
+        height:100%;
+        -webkit-overflow-scrolling: touch;
+    }
+    .verti-item{
+        width:100%;
+        height:0.9rem;
+        line-height: 0.9rem;
         text-align: center;
-        margin-right: 10px;
         background: transparent;
         box-shadow: none;
         color: #000;
         border-radius: 0;
-        &:last-child{
-            margin-right:0;
+        &.checked{
+            border-left: 2px solid rgb(231, 64, 55);
         }
-        &.red{
-            color:#f9261d;
-             border-bottom: 1px solid #f9261d;
-        }
-        //border: 0;
-    }
-    .zmenu{
-        background: #fff;
     }
 </style>

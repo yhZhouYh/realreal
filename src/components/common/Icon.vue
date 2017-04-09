@@ -1,11 +1,19 @@
 <template>
-    <svg class="zicon zheader-icon zflex" aria-hidden="true">
+    <svg class="zicon zheader-icon" :class="{zflex: vertical}" aria-hidden="true">
         <use :xlink:href="iconName"></use>
     </svg>
 </template>
 <script>
     export default{
-        props: ['icon'],
+        props: {
+            icon: {
+                type: String
+            },
+            vertical: {
+                type: Boolean,
+                default: true
+            }
+        },
         computed: {
             iconName () {
                 return '#' + this.icon

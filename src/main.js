@@ -8,16 +8,20 @@ import router from './router'
 import store from './store'
 import Group from 'vux/src/components/group'
 import Cell from 'vux/src/components/cell'
+import fixed from './components/filters/fixed'
+import VueTouchRipple from 'vue-touch-ripple'
 Vue.component('group', Group)
 Vue.component('cell', Cell)
-//import './assets/fonts/iconfont'
+Vue.use(VueTouchRipple)
+//import './assets/fonts/iconfont' //引入图标字体 svg形式
 
-
+//绑定fastclick
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+Vue.filter('fixed', fixed) //过滤数值 保留小数位数
+
 new Vue({
   router,
   store,

@@ -100,7 +100,8 @@ export default {
                 id: this.$route.params.id,
                 name: '高空干洗服务',
                 storeName: '小猪干洗电',
-                storeId: 58
+                storeId: 58,
+                simg: require('../../assets/imgs/test.png')
             },
             currentView: 1
         }

@@ -14,13 +14,21 @@
 import Icon from '../common/Icon'
 export default {
     name: 'zNumber',
-    props: ['item'],
+    props: {
+        item: {
+            type: Object
+        },
+        currentNum: {
+            type: Number,
+            default: 0
+        }
+    },
     components: {
         Icon
     },
     data() {
         return {
-            num: 0
+            num: this.currentNum
         }
     },
     methods: {
