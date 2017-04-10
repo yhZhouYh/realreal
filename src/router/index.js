@@ -8,6 +8,7 @@ import OrderList from '@/components/order/Index.vue'
 import ServiceList from '@/components/service/ServiceList.vue'
 import Category from '@/components/service/Category.vue'
 import Search from '@/components/service/Search.vue'
+import User from '@/components/user/Index.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search
+    },
+     {
+      path: '/user',
+      name: 'user',
+      component: User
     }
   ]
 })
