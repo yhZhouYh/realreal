@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import Search from 'vux/src/components/search'
+import Search from 'vux/src/components/search/index.vue'
 export default {
     name: 'search',
     components: {

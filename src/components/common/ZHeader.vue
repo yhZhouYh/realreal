@@ -4,7 +4,7 @@
         <span class="z-header-left zflex zflex1">
                     <div class="z-arrow zflex" :style="{color: arrowColor}">
                         <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
-                            <use xlink:href="#real-icon-jiantou"></use>
+                            <use xlink:href="#icon-fanhui"></use>
                         </svg>
                          <span class="leftwords" v-show="showBack">{{backWords}}</span>
     </div>
@@ -45,6 +45,7 @@
     top: 0;
     z-index: 100;
     left:0;
+    transition: all ease 0.3s;
 }
 
 .z-header-left {

@@ -127,4 +127,9 @@ export default {
 .price-big {
     font-size: 0.35rem;
 }
+.z-page{
+    position: absolute;
+    width:100%;
+    height:100%;
+}
 </style>
