@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
+    <transition name="fade"
+                mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
@@ -30,12 +31,14 @@ html {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s ease 
+  transition: all 0.3s ease
 }
 
-.fade-leave-active, .fade-enter{
+.fade-leave-active,
+.fade-enter {
   opacity: 0;
 }
+
 // .fade-enter{
 //   opacity: 0;
 //   transform: translate3d(0, 20%, 0)
@@ -46,9 +49,14 @@ html {
 // .fade-leave-active {
 //   transition: opacity .2s
 // }
-
 .zflex {
   display: flex;
+  align-items: center;
+}
+
+.zflex-col {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -61,12 +69,13 @@ html {
 }
 
 .zicon {
+  display: inline-block;
   width: 1em;
   height: 1em;
   fill: currentColor;
   overflow: hidden;
-  position: relative;
-  margin: 0 auto;
+  position: relative; //margin: 0 auto;
+  vertical-align: middle;
 }
 
 // @media screen and (min-width:321px) and (max-width:375px) {
@@ -74,43 +83,36 @@ html {
 //     font-size: 13px
 //   }
 // }
-
 // @media screen and (min-width:376px) and (max-width:414px) {
 //   body {
 //     font-size: 15px
 //   }
 // }
-
 // @media screen and (min-width:415px) and (max-width:639px) {
 //   body {
 //     font-size: 17px
 //   }
 // }
-
 // @media screen and (min-width:640px) and (max-width:719px) {
 //   body {
 //     font-size: 22px
 //   }
 // }
-
 // @media screen and (min-width:720px) and (max-width:749px) {
 //   body {
 //     font-size: 24.5px
 //   }
 // }
-
 // @media screen and (min-width:750px) and (max-width:799px) {
 //   body {
 //     font-size: 25.5px
 //   }
 // }
-
 // @media screen and (min-width:800px) {
 //   body {
 //     font-size: 25px
 //   }
 // }
-
 a img {
   width: 100%;
   border: 0;
@@ -138,6 +140,7 @@ a {
 }
 
 
+
 /*the animation definition*/
 
 @-webkit-keyframes fadeInUp {
@@ -159,7 +162,6 @@ a {
     -webkit-transform: translate3d(0, 5%, 0);
     -ms-transform: translate3d(0, 5%, 0);
     transform: translate3d(0, 5%, 0)
-    
   }
   100% {
     opacity: 1;
@@ -181,6 +183,7 @@ a {
     transform: none
   }
 }
+
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -195,13 +198,16 @@ a {
     transform: none
   }
 }
-.z-gray{
-  color:#C7C7C7;
+
+.z-gray {
+  color: #C7C7C7;
 }
-.z-red{
-  color:#f9261d;
+
+.z-red {
+  color: #f9261d;
 }
-.z-container .weui-cells{
+
+.z-container .weui-cells {
   margin-top: 0.2rem;
 }
 </style>

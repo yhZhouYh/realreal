@@ -1,5 +1,5 @@
 <template>
-    <svg class="zicon zheader-icon" :class="{zflex: vertical}" aria-hidden="true">
+    <svg class="zicon zheader-icon" :class="{zflex: vertical}" aria-hidden="true" :style="{marginRight: margin}">
         <use :xlink:href="iconName"></use>
     </svg>
 </template>
@@ -12,11 +12,20 @@
             vertical: {
                 type: Boolean,
                 default: true
+            },
+            horizon: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
             iconName () {
                 return '#' + this.icon
+            },
+            margin () {
+                if(this.horizon){
+                    return '10px'
+                }
             }
         }
     }
