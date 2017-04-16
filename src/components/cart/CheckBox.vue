@@ -8,9 +8,9 @@
                    :value="value"
                    id="id"
                    v-model="model">
-            <icon icon="real-icon-yuanxingxuanzhongfill"
+            <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
-            <icon icon="real-icon-yuanxingweixuanzhong"
+            <icon icon="icon-yuanxingweixuanzhong"
                   class="boxnocheck red"></icon>
         </label>
         <div class="checkbox-miidle zflex1">

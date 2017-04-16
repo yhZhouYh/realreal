@@ -1,34 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cart from './moduel/cart'
+import * as types from './mutation-types'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentMenu: []
+    currentMenu: [],
+    accessToken: localStorage.getItem('accessToken') || ''
   },
   // actions,
   // getters,
   mutations: {
-    // CURRENT_MENU(state, menu) {
-    //   state.currentMenu = menu
-    // }
+    [types.SAVE_ACCSSSTOKEN](state, code) {
+      localStorage.setItem('accessToken', code)
+      state.accessToken = code
+    }
 
   },
   actions: {
-    // logout({ commit }) {
-    //   commit(USER_LOGOUT)
-    // },
+    saveAccssToken({commit}, code){
+      commit(types.SAVE_ACCSSSTOKEN, code)
+    }
     
   },
   modules: {
     cart
   }
-//   modules: {
-//     user,
-//     flow,
-//     system,
-//     home
-//   }
 })

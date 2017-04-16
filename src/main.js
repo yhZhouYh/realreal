@@ -10,6 +10,7 @@ import Group from 'vux/src/components/group'
 import Cell from 'vux/src/components/cell'
 import fixed from './components/filters/fixed'
 import VueTouchRipple from 'vue-touch-ripple'
+import './api'
 Vue.component('group', Group)
 Vue.component('cell', Cell)
 Vue.use(VueTouchRipple)

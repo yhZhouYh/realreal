@@ -8,7 +8,10 @@ import OrderList from '@/components/order/Index.vue'
 import ServiceList from '@/components/service/ServiceList.vue'
 import Category from '@/components/service/Category.vue'
 import Search from '@/components/service/Search.vue'
-import User from '@/components/user/Index.vue'
+import User from '@/components/user'
+import Login from '@/components/user/Login.vue'
+import Register from '@/components/user/Register.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +60,16 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: User
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }
   ]
 })

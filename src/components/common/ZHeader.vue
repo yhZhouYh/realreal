@@ -1,6 +1,6 @@
 <template>
-    <div class="z-header zflex"
-         :class="{'vux-1px-b': showBorder}">
+    <div :class="{'vux-1px-b': showBorder}" class="z-header zflex"
+         >
         <span class="z-header-left zflex zflex1">
                     <div class="z-arrow zflex" :style="{color: arrowColor}">
                         <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
@@ -46,6 +46,9 @@
     z-index: 100;
     left:0;
     transition: all ease 0.3s;
+    &.vux-1px-b{
+        position: absolute;
+    }
 }
 
 .z-header-left {
