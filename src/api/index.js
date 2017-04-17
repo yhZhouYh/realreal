@@ -12,64 +12,27 @@ const appid = 'wxe6ab26eb9276d611'
 const secret = '0d1750587901b3570a84b6b0ca4e8dde'
 let access_token = store.state.accessToken
 
-// function fetch(url, data) {
-//     let access_token = store.state.accessToken
-//     //aaccesstoken 如果没有需请求获取
-//     // if (!access_token) {
-//     //     saveAccessToken()
-//     // }
-//     let service = {
-//         service: url,
-//         access_token: store.state.accessToken
-//     }
-//     let dataObj = Object.assign({}, service, data)
-//     return new Promise((resolve, reject) => {
-//         Vue.http.post('/index.php', queryString.stringify(dataObj)).then(response => {
-//             if (response.status == 200) {
-//                 const data = response.data
-//                 if (data.ret == 200) {
-//                     resolve(data.data.result)
-//                 } else if (data.ret == 401 || data.ret == 400) {
-//                     Vue.$vux.toast.show({
-//                         text: data.msg,
-//                         position: 'bottom',
-//                         width: 'auto',
-//                         type: 'text'
-//                     })
-
-//                 } else if (data.ret == 402) {
-//                     saveAccessToken()
-//                 } else if (data.ret == 403) {
-//                     router.push('login')
-//                 }
-//                 reject(data)
-//             }
-//         }, error => {
-//             Vue.$toast({
-//                 text: '网络异常，请稍后'
-//             })
-//         })
-//     })
-// }
-
-
-async function fetch(url, data) {
+async function fetch(service, data) {
     let access_token = store.state.accessToken
-    let service = {
-        service: url,
-        access_token: access_token
-    }
+    const user = store.state.user
+    console.log(user)
+
     let dataObj = Object.assign({}, service, data)
     if (!access_token) {
-        let access_token = await saveAccessToken({ service: 'AccessToken.GetAccessToken', access_token, appid, secret })
-        dataObj.access_token = access_token
+        let access_token = await getdata({ service: 'AccessToken.GetAccessToken', access_token, appid, secret })
+        store.dispatch('saveAccssToken', access_token)
     }
-    return getdata(dataObj)
+    return getdata(service, dataObj)
 }
 
- function getdata(data) {
+function getdata(service, data) {
+    const dataObj = {
+        service,
+        access_token: store.state.accessToken,
+        ...data
+    }
     return new Promise((resolve, reject) => {
-        Vue.http.post('/index.php', queryString.stringify(data)).then(response => {
+        Vue.http.post('/index.php', queryString.stringify(dataObj)).then(response => {
             if (response.status == 200) {
                 const data = response.data
                 if (data.ret == 200) {
@@ -83,15 +46,30 @@ async function fetch(url, data) {
                     })
 
                 } else if (data.ret == 402) {
-                    //saveAccessToken()
+                    const access_token = store.state.accessToken
+                    const user = store.state.user
+                    if (access_token && user.id) {
+                        getdata('AccessToken.UpdateAccessToken',{userid: user.id})
+                    } else {
+                        Vue.$vux.toast.show({
+                            text: '无相关操作权限',
+                            position: 'bottom',
+                            width: 'auto',
+                            type: 'text'
+                        })
+                    }
+
                 } else if (data.ret == 403) {
                     router.push('login')
                 }
                 reject(data)
             }
-        },error =>{
-             Vue.$toast({
-                text: '网络异常，请稍后'
+        }, error => {
+            Vue.$vux.toast.show({
+                text: '网络异常',
+                position: 'bottom',
+                width: 'auto',
+                type: 'text'
             })
         })
     })
@@ -127,11 +105,12 @@ function dealRes(res) {
 //     })
 // }
 
-function saveAccessToken(data) {
-   return getdata(data).then(res => {
-        store.dispatch('saveAccssToken', res)
-    })
-}
+//  function saveAccessToken(data) {
+//      getdata(data).then(res => {
+//         store.dispatch('saveAccssToken', res)
+//         return res
+//     })
+// }
 
 //获取验证码/找回密码
 export function sendSms(data) {
@@ -147,7 +126,7 @@ export function register(data) {
 export function login(data) {
     fetch('Login.Login', data).then(user => {
         console.log(user)
-        store.dispatch('login', user)
+        store.dispatch('login', JSON.stringify(user))
         store.dispatch('saveAccssToken', user.token)
     })
 }

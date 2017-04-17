@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     currentMenu: [],
     accessToken: localStorage.getItem('accessToken') || '',
-    user: localStorage.getItem('user') || {}
+    user: JSON.parse(localStorage.getItem('user')) || {}
   },
   // actions,
   // getters,
