@@ -6,3 +6,6 @@ export const DELETE_FROM_NUMBER = 'DELETE_FROM_NUMBER' //减号删除
 
 //access_token相关
 export const SAVE_ACCESSTOKEN = 'SAVE_ACCESSTOKEN' //保存
+
+//用户相关
+export const SAVE_USER = 'SAVE_USER'

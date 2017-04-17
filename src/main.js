@@ -13,7 +13,7 @@ import VueTouchRipple from 'vue-touch-ripple'
 import './api'
 Vue.component('group', Group)
 Vue.component('cell', Cell)
-Vue.use(VueTouchRipple)
+// Vue.use(VueTouchRipple)
 //import './assets/fonts/iconfont' //引入图标字体 svg形式
 
 //绑定fastclick

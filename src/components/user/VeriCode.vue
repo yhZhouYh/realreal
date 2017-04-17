@@ -1,7 +1,7 @@
 <template>
     <span class="verifyCode"
           @click="getCode"
-          v-touch-ripple>{{msg}}</span>
+         >{{msg}}</span>
 </template>
 <script>
 export default {

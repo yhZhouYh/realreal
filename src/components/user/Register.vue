@@ -76,7 +76,7 @@ import XInput from 'vux/src/components/X-input'
 import XButton from 'vux/src/components/x-button'
 import Toast from 'vux/src/components/toast'
 import VeriCode from './VeriCode'
-import { sendSms, register } from '../../api'
+import { sendSms, register, login } from '../../api'
 export default {
     name: 'login',
     components: {
@@ -123,9 +123,16 @@ export default {
                 return
             }
             if (!this.$route.query.id) {
+                this.showLoading = true
                 let { mobile, password, code } = { ...this._data } //解构当前data
                 register({ mobile, password, code: code.toLowerCase() }).then(res => {
-                    
+                    this.validToast('注册成功')
+                    return login({username:mobile, password})
+                }).then(res => {
+                    console.log(res)
+                    this.$store.dispatch('saveAccssToken', res.token)
+                }).catch(error => {
+                     this.showLoading = false
                 })
             }
 
