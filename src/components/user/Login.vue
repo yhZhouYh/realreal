@@ -37,8 +37,8 @@
                 <div class="forger-pass">
                     <router-link  to="register?id=reset">忘记密码?</router-link>
                 </div>
-                <divider>社交账号</divider>
-                <div class="zflex social">
+                <divider style="font-size: 0.25rem;margin-top:2rem">社交账号</divider>
+                <div class="zflex red">
                     <div class="itembox zflex1 zflex-center zflex-col">
                         <icon icon="icon-qq"></icon>
                         <div>QQ</div>
@@ -159,7 +159,7 @@ export default {
         color:#2cadff
     }
 }
-.social{
-    color:#ccc;
-}
+// .social{
+//     color:#ccc;
+// }
 </style>

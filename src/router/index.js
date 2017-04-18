@@ -11,6 +11,7 @@ import Search from '@/components/service/Search.vue'
 import User from '@/components/user'
 import Login from '@/components/user/Login.vue'
 import Register from '@/components/user/Register.vue'
+import UserInfo from '@/components/user/UserInfo.vue'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/user-info',
+      name: 'UserInfo',
+      component: UserInfo
     }
   ]
 })

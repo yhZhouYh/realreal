@@ -16,6 +16,9 @@ export default {
 <style lang="less">
 @import '~vux/src/styles/reset.less';
 @import './assets/styles/1px.less';
+*{
+  box-sizing: border-box;
+}
 body,
 html {
   height: 100%;

@@ -1,7 +1,7 @@
 <template>
     <div class="z-page z-user-index">
         <z-header :class="{'user-header-top': changeHeader}"
-                  :backWords="showBorder"
+                  backWords=""
                   :arrowColor="arrowColor"
                   :showBorder="false"
                   title="我的账户">
@@ -9,6 +9,12 @@
                                          style="margin-right: 5px;">
                                          <icon icon=""></icon>
                                     </div>-->
+            <router-link to="register"
+                         slot="rightitems"
+                         style="color: #fff"
+                         >
+            <icon icon="icon-fabu"></icon>             
+            </router-link>              
         </z-header>
         <div class="z-container"
              @scroll="scroll">
@@ -17,7 +23,7 @@
                     <img :src="img"
                          class="avatar">
                     <span class="username zflex1">王思聪</span>
-                    <span class="account-manage">账号管理,修改密码</span>
+                    <span class="account-manage">修改密码</span>
                 </div>
             </div>
             <div class="user-focus zflex">

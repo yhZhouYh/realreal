@@ -106,7 +106,6 @@ export default {
     },
     methods: {
         goback (url) {
-            debugger
           if(this.$route && url){
             this.$router.push(url)
           }else if(this.$route &&　!url){
@@ -116,6 +115,7 @@ export default {
           }else{
               historu.go(-1)
           }
+          this.$emit('goback')
         }
     }
 

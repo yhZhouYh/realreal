@@ -16,7 +16,7 @@ async function fetch(service, data) {
     let access_token = store.state.accessToken
     const user = store.state.user
     if (!access_token) {
-        access_token = await getdata({ service: 'AccessToken.GetAccessToken', appid, secret })
+        access_token = await getdata('AccessToken.GetAccessToken',{appid, secret})
         store.dispatch('saveAccssToken', access_token)
     }
     return getdata(service, data)
