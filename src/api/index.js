@@ -15,21 +15,18 @@ let access_token = store.state.accessToken
 async function fetch(service, data) {
     let access_token = store.state.accessToken
     const user = store.state.user
-    console.log(user)
-
-    let dataObj = Object.assign({}, service, data)
     if (!access_token) {
-        let access_token = await getdata({ service: 'AccessToken.GetAccessToken', access_token, appid, secret })
+        access_token = await getdata({ service: 'AccessToken.GetAccessToken', appid, secret })
         store.dispatch('saveAccssToken', access_token)
     }
-    return getdata(service, dataObj)
+    return getdata(service, data)
 }
 
-function getdata(service, data) {
+function getdata(service, datas) {
     const dataObj = {
         service,
         access_token: store.state.accessToken,
-        ...data
+        ...datas
     }
     return new Promise((resolve, reject) => {
         Vue.http.post('/index.php', queryString.stringify(dataObj)).then(response => {
@@ -49,8 +46,15 @@ function getdata(service, data) {
                     const access_token = store.state.accessToken
                     const user = store.state.user
                     if (access_token && user.id) {
-                        getdata('AccessToken.UpdateAccessToken',{userid: user.id})
-                    } else {
+                        getdata('AccessToken.UpdateAccessToken', { access_token, userid: user.id }).then(res => {
+                            getdata(service, datas)
+                        })
+                    } else if (access_token && !user.id) {
+                        getdata('AccessToken.GetAccessToken', { appid, secret }).then(res => {
+                            store.dispatch('saveAccssToken', res)
+                            getdata(service, datas)
+                        })
+                    }else {
                         Vue.$vux.toast.show({
                             text: '无相关操作权限',
                             position: 'bottom',

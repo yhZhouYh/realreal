@@ -23,6 +23,11 @@ html {
   background-color: #f4f4f4;
 }
 
+body{
+  max-width:720px;
+  margin:0 auto;
+  position: relative;
+}
 #app {
   position: absolute;
   width: 100%;

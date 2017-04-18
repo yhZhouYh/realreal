@@ -234,11 +234,11 @@ export default {
     div {
         // line-height: 1.2;
     }
-    .itembox {
+}
+.itembox {
         padding: 0.15rem 0;
         position: relative;
         background: #fff;
-    }
 }
 
 .reddot {

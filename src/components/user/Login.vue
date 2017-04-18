@@ -3,6 +3,9 @@
         <z-header :showBack="true"
                   backWords=""
                   title="登陆">
+            <router-link to="register"
+                         slot="rightitems"
+                         style="font-size:17px">注册</router-link>
         </z-header>
         <div class="z-container">
             <div class="login-box">
@@ -31,6 +34,24 @@
             <div class="login-button-box">
                 <x-button class="login-button"
                           @click.native="login">登陆</x-button>
+                <div class="forger-pass">
+                    <router-link  to="register?id=reset">忘记密码?</router-link>
+                </div>
+                <divider>社交账号</divider>
+                <div class="zflex social">
+                    <div class="itembox zflex1 zflex-center zflex-col">
+                        <icon icon="icon-qq"></icon>
+                        <div>QQ</div>
+                    </div>
+                    <div class="itembox zflex1 zflex-center zflex-col">
+                        <icon icon="icon-iconfontmoban"></icon>
+                        <div>微信</div>
+                    </div>
+                    <div class="itembox zflex1 zflex-center zflex-col">
+                        <icon icon="icon-xinlang"></icon>
+                        <div>微博</div>
+                    </div>
+                </div>
             </div>
     
         </div>
@@ -47,6 +68,7 @@ import XInput from 'vux/src/components/X-input'
 import XButton from 'vux/src/components/x-button'
 import Toast from 'vux/src/components/toast'
 import { login } from '../../api'
+import Divider from 'vux/src/components/divider'
 export default {
     name: 'login',
     components: {
@@ -54,7 +76,8 @@ export default {
         Icon,
         XButton,
         Toast,
-        XInput
+        XInput,
+        Divider
     },
     data() {
         return {
@@ -128,5 +151,15 @@ export default {
     &:active {
         background-color: #ccc!important;
     }
+}
+.forger-pass{
+    text-align: right;
+    padding-top:0.2rem;
+    a{
+        color:#2cadff
+    }
+}
+.social{
+    color:#ccc;
 }
 </style>

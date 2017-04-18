@@ -2,7 +2,7 @@
     <div :class="{'vux-1px-b': showBorder}" class="z-header zflex"
          >
         <span class="z-header-left zflex zflex1">
-                    <div class="z-arrow zflex" :style="{color: arrowColor}">
+                    <div class="z-arrow zflex" :style="{color: arrowColor}" @click="goback(url)">
                         <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
                             <use xlink:href="#icon-fanhui"></use>
                         </svg>
@@ -99,6 +99,23 @@ export default {
         backWords: {
             type: String,
             default: '返回'
+        },
+        url: {
+            type: String
+        }
+    },
+    methods: {
+        goback (url) {
+            debugger
+          if(this.$route && url){
+            this.$router.push(url)
+          }else if(this.$route &&　!url){
+              this.$router.go(-1)
+          }else if(!this.$route && url){
+              location.href='#/' + url
+          }else{
+              historu.go(-1)
+          }
         }
     }
 
