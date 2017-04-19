@@ -80,12 +80,12 @@ export default {
              console.log(src)
              this.avatar = src
              console.log(this.avatar)
-            //  reader.onload = (event) => {
-            //      console.log(event)
-            //     //  console.log(event.target.result)
-            //     //  this.avatar = event.target.result
-            //  }
-            //  reader.readAsDataURL(file)
+             reader.onload = (event) => {
+                 console.log(event)
+                //  console.log(event.target.result)
+                //  this.avatar = event.target.result
+             }
+             reader.readAsDataURL(file)
         }
     }
 }
