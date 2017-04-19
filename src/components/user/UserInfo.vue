@@ -15,7 +15,7 @@
             <div class="user-header">
                 <div class="user-header-center zflex zflex-center">
                     <div class="avatar-div">
-                         <img :src="avater"
+                         <img :src="avatar"
                          class="avatar">
                           <input type="file" accept="image/*" class="uploader-input" @change="uploader">    
                     </div>
@@ -24,6 +24,15 @@
             <group>
                 <x-input title="昵称"
                          v-model="user.userName" placeholder="请输入昵称"></x-input>
+                <cell>
+                    <span slot="icon">性别</span>
+                    <select name="sex" id=""  class="weui-input weui-select" slot="after-title">
+                        <option selected value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                </cell>
+                <x-input title="手机号码" type="number"
+                         v-model="user.userPhone" placeholder="请输入手机号"></x-input>
             </group>
             <circle-loading :showloading="showloading"></circle-loading>
         </div>
@@ -46,22 +55,37 @@ export default {
     data() {
         return {
             user: this.$store.state.user,
-            showloading: false
+            showloading: false,
+            avatar: this.user && this.user.userPhoto ? this.user.userPhoto : require('../../assets/imgs/avatar.jpg')
         }
     },
-    computed: {
-        avater () {
-            return this.user && this.user.userPhoto ? this.user.userPhoto : require('../../assets/imgs/avatar.jpg')
-        }
-    },
+
     methods: {
         goback () {
             alert(1111)
            
         },
         uploader (e) {
-             this.showloading = !this.showloading
             console.log(e)
+             this.showloading = !this.showloading
+             const file = e.target.files[0]
+             const reader = new FileReader()
+             let src = ''
+             let url = window.URL || window.webkitURL
+             if(url){
+                 src = url.createObjectURL(file)
+             }else{
+                 src = e.target.result
+             }
+             console.log(src)
+             this.avatar = src
+             console.log(this.avatar)
+            //  reader.onload = (event) => {
+            //      console.log(event)
+            //     //  console.log(event.target.result)
+            //     //  this.avatar = event.target.result
+            //  }
+            //  reader.readAsDataURL(file)
         }
     }
 }
@@ -87,5 +111,18 @@ export default {
     top:0;
     width:100%;
     height:100%;
+}
+.weui-select {
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    width: 100%;
+    font-size: inherit;
+    // height: 45px;
+    // line-height: 45px;
+    position: relative;
+    z-index: 1;
+    padding-left: 15px;
 }
 </style>

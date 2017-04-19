@@ -128,10 +128,11 @@ export function register(data) {
 
 //登陆
 export function login(data) {
-    fetch('Login.Login', data).then(user => {
+   fetch('Login.Login', data).then(user => {
         console.log(user)
         store.dispatch('login', JSON.stringify(user))
         store.dispatch('saveAccssToken', user.token)
+        router.push('/')
     })
 }
 
