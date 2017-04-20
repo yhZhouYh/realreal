@@ -19,7 +19,7 @@ export default new Vuex.Store({
       state.accessToken = code
     },
     [types.SAVE_USER](state, user) {
-      localStorage.setItem('user', user)
+      localStorage.setItem('user', JSON.stringify(user))
       state.user = user
     }
 

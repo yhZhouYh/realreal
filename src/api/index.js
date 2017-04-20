@@ -96,25 +96,11 @@ function dealRes(res) {
         } else if (data.ret == 402) {
             saveAccessToken()
         } else if (data.ret == 403) {
-            router.push('login')
+            router.push({name:'login', query:{redirect: router.name}})
         }
         reject(data)
     }
 }
-
-//获取access_token
-// function saveAccessToken() {
-//     fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
-//         store.dispatch('saveAccssToken', res)
-//     })
-// }
-
-//  function saveAccessToken(data) {
-//      getdata(data).then(res => {
-//         store.dispatch('saveAccssToken', res)
-//         return res
-//     })
-// }
 
 //获取验证码/找回密码
 export function sendSms(data) {
@@ -130,11 +116,27 @@ export function register(data) {
 export function login(data) {
    fetch('Login.Login', data).then(user => {
         console.log(user)
-        store.dispatch('login', JSON.stringify(user))
+        store.dispatch('login', user)
         store.dispatch('saveAccssToken', user.token)
         router.push('/')
     })
 }
+
+//图片上传
+export function uploader({upfile, type}) {
+   return fetch('Default.UploadBase64', {upfile, type})
+}
+
+//忘记密码
+export function forgetPass(data) {
+   return fetch('Login.Register', data)
+}
+
+//编辑用户信息
+export function editUser(data) {
+   return fetch('User.SaveField', data)
+}
+
 
 
 

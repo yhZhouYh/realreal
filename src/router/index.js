@@ -12,6 +12,7 @@ import User from '@/components/user'
 import Login from '@/components/user/Login.vue'
 import Register from '@/components/user/Register.vue'
 import UserInfo from '@/components/user/UserInfo.vue'
+import Apply from '@/components/user/Apply.vue'
 
 Vue.use(Router)
 
@@ -74,8 +75,13 @@ export default new Router({
     },
     {
       path: '/user-info',
-      name: 'UserInfo',
+      name: 'userInfo',
       component: UserInfo
+    },
+    {
+      path: '/apply',
+      name: 'apply',
+      component:Apply
     }
   ]
 })
