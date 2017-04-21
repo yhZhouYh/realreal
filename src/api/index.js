@@ -12,24 +12,31 @@ const appid = 'wxe6ab26eb9276d611'
 const secret = '0d1750587901b3570a84b6b0ca4e8dde'
 let access_token = store.state.accessToken
 
-async function fetch(service, data) {
+async function fetch(service, data, loading = false) {
     let access_token = store.state.accessToken
     const user = store.state.user
     if (!access_token) {
         access_token = await getdata('AccessToken.GetAccessToken',{appid, secret})
         store.dispatch('saveAccssToken', access_token)
     }
-    return getdata(service, data)
+    return getdata(service, data, loading)
 }
 
-function getdata(service, datas) {
+function getdata(service, datas, loading) {
     const dataObj = {
         service,
         access_token: store.state.accessToken,
         ...datas
     }
+    if(loading){
+         store.dispatch('changeLoading')
+    }
     return new Promise((resolve, reject) => {
         Vue.http.post('/index.php', queryString.stringify(dataObj)).then(response => {
+            var state = store.state.loading
+            if(state){
+                store.dispatch('changeLoading')
+            }
             if (response.status == 200) {
                 const data = response.data
                 if (data.ret == 200) {
@@ -135,6 +142,11 @@ export function forgetPass(data) {
 //编辑用户信息
 export function editUser(data) {
    return fetch('User.SaveField', data)
+}
+
+//获取地区
+export function getArea(data) {
+   return fetch('Default.AreaList', data, true)
 }
 
 

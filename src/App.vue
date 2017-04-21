@@ -4,12 +4,22 @@
                 mode="out-in">
       <router-view></router-view>
     </transition>
+    <circle-loading :showloading="$store.state.loading"></circle-loading>
   </div>
 </template>
 
 <script>
+import CircleLoading from '@/components/common/CircleLoading'
 export default {
-  name: 'app'
+  name: 'app',
+  // data () {
+  //   return {
+  //     showloading: this.$store.state.loading
+  //   }
+  // },
+  components: {
+    CircleLoading
+  }
 }
 </script>
 

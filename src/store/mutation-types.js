@@ -9,3 +9,6 @@ export const SAVE_ACCESSTOKEN = 'SAVE_ACCESSTOKEN' //保存
 
 //用户相关
 export const SAVE_USER = 'SAVE_USER'
+
+//全局loading
+export const CHANGE_LOADING = 'CHANGE_LOADING'

@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     currentMenu: [],
     accessToken: localStorage.getItem('accessToken') || '',
-    user: JSON.parse(localStorage.getItem('user')) || {}
+    user: JSON.parse(localStorage.getItem('user')) || {},
+    loading: false
   },
   // actions,
   // getters,
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     [types.SAVE_USER](state, user) {
       localStorage.setItem('user', JSON.stringify(user))
       state.user = user
+    },
+    [types.CHANGE_LOADING](state) {
+      state.loading = !state.loading
     }
 
   },
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     login({commit}, user){
       commit(types.SAVE_USER, user)
+    },
+    changeLoading({commit}){
+      commit(types.CHANGE_LOADING)
     }
     
   },
