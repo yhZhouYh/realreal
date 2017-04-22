@@ -149,6 +149,11 @@ export function getArea(data) {
    return fetch('Default.AreaList', data, true)
 }
 
+//商家个人入驻
+export function apply(data) {
+   return fetch('User.Apply', data, true)
+}
+
 
 
 
