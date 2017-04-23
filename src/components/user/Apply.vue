@@ -242,9 +242,6 @@ export default {
             idCart: ''
         }
     },
-    mounted() {
-        console.log(this.addmodel)
-    },
     methods: {
         apply() {
             let dataobj = {
