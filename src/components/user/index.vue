@@ -9,7 +9,7 @@
                                          style="margin-right: 5px;">
                                          <icon icon=""></icon>
                                     </div>-->
-            <router-link to="register"
+            <router-link to="user-info"
                          slot="rightitems"
                          style="color: #fff"
                          >
@@ -22,8 +22,8 @@
                 <div class="user-header-center zflex">
                     <img :src="img"
                          class="avatar">
-                    <span class="username zflex1">王思聪</span>
-                    <span class="account-manage">修改密码</span>
+                    <span class="username zflex1" @click="clickusername">{{username}}</span>
+                    <span class="account-manage" @click="gopass">修改密码</span>
                 </div>
             </div>
             <div class="user-focus zflex">
@@ -96,7 +96,9 @@
 
                  <group>
                     <cell title="商铺/维修员入驻"
-                          is-link>
+                          is-link
+                          link="storeUser"
+                          >
                         <icon icon="icon-dianpu"
                               slot="icon"
                               :horizon="true" style="color:#5e97e6"></icon>
@@ -140,12 +142,24 @@ export default {
         ZHeader,
         Icon
     },
+    computed: {
+        username () {
+            if(this.user && this.user.userName){
+                return this.user.userName
+            }else if(!this.user){
+                return '去登陆'
+            }else{
+                return '新用户'
+            }
+        }
+    },
     data() {
         return {
-            img: require('../../assets/imgs/avatar.jpg'),
+            img: this.$store.state.user.userPhoto?this.$store.state.user.userPhoto : require('../../assets/imgs/avatar.jpg'),
             changeHeader: true,
             showBorder: false,
-            arrowColor: '#fff'
+            arrowColor: '#fff',
+            user: this.$store.state.user
         }
     },
     mounted() {
@@ -155,7 +169,6 @@ export default {
         scroll(e) {
             var _this = this
             _throttle(function () {
-                console.log(e.target.scrollTop)
                 if (e.target.scrollTop >= 50) {
                     _this.changeHeader = false
                     _this.showBorder = true
@@ -167,6 +180,14 @@ export default {
                 }
             }, 300)()
         },
+        clickusername(){
+            if(!user){
+                this.$router.push('user-info')
+            }
+        },
+        gopass(){
+            this.$router.push({name:'register', query:{id:'reset'}})
+        }
     }
 }
 </script>

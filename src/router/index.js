@@ -13,6 +13,8 @@ import Login from '@/components/user/Login.vue'
 import Register from '@/components/user/Register.vue'
 import UserInfo from '@/components/user/UserInfo.vue'
 import Apply from '@/components/user/Apply.vue'
+import StoreUser from '@/components/user/StoreUser.vue'
+import Needs from '@/components/user/Needs.vue'
 
 Vue.use(Router)
 
@@ -44,7 +46,7 @@ export default new Router({
       component: OrderList
     },
     {
-      path: '/serviceList',
+      path: '/serviceList/:id',
       name: 'serviceList',
       component: ServiceList
     },
@@ -82,6 +84,16 @@ export default new Router({
       path: '/apply',
       name: 'apply',
       component:Apply
+    },
+    {
+      path: '/storeUser',
+      name: 'storeUser',
+      component:StoreUser
+    },
+    {
+      path: '/needs',
+      name: 'needs',
+      component:Needs
     }
   ]
 })

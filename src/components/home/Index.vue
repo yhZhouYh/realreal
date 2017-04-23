@@ -57,7 +57,7 @@
           <marquee class="zflex1">
             <marquee-item v-for="i in news"
                           :key="i"
-                          class="align-middle">{{i}}</marquee-item>
+                          class="align-middle">{{i.articleTitle}}</marquee-item>
           </marquee>
         </div>
         <div class="zflex">
@@ -87,6 +87,7 @@ import ZCategory from './CategoryCircle.vue'
 import Marquee from 'vux/src/components/marquee/marquee.vue'
 import MarqueeItem from 'vux/src/components/marquee/marquee-item.vue'
 import IndexCategory from './IndexCategory.vue'
+import {indexAds, article} from '../../api'
 export default {
   components: {
     ZHeader,
@@ -111,12 +112,7 @@ export default {
         { backcolor: '#e1b77d', svgsrc: '#real-icon-icon052', categoryname: "家电维修" },
         { backcolor: '#c8c8c8', svgsrc: '#real-icon-quanbufenlei', categoryname: "家电维修" }]
       ],
-      news: [
-        '天之道',
-        '损有余而补不足',
-        '是故虚胜实',
-        '不足剩有余'
-      ],
+      news: [],
       catesItem: [{
         catesId: '1',
         catesName: '家电服务',
@@ -202,6 +198,12 @@ export default {
     }
   },
   created() {
+    indexAds({id: 4}).then(res => {
+      console.log(res)
+    })
+    article({page: 1,limit: 6, classid: 8}).then(res=>{
+      this.news = res
+    })
     this.imgs = [{ url: require('../../assets/imgs/img1.jpg') },
     { url: require('../../assets/imgs/img2.jpg') },
     { url: require('../../assets/imgs/img3.jpg') },

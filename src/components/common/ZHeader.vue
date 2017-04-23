@@ -10,7 +10,9 @@
     </div>
     <slot name="leftitems"></slot>
     </span>
-    <span class="z-header-middle">{{title}}</span>
+    <span class="z-header-middle">{{title}}
+        <slot name="middleitems" v-if="!title"></slot>
+    </span>
     <span class="z-header-right zflex zflex1">
             <slot name="rightitems"></slot>
         </span>
@@ -82,7 +84,7 @@ export default {
         },
         title: {
             type: String,
-            default: '主页'
+            // default: '主页'
         },
         showBack: {
             type: Boolean,

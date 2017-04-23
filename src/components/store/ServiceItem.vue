@@ -1,19 +1,19 @@
 <template>
     <a href="javascript:;"
        class="z-servie-item zflex">
-        <x-img :src="item.src"
+        <x-img :src="item.goodsImg"
                :default-src="defaultsrc"
                class="item-left"
                container=".z-container"></x-img>
         <div class="item-right zflex1">
-            <p class="z-service-title">{{item.title}}</p>
-            <p class="z-service-desc">{{item.desc}}</p>
-            <p class="z-service-price"><span class="service-price">{{item.price}}元/{{item.unit}} <span class="origin-price z-gray">100元</span></span>
+            <p class="z-service-title">{{item.goodsName}}</p>
+            <p class="z-service-desc">{{item.goodsDesc}}</p>
+            <p class="z-service-price"><span class="service-price">{{item.shopPrice}}元/{{item.goodsUnit}} <span class="origin-price z-gray" v-if="item.shopPrice!=item.marketPrice">{{item.marketPrice}}元</span></span>
             </p>
             <p class="z-service-bottom zflex vux-1px-t">
                 <icon icon="real-icon-dianpu" class="gray"></icon>
                 <span class="store-name zflex1 gray">{{item.StoreName}}</span>
-                <span class="service-sale z-gray">已售{{item.sale}} 好评98%</span>
+                <span class="service-sale z-gray">已售{{item.saleNum}} 好评98%</span>
             </p>
         </div>
     </a>

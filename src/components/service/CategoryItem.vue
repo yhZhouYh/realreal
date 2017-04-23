@@ -1,7 +1,7 @@
 <template>
     <div class="category-item">
-        <x-button type="warn">进入{{detail.name}}</x-button>
-        <span v-for="item in detail.labels"  class="cate-btns">{{item.name}}</span>
+        <!--<x-button type="warn">进入{{detail.catName}}</x-button>-->
+        <span v-for="item in detail.children"  class="cate-btns">{{item.catName}}</span>
     </div>
 </template>
 <script>

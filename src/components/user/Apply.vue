@@ -5,7 +5,7 @@
                   title="申请入驻">
         </z-header>
         <div class="z-container">
-            <group>
+            <group v-if="$route.query.store">
                 <x-input title="店铺名称"
                          required
                          placeholder="请输入您的店铺名称"
@@ -41,9 +41,11 @@
                     <div slot="icon"
                          style="margin-right:0.3rem;"
                          :class="{'weui-cell_warn': !businessLicenceImgurl}">营业执照电子照</div>
-                   
-                    <div class="weui-uploader__input-box" :class="{hasphoto: businessLicenceImgurl}"
-                         slot="after-title" :style="{backgroundImage:'url('+businessLicenceImgurl+')'}">
+    
+                    <div class="weui-uploader__input-box"
+                         :class="{hasphoto: businessLicenceImgurl}"
+                         slot="after-title"
+                         :style="{backgroundImage:'url('+businessLicenceImgurl+')'}">
                         <input id="uploaderInput"
                                class="weui-uploader__input"
                                type="file"
@@ -56,15 +58,114 @@
                     <div slot="icon"
                          style="margin-right:0.3rem;"
                          :class="{'weui-cell_warn': !OrganizationCodeImgurl}">组织机构代码证</div>
-                         
-                    <div class="weui-uploader__input-box" :class="{hasphoto: OrganizationCodeImgurl}"
-                         slot="after-title" :style="{backgroundImage:'url('+OrganizationCodeImgurl+')'}">
+    
+                    <div class="weui-uploader__input-box"
+                         :class="{hasphoto: OrganizationCodeImgurl}"
+                         slot="after-title"
+                         :style="{backgroundImage:'url('+OrganizationCodeImgurl+')'}">
                         <input id="uploaderInput"
                                class="weui-uploader__input"
                                type="file"
                                accept="image/*"
                                multiple=""
                                @change="uploader($event, 'OrganizationCodeImgurl')">
+                    </div>
+                </cell>
+                <x-input title="银行开户行"
+                         required
+                         placeholder="请输入银行开户行"
+                         v-model="bankUserName"></x-input>
+                <x-input title="个人银行账号"
+                         type="number"
+                         required
+                         placeholder="请输入个人银行账号"
+                         v-model="bankAccount"></x-input>
+                <x-input title="开户银行支行名称"
+                         required
+                         placeholder="请输入开户银行支行名称"
+                         v-model="bankId"></x-input>
+            </group>
+            <group v-else>
+                <x-input title="店铺名称"
+                         required
+                         placeholder="请输入您的店铺名称"
+                         v-model="shopName"></x-input>
+                <x-input title="公司名称"
+                         required
+                         placeholder="请输入您的公司名称"
+                         v-model="companyName"></x-input>
+                <x-input title="联系姓名"
+                         required
+                         placeholder="请输入联系人姓名"
+                         v-model="contactName"></x-input>
+                <x-input type="number"
+                         is-type="china-mobile"
+                         title="联系电话"
+                         required
+                         placeholder="请输入联系人手机号码"
+                         v-model="contactPhone"></x-input>
+                <x-address :list="addressData"
+                           :class="{'weui-cell_warn': !addmodel.length}"
+                           title="联系地址"
+                           v-model="addmodel"
+                           value-text-align="left"></x-address>
+                <x-input title="详细地址"
+                         required
+                         placeholder="请输入详细地址"
+                         v-model="address"></x-input>
+                <x-input title="身份证号"
+                         required
+                         placeholder="请输入身份证号"
+                         v-model="idCart"></x-input>
+                <cell>
+                    <div slot="icon"
+                         style="margin-right:0.3rem;"
+                         :class="{'weui-cell_warn': !cartImgZ}">身份证正面</div>
+    
+                    <div class="weui-uploader__input-box"
+                         :class="{hasphoto: cartImgZ}"
+                         slot="after-title"
+                         :style="{backgroundImage:'url('+cartImgZ+')'}">
+                        <input id="uploaderInput"
+                               class="weui-uploader__input"
+                               type="file"
+                               accept="image/*"
+                               multiple=""
+                               @change="uploader($event, 'cartImgZ')">
+                    </div>
+                </cell>
+                <cell>
+                    <div slot="icon"
+                         style="margin-right:0.3rem;"
+                         :class="{'weui-cell_warn': !cartImgF}">身份证反面</div>
+    
+                    <div class="weui-uploader__input-box"
+                         :class="{hasphoto: cartImgF}"
+                         slot="after-title"
+                         :style="{backgroundImage:'url('+cartImgF+')'}">
+                        <input id="uploaderInput"
+                               class="weui-uploader__input"
+                               type="file"
+                               accept="image/*"
+                               multiple=""
+                               @change="uploader($event, 'cartImgF')">
+                    </div>
+                </cell>
+                <cell>
+                    <div slot="icon"
+                         style="margin-right:0.3rem;"
+                         :class="{'weui-cell_warn': !qualificationsImg}">资质证明书</div>
+    
+                    <div class="weui-uploader__input-box"
+                         :class="{hasphoto: qualificationsImg}"
+                         slot="after-title"
+                         :style="{backgroundImage:'url('+qualificationsImg+')'}">
+                        <input id="uploaderInput"
+                               class="weui-uploader__input"
+                               type="file"
+                               accept="image/*"
+                               multiple=""
+                               @change="uploader($event, 'qualificationsImg')">
                     </div>
                 </cell>
                 <x-input title="银行开户行"
@@ -128,13 +229,17 @@ export default {
             businessLicence: '',
             address: '',
             businessLicenceImgurl: '',
-            OrganizationCodeImgurl:'',
+            OrganizationCodeImgurl: '',
             bankUserName: '',
             bankAccount: '',
             bankId: '',
             shopName: '',
             toastText: '',
-            showToast: false
+            showToast: false,
+            cartImgZ: '',
+            cartImgF: '',
+            qualificationsImg: '',
+            idCart: ''
         }
     },
     mounted() {
@@ -142,11 +247,36 @@ export default {
     },
     methods: {
         apply() {
-            if (this.companyName && this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.bankId && this.shopName) {
-
+            let dataobj = {
+                userid: this.$store.state.user.userId,
+                type: this.$route.query.store ? 1 : 2,
+                shopName: this.shopName,
+                companyName: this.companyName,
+                contactName: this.contactName,
+                contactPhone: this.contactPhone,
+                provinceId: this.addmodel[0],
+                cityId: this.addmodel[1],
+                countyId: this.addmodel[2],
+                address: this.address,
+                businessLicence: this.businessLicence,
+                businessLicenceImgurl: this.businessLicenceImgurl,
+                OrganizationCodeImgurl: this.OrganizationCodeImgurl,
+                bankUserName: this.bankUserName,
+                bankAccount: this.bankAccount,
+                bankId: this.bankId,
+                idCart: this.idCart,
+                cartImgZ: this.cartImgZ,
+                cartImgF: this.cartImgF,
+                qualificationsImg: this.qualificationsImg
+            }
+            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.bankId && this.shopName && this.addmodel.length) {
+                apply(dataobj).then(res => {
+                    this.validToast('申请成功，等待审核')
+                })
             } else {
                 this.validToast('请完善资料')
             }
+
         },
         validToast(text) {
             // debugger
@@ -189,10 +319,7 @@ export default {
 }
 
 .weui-uploader__input-box {
-    float: left;
     position: relative;
-    margin-right: 9px;
-    margin-bottom: 9px;
     width: 77px;
     height: 77px;
     border: 1px solid #D9D9D9;
@@ -212,13 +339,15 @@ export default {
     background: no-repeat center center;
     background-size: cover;
 }
- .weui-uploader__input-box.hasphoto:before{
+
+.weui-uploader__input-box.hasphoto:before {
     width: 0;
-    height:0;
+    height: 0;
 }
-.weui-uploader__input-box.hasphoto:after{
+
+.weui-uploader__input-box.hasphoto:after {
     width: 0;
-    height:0;
+    height: 0;
 }
 
 .weui-uploader__input-box:after {
@@ -271,5 +400,9 @@ export default {
     .checkbox-miidle {
         padding-left: 0.1rem;
     }
+}
+
+.v-transfer-dom .vux-popup-picker-header {
+    color: #E64340;
 }
 </style>

@@ -15,7 +15,7 @@
         <div class="z-container zflex">
     
             <div class="z-ver-menu">
-                <cate-menu></cate-menu>
+                <cate-menu :items="items" @checkedItem="checkedItem"></cate-menu>
             </div>
             <div class="z-category-detail zflex1">
                 <category-item :detail="detail"></category-item>
@@ -27,6 +27,7 @@
 import ZHeader from '@/components/common/ZHeader.vue'
 import CateMenu from './CateMenu.vue'
 import CategoryItem from './CategoryItem.vue'
+import {getCategory} from '../../api'
 export default {
     name: 'category',
     components: {
@@ -36,17 +37,19 @@ export default {
     },
     data () {
         return {
-            detail: {
-                id: 1,
-                name: '家电频道',
-                labels: [
-                    {id:1, name:'电视'},
-                    {id:1, name:'电脑'},
-                    {id:1, name:'电话'},
-                    {id:1, name:'洗衣机'},
-                    {id:1, name:'吹风机插座'}
-                ]
-            }
+            items: [],
+            detail: {}
+        }
+    },
+    created () {
+        getCategory().then(res => {
+            this.items = res
+            this.detail = this.items[0]
+        })
+    },
+    methods: {
+        checkedItem(detail){
+            this.detail = detail
         }
     }
 }

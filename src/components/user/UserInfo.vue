@@ -129,7 +129,7 @@ export default {
                 let _this = this
                 uploader({ upfile: event.target.result, type: 'users' }).then(photo => {
                     _this.showloading = !this.showloading
-                    _this.uploaderAvatar = src
+                    _this.uploaderAvatar = photo
                     _this.user.userPhoto = photo
                     _this.$store.dispatch('login', _this.user)
                 })

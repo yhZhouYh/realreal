@@ -11,8 +11,16 @@ import Cell from 'vux/src/components/cell'
 import fixed from './components/filters/fixed'
 import VueTouchRipple from 'vue-touch-ripple'
 import './api'
+import Scroller from 'muse-ui/src/infiniteScroll/infiniteScroll.vue'
+import Blank from '@/components/common/Blank'
+
 Vue.component('group', Group)
 Vue.component('cell', Cell)
+Vue.component('scroller', Scroller)
+Vue.component('blank', Blank)
+
+// import InfiniteLoading from 'vue-infinite-loading';
+// Vue.component('infiniteLoading', InfiniteLoading)
 // Vue.use(VueTouchRipple)
 //import './assets/fonts/iconfont' //引入图标字体 svg形式
 

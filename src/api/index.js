@@ -71,7 +71,7 @@ function getdata(service, datas, loading) {
                     }
 
                 } else if (data.ret == 403) {
-                    router.push('login')
+                    router.push({name:'login',query:{redirect: router.route.name}})
                 }
                 reject(data)
             }
@@ -103,7 +103,7 @@ function dealRes(res) {
         } else if (data.ret == 402) {
             saveAccessToken()
         } else if (data.ret == 403) {
-            router.push({name:'login', query:{redirect: router.name}})
+            router.push({name:'login', query:{redirect: router.app.$route.query.name}})
         }
         reject(data)
     }
@@ -122,10 +122,15 @@ export function register(data) {
 //登陆
 export function login(data) {
    fetch('Login.Login', data).then(user => {
-        console.log(user)
+       console.log(router)
         store.dispatch('login', user)
         store.dispatch('saveAccssToken', user.token)
-        router.push('/')
+        if(router.app.$route.query.redirect){
+            router.push(router.app.$route.query.redirect)
+        }else{
+             router.push('/')
+        }
+        
     })
 }
 
@@ -152,6 +157,26 @@ export function getArea(data) {
 //商家个人入驻
 export function apply(data) {
    return fetch('User.Apply', data, true)
+}
+
+//获取分类
+export function getCategory(data) {
+   return fetch('Default.GetColumn', data)
+}
+
+//首页轮播
+export function indexAds(data) {
+   return fetch('Index.Ads', data)
+}
+
+//文章
+export function article(data) {
+   return fetch('Default.Index', data)
+}
+
+//根据分类查商品
+export function getGoodsByCid(data) {
+   return fetch('Goods.Index', data, true)
 }
 
 
