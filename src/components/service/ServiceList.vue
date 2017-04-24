@@ -22,19 +22,21 @@
         <div class="z-container"
              ref="scroller">
             <!--<div class="z-button-tab">
-                                            <button-tab v-model="selected">
-                                                <button-tab-item selected :value="0">服务</button-tab-item>
-                                                <button-tab-item :value="1">商家</button-tab-item>
-                                            </button-tab>
-                                        </div>-->
+                                                                    <button-tab v-model="selected">
+                                                                        <button-tab-item selected :value="0">服务</button-tab-item>
+                                                                        <button-tab-item :value="1">商家</button-tab-item>
+                                                                    </button-tab>
+                                                                </div>-->
             <div v-show="selected == 0"
                  class="z-service-container">
                 <div class="z-box"
                      v-for="item in serviceItems">
+                     
                     <service-item container=".z-store-detail"
                                   :item="item"
                                   :key="item">
                     </service-item>
+                    
                 </div>
                 <blank v-if="!serviceItems.length"
                        :define="true">
@@ -43,7 +45,8 @@
                 <div class="menu-box">
                     <z-menu :items="items"
                             name="catName"
-                            @checkedItem="checkedItem" :isCheck="isChecked"></z-menu>
+                            @checkedItem="checkedItem"
+                            :isCheck="isChecked"></z-menu>
                 </div>
             </div>
             <div class="z-storeItems">
@@ -66,7 +69,7 @@ import ButtonTabItem from 'vux/src/components/button-tab/button-tab-item.vue'
 import ServiceItem from '../store/ServiceItem.vue'
 import StoreItem from './StoreItem.vue'
 import ZMenu from '../common/Menu.vue'
-import { getCategory, getGoodsByCid } from '../../api'
+import { getCategory, getGoodsByCid, getStoreById } from '../../api'
 import infiniteLoading from '../common/InfiniteScroll.vue'
 export default {
     name: 'serviceList',
@@ -83,51 +86,69 @@ export default {
         return {
             title: '',
             serviceItems: [],
-            storeItems: [
-                { id: 1, src: require('../../assets/imgs/storetest.jpg'), title: '滚筒洗衣机上门维修(检测费)', desc: '服务内容：1.总费用=一口价+特殊配置特殊配置特殊配置特殊配置', price: 49, unit: '项', sale: 418, StoreName: '到家维修' },
-                { id: 1, src: require('../../assets/imgs/storetest.jpg'), title: '滚筒洗衣机上门维修(检测费)', desc: '服务内容：1.总费用=一口价+特殊配置特殊配置特殊配置特殊配置', price: 49, unit: '项', sale: 418, StoreName: '到家维修' },
-                { id: 1, src: require('../../assets/imgs/storetest.jpg'), title: '滚筒洗衣机上门维修(检测费)', desc: '服务内容：1.总费用=一口价+特殊配置特殊配置特殊配置特殊配置', price: 49, unit: '项', sale: 418, StoreName: '到家维修' }
-            ],
+            storeItems: [],
             selected: 0,
             items: [],
             scroller: null,
             loading: false,
-            currentCid: this.$route.params.id,
+            currentCid: this.$route.query.cid ? this.$route.query.cid : 0,
             cid: 0,
             page: 1,
             limit: 10,
+            page2: 1,
             isOver: false,
-            isChecked: 0
+            isOver2: false,
+            isChecked: this.$route.query.index != undefined ? this.$route.query.index + 1 : 0, //check index 应该加+1
+            middle: {}
         }
     },
     mounted() {
         this.scroller = this.$refs.scroller
     },
+
     created() {
         getCategory({ id: this.$route.params.id }).then(res => {
             this.title = res[0].catName
             this.items = res[0].children
             let data = { ...res[0] }
             data.catName = '全部'
+            data.catId = 0
             this.items.unshift(data)
         })
-        getGoodsByCid({ id: this.currentCid, page: this.page, limit: this.limit }).then(res => {
+        getGoodsByCid({ id: this.$route.params.id, page: this.page, limit: this.limit, cid: this.currentCid }).then(res => {
             this.serviceItems = res
+        })
+        getStoreById({ id: this.$route.params.id, page: this.page2, limit: this.limit }).then(res => {
+            this.storeItems = res
         })
 
     },
     methods: {
         loadMore() {
-            if (!this.isOver) {
-                this.loading = true
-                getGoodsByCid({ id: this.currentCid, page: this.page++, limit: this.limit }).then(res => {
-                    this.loading = false
-                    this.serviceItems.concat(res)
-                    if (res.length == 0) {
-                        this.isOver = true
-                    }
-                })
+            if (this.selected == 0) {
+                if (!this.isOver) {
+                    this.loading = true
+                    getGoodsByCid({ id: this.$route.params.id, page: ++this.page, limit: this.limit, cid: this.currentCid }).then(res => {
+                        this.loading = false
+                        this.serviceItems.concat(res)
+                        if (res.length == 0) {
+                            this.isOver = true
+                        }
+                    })
+                }
+            }else{
+                 if (!this.isOver2) {
+                    this.loading = true
+                    getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit}).then(res => {
+                        this.loading = false
+                        this.serviceItems.concat(res)
+                        if (res.length == 0) {
+                            this.isOver2 = true
+                        }
+                    })
+                }
             }
+
         },
         checkedItem(item) {
             this.page = 1

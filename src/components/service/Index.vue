@@ -2,34 +2,36 @@
     <div class="z-page z-service">
         <!--头部-->
         <z-header :showBack="true"
-                  backWords="">
+                  backWords=""
+                  :title="data.shopName"
+                  >
         </z-header>
         <!--头部-->
         <div class="z-container">
             <!--轮播-->
             <div class="z-store-carousel">
-                <tf-carousel :imgs="imgs"
+                <tf-carousel :imgs="data.gallery"
                              :delay="4000"
                              :autoPlay="false">
                 </tf-carousel>
             </div>
             <!--轮播-->
             <div class="z-box">
-                <div class="service-detail-title">洗衣机上门维修（检测费）</div>
+                <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                        <span class="price-big">{{data.price}}</span>元/{{data.unit}}
-                    <span class="origin-price gray">原价100元</span></span>
+                                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                    <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data" @add="add" @minus="minus"></z-number>
                 </div>
             </div>
     
-            <group>
+            <!--<group>
                 <cell title="服务项目"
                       value="洗衣机上门维修"
                       :is-link="true"></cell>
-            </group>
+            </group>-->
     
             <group>
                 <cell title="服务时间">
@@ -72,6 +74,7 @@ import Tab from 'vux/src/components/tab/tab.vue'
 import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Comment from '../store/Comment'
 import ServiceBottom from './ServiceBottom'
+import {goodsDetail} from '../../api'
 export default {
     name: 'serviceDetail',
     components: {
@@ -94,17 +97,14 @@ export default {
                 { id: 1, name: '详情' },
                 { id: 2, name: '评论' },
             ],
-            data: {
-                price: '98',
-                unit: '次',
-                id: this.$route.params.id,
-                name: '高空干洗服务',
-                storeName: '小猪干洗电',
-                storeId: 58,
-                simg: require('../../assets/imgs/test.png')
-            },
+            data: {},
             currentView: 1
         }
+    },
+    created () {
+        goodsDetail({id: this.$route.params.id}).then(res=>{
+            this.data = res
+        })  
     },
     methods: {
         checkTabItem(index) {

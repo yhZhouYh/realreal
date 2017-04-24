@@ -138,7 +138,7 @@
   };
 </script>
 <style lang="less" scoped>
-  @import '~vue-infinite-loading/src/styles/spinner';
+  // @import '~vue-infinite-loading/src/styles/spinner';
   .infinite-loading-container{
     clear: both;
     text-align: center;

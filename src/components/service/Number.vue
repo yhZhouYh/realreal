@@ -1,11 +1,11 @@
 <template>
     <div class="z-number zflex">
-        <icon icon="real-icon-jian"
+        <icon icon="icon-jianshao"
               class="number-minus red"
               :class="{disable: num == 0}"
               @click.native="minus"></icon>
         <span class="number-box">{{num}}</span>
-        <icon icon="real-icon-jikediancanicon09"
+        <icon icon="icon-tianjia"
               class="number-add red"
               @click.native="add()"></icon>
     </div>

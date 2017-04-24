@@ -1,7 +1,7 @@
 <template>
     <div class="category-item">
         <!--<x-button type="warn">进入{{detail.catName}}</x-button>-->
-        <span v-for="item in detail.children"  class="cate-btns">{{item.catName}}</span>
+        <span v-for="(item,index) in detail.children"  class="cate-btns" @click="go(item, index)">{{item.catName}}</span>
     </div>
 </template>
 <script>
@@ -11,6 +11,11 @@
         props: ['detail'],
         components: {
             XButton
+        },
+        methods: {
+            go(item, index){
+                this.$router.push({name:'serviceList',params:{id: item.parentId},query:{index: index, cid: item.catId}})
+            }
         }
     }
 </script>

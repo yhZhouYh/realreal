@@ -1,6 +1,5 @@
 <template>
-    <a href="javascript:;"
-       class="z-servie-item zflex">
+    <router-link :to="to" class="z-servie-item zflex">
         <x-img :src="item.goodsImg"
                :default-src="defaultsrc"
                class="item-left"
@@ -11,14 +10,15 @@
             <p class="z-service-price"><span class="service-price">{{item.shopPrice}}元/{{item.goodsUnit}} <span class="origin-price z-gray" v-if="item.shopPrice!=item.marketPrice">{{item.marketPrice}}元</span></span>
             </p>
             <p class="z-service-bottom zflex vux-1px-t">
-                <icon icon="real-icon-dianpu" class="gray"></icon>
-                <span class="store-name zflex1 gray">{{item.StoreName}}</span>
-                <span class="service-sale z-gray">已售{{item.saleNum}} 好评98%</span>
+                <icon icon="icon-dianpu" class="gray"></icon>
+                <span class="store-name zflex1 gray">{{item.shopName}}</span>
+                <span class="service-sale z-gray">已售{{item.saleNum}} </span>
+                <!--好评98%-->
             </p>
         </div>
-    </a>
+    </router-link>
 </template>
-<script>
+<script>    
 import XImg from 'vux/src/components/x-img'
 import Icon from '../common/Icon'
 export default {
@@ -27,6 +27,11 @@ export default {
     data() {
         return {
             defaultsrc: require('../../assets/imgs/zhanwei.png')
+        }
+    },
+    computed: {
+        to () {
+            return '/service/' + this.item.goodsId
         }
     },
     components: {

@@ -1,15 +1,15 @@
 <template>
     <a href="javascript:;"class="z-store-item" v-touch-ripple>
-        <div class="store-img back-img"
-             :style="{backgroundImage:'url('+item.src+')'}"></div>
+        <!--<div class="store-img back-img"
+             :style="{backgroundImage:'url('+item.shopImg+')'}"></div>-->
+             <img class="store-img back-img" :src="item.shopImg"></img>
         <div class="store-desc">
-            <p>{{item.StoreName}}</p>
+            <p>{{item.shopName}}</p>
             <div class="zflex gray storeSale">
                 <span class="zflex1">已接单{{item.sale}}</span>
                 <!--<span>已接单{{item.sale}}</span>-->
             </div>
         </div>
-    
     </a>
 </template>a
 <script>

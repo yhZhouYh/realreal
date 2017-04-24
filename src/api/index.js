@@ -179,6 +179,16 @@ export function getGoodsByCid(data) {
    return fetch('Goods.Index', data, true)
 }
 
+//商店索引
+export function getStoreById(data) {
+   return fetch('Shops.Index', data, true)
+}
+
+
+//商店索引
+export function goodsDetail(data) {
+   return fetch('Goods.GetInfo', data, true)
+}
 
 
 

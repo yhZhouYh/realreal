@@ -29,7 +29,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/index.php': {
-        target: ' http://api.finaly.cn', // target host
+        target: 'http://api.finaly.cn', // target host
+        changeOrigin: true
+      },
+      '/upload': {
+        target: 'http://zy.finaly.cn', // target host
         changeOrigin: true
       },
     },
