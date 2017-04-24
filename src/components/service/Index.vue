@@ -3,8 +3,7 @@
         <!--头部-->
         <z-header :showBack="true"
                   backWords=""
-                  :title="data.shopName"
-                  >
+                  :title="data.shopName">
         </z-header>
         <!--头部-->
         <div class="z-container">
@@ -20,32 +19,36 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                                    <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
-                    <z-number :item="data" @add="add" @minus="minus" :currentNum="count"></z-number>
+                    <z-number :item="data"
+                              @add="add"
+                              @minus="minus"
+                              :currentNum="count"></z-number>
                 </div>
             </div>
     
             <!--<group>
-                <cell title="服务项目"
-                      value="洗衣机上门维修"
-                      :is-link="true"></cell>
-            </group>-->
+                            <cell title="服务项目"
+                                  value="洗衣机上门维修"
+                                  :is-link="true"></cell>
+                        </group>-->
     
             <group>
                 <cell title="服务时间">
                     <span slot="value"
                           class="red">
-                                {{data.serviceTime}}
-                            </span>
+                                            {{data.serviceTime}}
+                                        </span>
                 </cell>
             </group>
     
             <div class="z-box">
                 <p>服务描述</p>
                 <p v-if="data.goodsTips">{{data.goodsTips}}</p>
-                <p v-else style="text-align:center">暂无描述</p>
+                <p v-else
+                   style="text-align:center">暂无描述</p>
             </div>
     
             <sticky scroll-box="z-container">
@@ -60,7 +63,9 @@
                 </tab>
             </sticky>
             <comment v-show="currentView == 1"></comment>
-            <div v-show="currentView == 0" v-html="data.goodsDesc" class="service-detail"></div>
+            <div v-show="currentView == 0"
+                 v-html="data.goodsDesc"
+                 class="service-detail"></div>
         </div>
         <service-bottom></service-bottom>
     </div>
@@ -74,9 +79,9 @@ import Tab from 'vux/src/components/tab/tab.vue'
 import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Comment from '../store/Comment'
 import ServiceBottom from './ServiceBottom'
-import {goodsDetail} from '../../api'
+import { goodsDetail } from '../../api'
 export default {
-    name: 'serviceDetail',
+    name: 'service',
     components: {
         TfCarousel,
         ZHeader,
@@ -102,13 +107,15 @@ export default {
             count: 0
         }
     },
-    created () {
-        goodsDetail({id: this.$route.params.id}).then(res=>{
+    created() {
+        goodsDetail({ id: this.$route.params.id }).then(res => {
             this.data = res
             const carts = this.$store.state.cart.carts
-            const currentItem = carts.items.find(p=>p.goodsId === res.goodsId)
-            this.count = currentItem.count
-        })  
+            const currentItem = carts.items.find(p => p.goodsId === res.goodsId)
+            if (currentItem) {
+                this.count = currentItem.count
+            }
+        })
     },
     // mounted () {
     //     // this.count = this.$store.dispatch('getCartItem', item).count
@@ -118,10 +125,10 @@ export default {
         checkTabItem(index) {
             this.currentView = index
         },
-        add(item){
+        add(item) {
             this.$store.dispatch('addToCart', item)
         },
-        minus(item){
+        minus(item) {
             this.$store.dispatch('minusfromCart', item)
         }
     }
@@ -135,12 +142,14 @@ export default {
 .price-big {
     font-size: 0.35rem;
 }
-.z-page{
+
+.z-page {
     position: absolute;
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 }
-.service-detail img{
-    width:100%;
+
+.service-detail img {
+    width: 100%;
 }
 </style>

@@ -21,22 +21,14 @@
         </z-header>
         <div class="z-container"
              ref="scroller">
-            <!--<div class="z-button-tab">
-                                                                    <button-tab v-model="selected">
-                                                                        <button-tab-item selected :value="0">服务</button-tab-item>
-                                                                        <button-tab-item :value="1">商家</button-tab-item>
-                                                                    </button-tab>
-                                                                </div>-->
             <div v-show="selected == 0"
                  class="z-service-container">
                 <div class="z-box"
                      v-for="item in serviceItems">
-                     
                     <service-item container=".z-store-detail"
                                   :item="item"
                                   :key="item">
                     </service-item>
-                    
                 </div>
                 <blank v-if="!serviceItems.length"
                        :define="true">
@@ -136,10 +128,10 @@ export default {
                         }
                     })
                 }
-            }else{
-                 if (!this.isOver2) {
+            } else {
+                if (!this.isOver2) {
                     this.loading = true
-                    getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit}).then(res => {
+                    getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit }).then(res => {
                         this.loading = false
                         this.serviceItems.concat(res)
                         if (res.length == 0) {

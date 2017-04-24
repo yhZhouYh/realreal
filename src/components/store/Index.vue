@@ -162,4 +162,8 @@ export default {
 .store-items {
     margin-top: 0;
 }
+.service-detail{
+    background: #fff;
+    padding: 0.2rem;
+}
 </style>

@@ -2,8 +2,8 @@
   <div id="app">
     <transition name="fade"
                 mode="out-in">
-      <keep-alive>         
-      <router-view></router-view>
+      <keep-alive exclude="service">         
+        <router-view></router-view>
       </keep-alive> 
     </transition>
     <circle-loading :showloading="$store.state.loading"></circle-loading>

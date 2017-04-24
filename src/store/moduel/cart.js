@@ -7,7 +7,7 @@ let cartItem = {
 }
 
 const state = {
-    carts: JSON.parse(localStorage.getItem('carts')) || {},
+    carts: JSON.parse(localStorage.getItem('carts')) || {items:[], quntity: 0},
     currentGoods: {}
 }
 
