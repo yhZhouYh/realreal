@@ -26,9 +26,14 @@ export default {
     components: {
         Icon
     },
+    watch: {
+        currentNum(){
+            this.num = this.currentNum
+        }
+    },
     data() {
         return {
-            num: this.currentNum
+            num: 0
         }
     },
     methods: {

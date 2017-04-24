@@ -2,17 +2,17 @@
     <div class="service-bottom zflex vux-1px-t">
         <a href="javascript:;"
            class="itembox zflex vux-1px-r zflex-center">
-            <icon icon="real-icon-dianpu"></icon>
+            <icon icon="icon-dianpu"></icon>
             <div>店铺</div>
         </a>
         <a href="javascript:;"
            class="itembox zflex vux-1px-r zflex-center">
-            <icon icon="real-icon-lianxidianhua"></icon>
+            <icon icon="icon-call-business"></icon>
             <div>联系商家</div>
         </a>
         <a href="javascript:;"
            class="itembox zflex vux-1px-r zflex-center">
-            <icon icon="real-icon-gouwuche"></icon>
+            <icon icon="icon-gouwuche"></icon>
             <div>购物车</div>
             <div class="badge-box" v-show="cartAllCounts">
                 <badge :text="cartAllCounts"></badge>
@@ -41,7 +41,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'cartAllCounts'
+            'cartAllCounts',
         ])
     }
 }
@@ -68,6 +68,9 @@ export default {
         height: 100%;
         line-height: 1rem;
         font-size: 0.3rem;
+    }
+    &.vux-1px-t{
+        position: absolute;
     }
 }
 

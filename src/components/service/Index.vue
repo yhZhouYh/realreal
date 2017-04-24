@@ -23,7 +23,7 @@
                                         <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
-                    <z-number :item="data" @add="add" @minus="minus"></z-number>
+                    <z-number :item="data" @add="add" @minus="minus" :currentNum="count"></z-number>
                 </div>
             </div>
     
@@ -37,16 +37,15 @@
                 <cell title="服务时间">
                     <span slot="value"
                           class="red">
-                                2017-03-08 19:30
+                                {{data.serviceTime}}
                             </span>
                 </cell>
             </group>
     
             <div class="z-box">
                 <p>服务描述</p>
-                <p>1.总费用 = 保险费 + 配件费</p>
-                <p>2.专业师傅</p>
-                <p>3.如有高空作业,将收取一部分高空作业费</p>
+                <p v-if="data.goodsTips">{{data.goodsTips}}</p>
+                <p v-else style="text-align:center">暂无描述</p>
             </div>
     
             <sticky scroll-box="z-container">
@@ -54,13 +53,14 @@
                      active-color="#f9261d"
                      default-color="#969696"
                      bar-active-color="#f9261d">
-                    <tab-item :selected="index == 1"
+                    <tab-item :selected="index == 0"
                               v-for="(item, index) in tabItems"
                               :key="item"
                               @on-item-click="checkTabItem(index)">{{item.name}}</tab-item>
                 </tab>
             </sticky>
             <comment v-show="currentView == 1"></comment>
+            <div v-show="currentView == 0" v-html="data.goodsDesc" class="service-detail"></div>
         </div>
         <service-bottom></service-bottom>
     </div>
@@ -98,14 +98,22 @@ export default {
                 { id: 2, name: '评论' },
             ],
             data: {},
-            currentView: 1
+            currentView: 0,
+            count: 0
         }
     },
     created () {
         goodsDetail({id: this.$route.params.id}).then(res=>{
             this.data = res
+            const carts = this.$store.state.cart.carts
+            const currentItem = carts.items.find(p=>p.goodsId === res.goodsId)
+            this.count = currentItem.count
         })  
     },
+    // mounted () {
+    //     // this.count = this.$store.dispatch('getCartItem', item).count
+    //     console.log(this.count)
+    // },
     methods: {
         checkTabItem(index) {
             this.currentView = index
@@ -131,5 +139,8 @@ export default {
     position: absolute;
     width:100%;
     height:100%;
+}
+.service-detail img{
+    width:100%;
 }
 </style>
