@@ -90,14 +90,19 @@ export default {
             page2: 1,
             isOver: false,
             isOver2: false,
-            isChecked: this.$route.query.index != undefined ? this.$route.query.index + 1 : 0, //check index 应该加+1
-            middle: {}
+            isChecked: this.$route.query.index != undefined ? parseInt(this.$route.query.index) + 1 : 0, //check index 应该加+1
+            middle: {},
+            middleObj: {
+                page: 1,
+                items: [],
+                isOver: false
+            }
         }
     },
     mounted() {
         this.scroller = this.$refs.scroller
     },
-
+    //初始化
     created() {
         getCategory({ id: this.$route.params.id }).then(res => {
             this.title = res[0].catName
@@ -108,7 +113,12 @@ export default {
             this.items.unshift(data)
         })
         getGoodsByCid({ id: this.$route.params.id, page: this.page, limit: this.limit, cid: this.currentCid }).then(res => {
-            this.serviceItems = res
+            if (!this.middle[this.isChecked]) {
+                let middleObj = { ...this.middleObj }
+                middleObj.items = res
+                this.middle[this.isChecked] = middleObj
+            }
+            this.serviceItems = this.middle[this.isChecked].items
         })
         getStoreById({ id: this.$route.params.id, page: this.page2, limit: this.limit }).then(res => {
             this.storeItems = res
@@ -118,13 +128,15 @@ export default {
     methods: {
         loadMore() {
             if (this.selected == 0) {
-                if (!this.isOver) {
+                let middle = this.middle[this.isChecked]
+                if (!middle.isOver) {
                     this.loading = true
                     getGoodsByCid({ id: this.$route.params.id, page: ++this.page, limit: this.limit, cid: this.currentCid }).then(res => {
                         this.loading = false
-                        this.serviceItems.concat(res)
+                        middle.items.concat(res)
+                        this.serviceItems = middle.items
                         if (res.length == 0) {
-                            this.isOver = true
+                            middle.isOver = true
                         }
                     })
                 }
@@ -142,13 +154,20 @@ export default {
             }
 
         },
-        checkedItem(item) {
-            this.page = 1
-            this.isOver = false
+        checkedItem(item, index) { //缓存处理
+            this.isChecked = index
             this.currentCid = item.catId
-            getGoodsByCid({ id: this.$route.params.id, page: this.page, limit: this.limit, cid: this.currentCid }).then(res => {
-                this.serviceItems = res
-            })
+            if (!this.middle[this.isChecked]) {
+                let middleObj = { ...this.middleObj }
+                getGoodsByCid({ id: this.$route.params.id, page: this.page, limit: this.limit, cid: this.currentCid }).then(res => {
+                    middleObj.items = res
+                    this.middle[this.isChecked] = middleObj
+                    this.serviceItems = this.middle[this.isChecked].items
+                })
+            } else {
+                this.serviceItems = this.middle[index].items
+            }
+
         }
     }
 }

@@ -19,7 +19,7 @@
             </div>
         </a>
         <a href="javascript:;"
-           class="buynow zflex1">
+           class="buynow zflex1" @click="buynow">
                 立即购买
             </a>
     </div>
@@ -30,6 +30,7 @@ import Badge from 'vux/src/components/Badge'
 import { mapGetters } from 'vuex'
 export default {
     name: 'serviceBottom',
+    // props: ['count'],
     components: {
         Icon,
         Badge
@@ -37,6 +38,11 @@ export default {
     data() {
         return {
             //cartnum: 0
+        }
+    },
+    methods:{
+        buynow (){
+            this.$emit('buynow')
         }
     },
     computed: {

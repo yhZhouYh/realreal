@@ -59,7 +59,7 @@ export default {
     methods: {
         checkItem(item, index) {
             if (this.isChecked != index) {
-                this.$emit('checkedItem', item)
+                this.$emit('checkedItem', item, index)
             }
             this.isChecked = index
         }

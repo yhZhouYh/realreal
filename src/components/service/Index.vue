@@ -9,7 +9,7 @@
         <div class="z-container">
             <!--轮播-->
             <div class="z-store-carousel">
-                <tf-carousel :imgs="data.gallery"
+                <tf-carousel v-if="data.gallery":imgs="data.gallery"
                              :delay="4000"
                              :autoPlay="false">
                 </tf-carousel>
@@ -38,9 +38,8 @@
             <group>
                 <cell title="服务时间">
                     <span slot="value"
-                          class="red">
-                                            {{data.serviceTime}}
-                                        </span>
+                          class="red">最近可约 {{data.serviceTime}}</span>
+                          
                 </cell>
             </group>
     
@@ -67,7 +66,7 @@
                  v-html="data.goodsDesc"
                  class="service-detail"></div>
         </div>
-        <service-bottom></service-bottom>
+        <service-bottom @buynow="buynow"></service-bottom>
     </div>
 </template>
 <script>
@@ -104,16 +103,19 @@ export default {
             ],
             data: {},
             currentView: 0,
-            count: 0
+            count: 0,
+            currentItem: {}
         }
     },
     created() {
         goodsDetail({ id: this.$route.params.id }).then(res => {
             this.data = res
             const carts = this.$store.state.cart.carts
-            const currentItem = carts.items.find(p => p.goodsId === res.goodsId)
-            if (currentItem) {
-                this.count = currentItem.count
+            this.currentItem = carts.items.find(p => p.goodsId === res.goodsId)
+            if (this.currentItem) {
+                this.count = this.currentItem.count
+            }else{
+                this.currentItem = this.data
             }
         })
     },
@@ -130,6 +132,14 @@ export default {
         },
         minus(item) {
             this.$store.dispatch('minusfromCart', item)
+        },
+        buynow(){
+            if(!this.currentItem.count){
+                 this.add(this.data)
+                 this.$router.push('/cart')
+            }else{
+                this.$router.push('/cart')
+            }
         }
     }
 }

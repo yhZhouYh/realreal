@@ -28,8 +28,12 @@ export default {
     },
     watch: {
         currentNum(){
+           
             this.num = this.currentNum
         }
+    },
+    mounted () {
+        this.num = this.currentNum
     },
     data() {
         return {

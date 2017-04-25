@@ -38,6 +38,7 @@ const mutations = {
         const record = state.carts.items.find(p => p.goodsId === item.goodsId) //找到符合条件的第一个项目
         if (!record) {
             item.count = 1
+            item.isCheck = true
             state.carts.quntity++
             state.carts.items.push(item)
         } else {
