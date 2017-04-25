@@ -1,13 +1,14 @@
 <template>
     <div class="z-checkbox zflex">
-        <label for="id"
+        <label :for="id"
                class="check-label">
             <input type="checkbox"
                    class="z-check"
                    name="checkit"
                    :value="value"
-                   id="id"
-                   v-model="model">
+                   :checked="checked"
+                   :id="id"
+                   v-model="model" @change="change(value)">
             <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
             <icon icon="icon-yuanxingweixuanzhong"
@@ -32,6 +33,11 @@ export default {
     data () {
         return {
             model: this.checked
+        }
+    },
+    methods: {
+        change(value){
+            this.$emit('change',value)
         }
     }
 }

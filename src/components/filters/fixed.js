@@ -1,6 +1,6 @@
 const fixed = function (value, num) {
     if(!value){
-        return
+        return 0
     }else{
         return parseFloat(value).toFixed(num)
     }

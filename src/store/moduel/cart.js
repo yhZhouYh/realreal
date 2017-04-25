@@ -7,7 +7,7 @@ let cartItem = {
 }
 
 const state = {
-    carts: JSON.parse(localStorage.getItem('carts')) || {items:[], quntity: 0},
+    carts: JSON.parse(localStorage.getItem('carts')) || { items: [], quntity: 0 },
     currentGoods: {}
 }
 
@@ -29,6 +29,12 @@ const actions = {
     },
     getCartItem({ commit, state }, item) {
         commit(types.GET_CART_ITEM, item)
+    },
+    updateIsCheck({ commit, state }, item, index) {
+        commit(types.UPDATE_CHECK, item, index)
+    },
+    deleteIndex({ commit, state }, item, index) {
+        commit(types.DELETE_INDEX, item, index)
     }
 
 }
@@ -39,64 +45,18 @@ const mutations = {
         if (!record) {
             item.count = 1
             item.isCheck = true
-            state.carts.quntity++
             state.carts.items.push(item)
         } else {
-            state.carts.quntity++
             record.count++
         }
+        state.carts.quntity++
         localStorage.setItem('carts', JSON.stringify(state.carts))
     },
-    //    [types.ADD_TO_CART](state, item) {
-    //     const record = state.carts.find(p => p.storeId === item.storeId) //找到符合条件的第一个项目
-    //     if (!record) {
-    //         item.count = 1
-    //         let current = {...cartItem, ...item}
-    //         current.services.push(item)
-    //         state.quntity++
-    //         state.carts.push(current)
-    //     } else {
-    //         const detail = record.services.find(i => i.id === item.id) //找到services中符合条件的部分
-    //         if(!detail){
-    //             item.count = 1
-    //             record.count++
-    //             state.quntity++
-    //             record.services.push(item)
-    //         }else{
-    //             state.quntity++
-    //             detail.count++
-    //             record.count++
-    //         }
-
-    //     }
-    // },
     [types.CHECKOUT_REQUEST](state) {
         // 清空购物车
         state.items = []
     },
-    // [types.DELETE_FROM_NUMBER](state, item) {
-    //     const record=  state.carts.findIndex(p => p.storeId === item.storeId)
-    //     if(!record && record !=0){
-    //         return
-    //     }else{
-    //         const ele = state.carts[record].services
-    //         const detail = ele.findIndex(i => i.id === item.id)
-    //         if(!detail && detail !=0){
-    //             return
-    //         }else{
-    //             ele[detail].count--
-    //             //detail.count--
-    //             state.quntity--
-    //             state.carts[record].count--
-    //             if(ele[detail].count == 0){
-    //                 ele.splice(detail, 1)
-    //             }
-    //             if(state.carts[record].count == 0) {
-    //                 state.carts.splice(record, 1)
-    //             }
-    //         }
-    //     }
-    // }
+
     [types.DELETE_FROM_NUMBER](state, item) {
         const index = state.carts.items.findIndex(p => p.goodsId === item.goodsId) //找到符合条件的第一个项目的索引
         if (!index && index != 0) {
@@ -120,6 +80,18 @@ const mutations = {
     [types.GET_CART_ITEM](state, item) {
         const goods = state.items.find(p => p.goodsId === item.goodsId)
         state.currentGoods = goods
+    },
+    [types.UPDATE_CHECK](state, item, index) {
+        item.isCheck = !item.isCheck
+        state.carts.items[index] = item
+        localStorage.setItem('carts', JSON.stringify(state.carts))
+    },
+    [types.DELETE_INDEX](state, item, index) {
+        debugger
+        state.carts.quntity -= item.count
+        state.carts.items.splice(index, 1)
+        console.log(state.carts.quntity)
+        localStorage.setItem('carts', JSON.stringify(state.carts))
     }
 
 }

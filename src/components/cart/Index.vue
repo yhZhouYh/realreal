@@ -13,25 +13,28 @@
             </blank>
             <div class="cart-box"
                  v-else
-                 v-for="item in items">
+                 v-for="(item,index) in items">
                 <div class="cart-item vux-1px-b zflex">
                     <!--<z-check>
-                            <span slot="middle" class="zflex">
-                                <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
-                                <span class="cart-title">{{item.shopName}}</span>
-                            </span>
-                            <span slot="right" class="cart-right vux-1px-l gray">删除</span>
-                        </z-check>-->
+                                <span slot="middle" class="zflex">
+                                    <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
+                                    <span class="cart-title">{{item.shopName}}</span>
+                                </span>
+                                <span slot="right" class="cart-right vux-1px-l gray">删除</span>
+                            </z-check>-->
                     <span slot="middle"
                           class="zflex zflex1">
-                                <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
-                                <span class="cart-title">{{item.shopName}}</span>
+                                    <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
+                                    <span class="cart-title">{{item.shopName}}</span>
                     </span>
                     <span slot="right"
-                          class="cart-right vux-1px-l gray">删除</span>
+                          class="cart-right vux-1px-l gray" @click="deleteItem(item,index)">删除</span>
                 </div>
                 <div class="cart-item vux-1px-b">
-                    <z-check :checked="item.isCheck">
+                    <z-check :checked="item.isCheck"
+                             :id="item.goodsId"
+                             :value="item"
+                             @change="change(item, index)">
                         <div slot="middle"
                              class="zflex">
                             <div class="service-img"
@@ -51,12 +54,17 @@
                 </div>
             </div>
         </div>
-        <div class="service-bottom zflex vux-1px-t">
-            <div class="cart-total zflex1">合计：<span class="red">￥{{price | fixed(2)}}</span></div>
+        <div class="service-bottom zflex vux-1px-t" v-if="items.length">
+            <div class="cart-total zflex1">合计：<span class="red">￥{{totalPrice | fixed(2)}}</span></div>
             <a href="javascript:;"
                class="buynow ripple"
-               v-touch-ripple>结算</a>
+               v-touch-ripple>下单</a>
         </div>
+        <confirm v-model="show"
+                 title="你确定要删除么"
+                 @on-confirm="onConfirm">
+            <!--<p style="text-align:center;">你确定要删除么</p>-->
+        </confirm>
     </div>
 </template>
 <script>
@@ -65,6 +73,7 @@ import ZCheck from './CheckBox'
 import Icon from '../common/Icon'
 import ZNumber from '../service/Number.vue'
 import Blank from '@/components/common/Blank'
+import { Confirm } from 'vux'
 export default {
     name: 'cart',
     components: {
@@ -72,22 +81,49 @@ export default {
         ZCheck,
         Icon,
         ZNumber,
-        Blank
+        Blank,
+        Confirm
     },
     //需要vuex里购物车数据
     data() {
         return {
             items: this.$store.state.cart.carts.items,
-            price: 90
+            price: 90,
+            show: false,
+            deleteIndex: 0,
+            currentItem: null 
+        }
+    },
+    computed: {
+        totalPrice() {
+            let totalPrice = 0
+            this.items.map((item, index) => {
+                if (item.isCheck) {
+                    totalPrice += item.shopPrice * item.count
+                }
+            })
+            console.log(totalPrice == 0)
+            return totalPrice 
         }
     },
     methods: {
-         add(item) {
+        add(item) {
             this.$store.dispatch('addToCart', item)
         },
         minus(item) {
             this.$store.dispatch('minusfromCart', item)
         },
+        change(item, index) {
+            this.$store.dispatch('updateIsCheck', item, index)
+        },
+        onConfirm(){
+            this.$store.dispatch('deleteIndex', this.currentItem, this.deleteIndex)
+        },
+        deleteItem(item, index){
+            this.show = !this.show
+            this.deleteIndex = index
+            this.currentItem = item
+        }
     }
 }
 </script>
