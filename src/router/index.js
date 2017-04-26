@@ -15,6 +15,7 @@ import UserInfo from '@/components/user/UserInfo.vue'
 import Apply from '@/components/user/Apply.vue'
 import StoreUser from '@/components/user/StoreUser.vue'
 import Needs from '@/components/user/Needs.vue'
+import Near from '@/components/home/Near.vue'
 
 Vue.use(Router)
 
@@ -94,6 +95,11 @@ export default new Router({
       path: '/needs',
       name: 'needs',
       component:Needs
+    },
+    {
+      path: '/near',
+      name: 'near',
+      component:Near
     }
   ]
 })

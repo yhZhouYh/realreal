@@ -5,11 +5,13 @@
         <router-view></router-view>
     </transition>
     <circle-loading :showloading="$store.state.loading"></circle-loading>
+    <Z-footer></Z-footer>
   </div>
 </template>
 
 <script>
 import CircleLoading from '@/components/common/CircleLoading'
+import ZFooter from '@/components/home/Footter'
 export default {
   name: 'app',
   // data () {
@@ -18,7 +20,8 @@ export default {
   //   }
   // },
   components: {
-    CircleLoading
+    CircleLoading,
+    ZFooter
   }
 }
 </script>

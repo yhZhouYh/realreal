@@ -27,7 +27,7 @@ Vue.component('blank', Blank)
 //绑定fastclick
 FastClick.attach(document.body)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 Vue.filter('fixed', fixed) //过滤数值 保留小数位数
 

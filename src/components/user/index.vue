@@ -63,12 +63,12 @@
                     </cell>
                 </group>
                 <div class="order-menu zflex">
-                    <a href="javascript:;"
+                    <router-link to="/orderList"
                        class="itembox zflex1 zflex-center zflex-col">
                         <icon icon="icon-daifukuan"></icon>
                         <div>待付款</div>
                         <div class="reddot"></div>
-                    </a>
+                    </router-link>
                     <a href="javascript:;"
                        class="itembox zflex1 zflex-center zflex-col">
                         <icon icon="icon-daiqujian"></icon>

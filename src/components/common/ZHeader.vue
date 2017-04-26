@@ -63,7 +63,7 @@
     justify-content: flex-end;
 }
 .zheader-icon {
-    font-size: 0.45rem;
+    font-size: 0.38rem;
 }
 
 .z-header-middle {

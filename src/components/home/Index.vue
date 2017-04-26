@@ -1,12 +1,12 @@
 <template>
   <!--头部开始-->
   <div class="z-page">
-    <z-header :showArrow="false">
+    <z-header :showArrow="false" title="主页">
       <div slot="leftitems"
            style="color:#ea2a1d">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
-          <use xlink:href="#real-icon-zuobiao"></use>
+          <use xlink:href="#icon-weizhi"></use>
         </svg>
       </div>
       <div slot="leftitems"
@@ -17,14 +17,14 @@
            style="margin-right: 5px;">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
-          <use xlink:href="#real-icon-search"></use>
+          <use xlink:href="#icon-sousuo"></use>
         </svg>
         <p class="zheader-icon-word">搜索</p>
       </div>
       <div slot="rightitems">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
-          <use xlink:href="#real-icon-fabuxuqiuben01"></use>
+          <use xlink:href="#icon-fabu"></use>
         </svg>
         <p class="zheader-icon-word">需求</p>
       </div>
@@ -73,7 +73,7 @@
   
       <div class="z-box"
            v-for="cates in catesItem">
-        <index-category :cates="cates"></index-category>
+        <index-category :cates="cates" @click.native="go"></index-category>
       </div>
       <!--各项分类结束-->
     </div>
@@ -101,16 +101,16 @@ export default {
     return {
       imgs: [],
       cateSvgs: [
-        [{ backcolor: '#4da4d1', svgsrc: '#real-icon-jiadian', categoryname: "家电维修" },
-        { backcolor: '#ec633f', svgsrc: '#real-icon-iconfontdayinji', categoryname: "家电维修" },
-        { backcolor: '#f5ce33', svgsrc: '#real-icon-dianshang', categoryname: "家电维修" },
-        { backcolor: '#8dc52c', svgsrc: '#real-icon-shangmenfuwu', categoryname: "家电维修" },
-        { backcolor: '#f25a59', svgsrc: '#real-icon-shenghuofuwu', categoryname: "家电维修" }],
-        [{ backcolor: '#ce1c1a', svgsrc: '#real-icon-444', categoryname: "家电维修" },
-        { backcolor: '#4ddf74', svgsrc: '#real-icon-tongcheng', categoryname: "家电维修" },
-        { backcolor: '#8185a0', svgsrc: '#real-icon-xingyezixun', categoryname: "家电维修" },
-        { backcolor: '#e1b77d', svgsrc: '#real-icon-icon052', categoryname: "家电维修" },
-        { backcolor: '#c8c8c8', svgsrc: '#real-icon-quanbufenlei', categoryname: "家电维修" }]
+        [{ backcolor: '#4da4d1', svgsrc: '#icon-jiadian', categoryname: "家电服务" },
+        { backcolor: '#ec633f', svgsrc: '#icon-bangongshebei', categoryname: "办公设备" },
+        { backcolor: '#f5ce33', svgsrc: '#icon-dianshang', categoryname: "电商服务" },
+        { backcolor: '#8dc52c', svgsrc: '#icon-shangmenfuwu', categoryname: "上门服务" },
+        { backcolor: '#f25a59', svgsrc: '#icon-shenghuofuwu', categoryname: "生活服务" }],
+        [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新" },
+        { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易" },
+        { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯" },
+        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻" },
+        { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类" }]
       ],
       news: [],
       catesItem: [{
@@ -208,6 +208,11 @@ export default {
     { url: require('../../assets/imgs/img2.jpg') },
     { url: require('../../assets/imgs/img3.jpg') },
     { url: require('../../assets/imgs/img4.jpg') }]
+  },
+  methods: {
+    go(){
+      this.$router.push('/serviceList/48')
+    }
   }
 }
 </script>
