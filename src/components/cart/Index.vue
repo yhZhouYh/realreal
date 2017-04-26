@@ -58,7 +58,7 @@
             <div class="cart-total zflex1">合计：<span class="red">￥{{totalPrice | fixed(2)}}</span></div>
             <a href="javascript:;"
                class="buynow ripple"
-               v-touch-ripple>下单</a>
+               v-touch-ripple @click="downOrder">下单</a>
         </div>
         <confirm v-model="show"
                  title="你确定要删除么"
@@ -74,7 +74,7 @@ import Icon from '../common/Icon'
 import ZNumber from '../service/Number.vue'
 import Blank from '@/components/common/Blank'
 import { Confirm } from 'vux'
-import {cartList} from '../../api'
+import {cartList, cartAdd} from '../../api'
 export default {
     name: 'cart',
     components: {
@@ -94,7 +94,8 @@ export default {
             deleteIndex: 0,
             currentItem: null,
             page: 1,
-            limit: 10
+            limit: 10,
+            checkedItems: []
         }
     },
     created(){
@@ -107,6 +108,7 @@ export default {
             let totalPrice = 0
             this.items.map((item, index) => {
                 if (item.isCheck) {
+                    this.checkedItems.push(item)
                     totalPrice += item.shopPrice * item.count
                 }
             })
@@ -132,6 +134,11 @@ export default {
             this.show = !this.show
             this.deleteIndex = index
             this.currentItem = item
+        },
+        downOrder(){
+            this.checkedItems.map((item, inde)=>{
+                cartAdd({userid: this.$store.state.user.userId, goodsId: item.goodsId, buyNum: item.count, shopsId: item.shopId, isCheck: item.isCheck?1:0})
+            })
         }
     }
 }

@@ -194,7 +194,12 @@ export function goodsDetail(data) {
 
 //购物车列表
 export function cartList(data) {
-   return fetch('Carts.Index', data, true)
+   return fetch('Carts.Index', data)
+}
+
+//添加购物车
+export function cartAdd(data) {
+   return fetch('Carts.Add', data, true)
 }
 
 
