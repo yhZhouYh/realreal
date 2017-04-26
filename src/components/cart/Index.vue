@@ -74,6 +74,7 @@ import Icon from '../common/Icon'
 import ZNumber from '../service/Number.vue'
 import Blank from '@/components/common/Blank'
 import { Confirm } from 'vux'
+import {cartList} from '../../api'
 export default {
     name: 'cart',
     components: {
@@ -91,8 +92,15 @@ export default {
             price: 90,
             show: false,
             deleteIndex: 0,
-            currentItem: null 
+            currentItem: null,
+            page: 1,
+            limit: 10
         }
+    },
+    created(){
+        cartList({userid: this.$store.state.user.userId,page: this.page, limit: this.limit}).then(res=>{
+            console.log(res)
+        })
     },
     computed: {
         totalPrice() {
@@ -114,10 +122,11 @@ export default {
             this.$store.dispatch('minusfromCart', item)
         },
         change(item, index) {
-            this.$store.dispatch('updateIsCheck', item, index)
+            this.$store.dispatch('updateIsCheck', {item, index})
         },
         onConfirm(){
-            this.$store.dispatch('deleteIndex', this.currentItem, this.deleteIndex)
+            debugger
+            this.$store.dispatch('deleteIndex',{item: this.currentItem, index: this.deleteIndex})
         },
         deleteItem(item, index){
             this.show = !this.show

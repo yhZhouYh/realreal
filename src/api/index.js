@@ -71,7 +71,9 @@ function getdata(service, datas, loading) {
                     }
 
                 } else if (data.ret == 403) {
-                    router.push({name:'login',query:{redirect: router.route.name}})
+                    debugger
+                    console.log(router.app._route.name)
+                    router.push({name:'login',query:{redirect: router.app.$route.name}})
                 }
                 reject(data)
             }
@@ -103,7 +105,7 @@ function dealRes(res) {
         } else if (data.ret == 402) {
             saveAccessToken()
         } else if (data.ret == 403) {
-            router.push({name:'login', query:{redirect: router.app.$route.query.name}})
+            router.push({path:'login', query:{redirect: router.app.$route.query.name}})
         }
         reject(data)
     }
@@ -188,6 +190,11 @@ export function getStoreById(data) {
 //商店索引
 export function goodsDetail(data) {
    return fetch('Goods.GetInfo', data, true)
+}
+
+//购物车列表
+export function cartList(data) {
+   return fetch('Carts.Index', data, true)
 }
 
 

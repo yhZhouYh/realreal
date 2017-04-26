@@ -30,11 +30,11 @@ const actions = {
     getCartItem({ commit, state }, item) {
         commit(types.GET_CART_ITEM, item)
     },
-    updateIsCheck({ commit, state }, item, index) {
-        commit(types.UPDATE_CHECK, item, index)
+    updateIsCheck({ commit, state }, {item, index}) {
+        commit(types.UPDATE_CHECK, {item, index})
     },
-    deleteIndex({ commit, state }, item, index) {
-        commit(types.DELETE_INDEX, item, index)
+    deleteIndex({ commit, state }, {item, index}) {
+        commit(types.DELETE_INDEX, {item, index})
     }
 
 }
@@ -81,12 +81,12 @@ const mutations = {
         const goods = state.items.find(p => p.goodsId === item.goodsId)
         state.currentGoods = goods
     },
-    [types.UPDATE_CHECK](state, item, index) {
+    [types.UPDATE_CHECK](state, {item, index}) {
         item.isCheck = !item.isCheck
         state.carts.items[index] = item
         localStorage.setItem('carts', JSON.stringify(state.carts))
     },
-    [types.DELETE_INDEX](state, item, index) {
+    [types.DELETE_INDEX](state, {item, index}) {
         debugger
         state.carts.quntity -= item.count
         state.carts.items.splice(index, 1)
