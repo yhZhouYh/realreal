@@ -36,6 +36,10 @@ let webpackConfig = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
+       {
+        test: /muse-ui.src.*?js$/,
+        loader: 'babel-loader'
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
