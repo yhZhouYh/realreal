@@ -11,6 +11,9 @@ Vue.use(Toast)
 const appid = 'wxe6ab26eb9276d611'
 const secret = '0d1750587901b3570a84b6b0ca4e8dde'
 let access_token = store.state.accessToken
+debugger
+const API_ROOT = process.env.API_ROOT
+
 
 async function fetch(service, data, loading = false) {
     let access_token = store.state.accessToken
