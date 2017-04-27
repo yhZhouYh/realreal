@@ -1,28 +1,28 @@
 <template>
     <div class="z-index-category">
-        <a href="javascript:;"
+        <router-link to="{name:'serviceList',params:{id:item.id}}"
            class="zflex z-category-header">
-            <div class="zflex1">{{cates.catesName}}</div>
+            <div class="zflex1">{{cates.catName}}</div>
             <div class="">更多 <span class="z-arrow-right"></span></div>
-        </a>
+        </router-link>
         <!--<scrollbar>-->
         <div class="category-scroll zflex"
              ref="scroll">
             <a href="javascript:;"
                class="category-items"
                ref="item" v-for=" item in cates.items">
-                <img :src="item.card"
+                <img :src="item.goodsImg"
                      alt="">
                 <!--<x-img :src="img"
                                 container=".z-index-category"></x-img>-->
-                <p class="items-title">{{item.title}}</p>
-                <p class="items-price">{{item.price}}元/{{item.unit}}</p>
+                <p class="items-title">{{item.goodsName}}</p>
+                <p class="items-price">{{item.shopPrice}}元/{{item.goodsUnit}}</p>
                 <p class="items-store zflex">
                     <svg class="zicon zheader-icon zflex"
                          aria-hidden="true">
-                        <use xlink:href="#real-icon-dianpu"></use>
+                        <use xlink:href="#icon-dianpu"></use>
                     </svg>
-                    <span class="store-name zflex1">{{item.name}}</span>
+                    <span class="store-name zflex1 items-title">{{item.shopName}}</span>
                 </p>
             </a>
         </div>
@@ -94,6 +94,8 @@ export default {
     .category-items {
         //width: 2.3rem;
         // padding-right: 16px;
+        // overflow: hidden;
+        width: 2.3rem;
         padding-right: 0.1rem;
         &:last-child {
             padding-right: 0

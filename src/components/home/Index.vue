@@ -34,6 +34,7 @@
       <!--轮播开始-->
       <div class="z-carousel-box">
         <tf-carousel :imgs="imgs"
+                      display='adFile'
                      :delay="4000"></tf-carousel>
       </div>
       <!--轮播结束-->
@@ -87,7 +88,7 @@ import ZCategory from './CategoryCircle.vue'
 import Marquee from 'vux/src/components/marquee/marquee.vue'
 import MarqueeItem from 'vux/src/components/marquee/marquee-item.vue'
 import IndexCategory from './IndexCategory.vue'
-import {indexAds, article} from '../../api'
+import {indexAds, article, getgoodsIndex} from '../../api'
 export default {
   components: {
     ZHeader,
@@ -198,16 +199,15 @@ export default {
     }
   },
   created() {
-    indexAds({id: 4}).then(res => {
-      console.log(res)
+    indexAds({id: 34}).then(res => {
+      this.imgs = res
     })
     article({page: 1,limit: 6, classid: 8}).then(res=>{
       this.news = res
     })
-    this.imgs = [{ url: require('../../assets/imgs/img1.jpg') },
-    { url: require('../../assets/imgs/img2.jpg') },
-    { url: require('../../assets/imgs/img3.jpg') },
-    { url: require('../../assets/imgs/img4.jpg') }]
+    getgoodsIndex().then(res => {
+      this.catesItem = res
+    })
   },
   methods: {
     go(){

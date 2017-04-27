@@ -7,7 +7,7 @@
             <a href="javascript:;"
                class="carousel-img"
                v-for="item in imgs"
-               :style="{width: imgItemWidth, backgroundImage: 'url(' + item + ')'}"></a>
+               :style="{width: imgItemWidth, backgroundImage: 'url(' + item[display] + ')'}"></a>
         </div>
         <div class="tf-carousel-nav">
             <a href="javascript:;"
@@ -26,6 +26,9 @@ export default {
             default: function (){
                 return []
             }
+        },
+        display: {
+            type: String
         },
         delay: {
             type: Number,

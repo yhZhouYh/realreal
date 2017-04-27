@@ -206,6 +206,12 @@ export function cartAdd(data) {
    return fetch('Carts.Add', data, true)
 }
 
+//首页分类商品
+export function getgoodsIndex(data) {
+   return fetch('Index.GetRecommendsGoods', data, true)
+}
+
+
 
 
 
