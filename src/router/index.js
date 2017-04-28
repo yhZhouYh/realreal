@@ -16,6 +16,7 @@ import Apply from '@/components/user/Apply.vue'
 import StoreUser from '@/components/user/StoreUser.vue'
 import Needs from '@/components/user/Needs.vue'
 import Near from '@/components/home/Near.vue'
+import AddressManage from '@/components/user/AddressManage.vue'
 
 Vue.use(Router)
 
@@ -100,6 +101,11 @@ export default new Router({
       path: '/near',
       name: 'near',
       component:Near
+    },
+    {
+      path: '/addressManage',
+      name: 'addressManage',
+      component:AddressManage
     }
   ]
 })

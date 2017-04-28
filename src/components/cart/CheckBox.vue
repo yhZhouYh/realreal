@@ -1,7 +1,7 @@
 <template>
     <div class="z-checkbox zflex">
         <label :for="id"
-               class="check-label">
+               class="check-label zflex">
             <input type="checkbox"
                    class="z-check"
                    name="checkit"

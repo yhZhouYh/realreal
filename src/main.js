@@ -27,6 +27,13 @@ Vue.component('blank', Blank)
 //绑定fastclick
 FastClick.attach(document.body)
 
+// function loadScript() {  
+//   var script = document.createElement("script");  
+//   script.src = "http://api.map.baidu.com/api?v=2.0&ak=8uBt9y54pwbH5EXH3YlMs4f0tnWZMwvd&callback=initialize";//此为v2.0版本的引用方式  
+//   // http://api.map.baidu.com/api?v=1.4&ak=您的密钥&callback=initialize"; //此为v1.4版本及以前版本的引用方式  
+//   document.head.appendChild(script);  
+// } 
+// loadScript()
 Vue.config.productionTip = true
 
 Vue.filter('fixed', fixed) //过滤数值 保留小数位数

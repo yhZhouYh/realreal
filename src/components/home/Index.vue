@@ -1,7 +1,8 @@
 <template>
   <!--头部开始-->
   <div class="z-page">
-    <z-header :showArrow="false" title="主页">
+    <z-header :showArrow="false"
+              title="主页">
       <div slot="leftitems"
            style="color:#ea2a1d">
         <svg class="zicon zheader-icon zflex"
@@ -34,7 +35,7 @@
       <!--轮播开始-->
       <div class="z-carousel-box">
         <tf-carousel :imgs="imgs"
-                      display='adFile'
+                     display='adFile'
                      :delay="4000"></tf-carousel>
       </div>
       <!--轮播结束-->
@@ -74,7 +75,8 @@
   
       <div class="z-box"
            v-for="cates in catesItem">
-        <index-category :cates="cates" @click.native="go"></index-category>
+        <index-category :cates="cates"
+                        @click.native="go"></index-category>
       </div>
       <!--各项分类结束-->
     </div>
@@ -88,7 +90,8 @@ import ZCategory from './CategoryCircle.vue'
 import Marquee from 'vux/src/components/marquee/marquee.vue'
 import MarqueeItem from 'vux/src/components/marquee/marquee-item.vue'
 import IndexCategory from './IndexCategory.vue'
-import {indexAds, article, getgoodsIndex} from '../../api'
+import { indexAds, article, getgoodsIndex } from '../../api'
+//import BMap from 'BMap'
 export default {
   components: {
     ZHeader,
@@ -199,19 +202,29 @@ export default {
     }
   },
   created() {
-    indexAds({id: 34}).then(res => {
+    indexAds({ id: 34 }).then(res => {
       this.imgs = res
     })
-    article({page: 1,limit: 6, classid: 8}).then(res=>{
+    article({ page: 1, limit: 6, classid: 8 }).then(res => {
       this.news = res
     })
     getgoodsIndex().then(res => {
       this.catesItem = res
     })
+
   },
+  mounted() {
+    this.getLoction()
+  },
+
   methods: {
-    go(){
-      this.$router.push('/serviceList/48')
+    go() {
+      this.$router.push('/serviceList/48') 
+    },
+    getLoction() {
+       navigator.geolocation.getCurrentPosition(pos => {
+         console.log(position.coords.latitude, position.coords.longitude)
+       })
     }
   }
 }
@@ -252,10 +265,12 @@ export default {
   margin-top: 0.18rem;
   overflow: hidden;
 }
-.gray{
-  color:rgb(150, 150, 150)
+
+.gray {
+  color: rgb(150, 150, 150)
 }
-.red{
-  color:#f9261d;
+
+.red {
+  color: #f9261d;
 }
 </style>
