@@ -5,7 +5,7 @@
         <router-view></router-view>
     </transition>
     <circle-loading :showloading="$store.state.loading"></circle-loading>
-    <Z-footer></Z-footer>
+    <Z-footer :show="$store.state.showFooter"></Z-footer>
   </div>
 </template>
 

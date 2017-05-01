@@ -10,18 +10,24 @@
             <icon icon="icon-call-business"></icon>
             <div>联系商家</div>
         </a>
+        <!--<a href="javascript:;"
+                   class="itembox zflex vux-1px-r zflex-center">
+                    <icon icon="icon-gouwuche"></icon>
+                    <div>购物车</div>
+                    <div class="badge-box" v-show="cartAllCounts">
+                        <badge :text="cartAllCounts"></badge>
+                    </div>
+                </a>-->
         <a href="javascript:;"
-           class="itembox zflex vux-1px-r zflex-center">
-            <icon icon="icon-gouwuche"></icon>
-            <div>购物车</div>
-            <div class="badge-box" v-show="cartAllCounts">
-                <badge :text="cartAllCounts"></badge>
-            </div>
-        </a>
+           class="buynow zflex1 addtocart"
+           @click="addtocart">
+                        加入购物车
+                </a>
         <a href="javascript:;"
-           class="buynow zflex1" @click="buynow">
-                立即购买
-            </a>
+           class="buynow zflex1"
+           @click="buynow">
+                        立即购买
+                </a>
     </div>
 </template>
 <script>
@@ -40,9 +46,12 @@ export default {
             //cartnum: 0
         }
     },
-    methods:{
-        buynow (){
+    methods: {
+        buynow() {
             this.$emit('buynow')
+        },
+        addtocart() {
+            this.$emit('addtocart')
         }
     },
     computed: {
@@ -74,8 +83,11 @@ export default {
         height: 100%;
         line-height: 1rem;
         font-size: 0.3rem;
+        &.addtocart {
+            background: #FF6C02;
+        }
     }
-    &.vux-1px-t{
+    &.vux-1px-t {
         position: absolute;
     }
 }
@@ -86,7 +98,7 @@ export default {
 
 .badge-box {
     position: absolute;
-    top: 0;
-    right: 0.2rem
+    top: -0.1rem;
+    right: -0.2rem;
 }
 </style>

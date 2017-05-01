@@ -2,7 +2,7 @@
     <div class="z-number zflex">
         <icon icon="icon-jianshao"
               class="number-minus red"
-              :class="{disable: num == 0}"
+              :class="{disable: num == 1}"
               @click.native="minus"></icon>
         <span class="number-box">{{num}}</span>
         <icon icon="icon-tianjia"
@@ -20,7 +20,7 @@ export default {
         },
         currentNum: {
             type: Number,
-            default: 0
+            default: 1
         }
     },
     components: {
@@ -37,20 +37,20 @@ export default {
     },
     data() {
         return {
-            num: 0
+            num: 1
         }
     },
     methods: {
         add() {
             this.num++
             //this.$store.dispatch('addToCart', this.item) //添加入购物车
-            this.$emit('add', this.item)
+            this.$emit('add', this.item, this.num)
         },
         minus() {
-            if (this.num > 0) {
+            if (this.num > 1) {
                 this.num--
                 //this.$store.dispatch('minusfromCart', this.item)
-                this.$emit('minus', this.item)
+                this.$emit('minus', this.item, this.num)
             }
 
         },

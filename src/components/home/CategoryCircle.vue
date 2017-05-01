@@ -1,18 +1,18 @@
 <template>
     <div class="z-categroty-contianer">
-        <a class="z-category-circle zflex zflex-center"
+        <router-link :to="{name: 'needs', params:{cid: cid}}" class="z-category-circle zflex zflex-center"
            :style="{background: backcolor}">
             <svg class="zicon zheader-icon"
                  aria-hidden="true">
                 <use v-bind:xlink:href="svgsrc"></use>
             </svg>
-        </a>
+        </router-link>
         <p>{{categoryname}}</p>
     </div>
 </template>
 <script>
 export default {
-    props: ['backcolor', 'svgsrc', 'categoryname']
+    props: ['backcolor', 'svgsrc', 'categoryname', 'cid']
 }
 </script>
 <style lang="less">

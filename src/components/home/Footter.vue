@@ -1,5 +1,5 @@
 <template>
-    <div class="z-footer zflex vux-1px-t">
+    <div class="z-footer zflex vux-1px-t" v-if="show" id="footer">
         <router-link class="zflex1" to="/" :class="{red: $route.name=='home'}">
             <icon icon="icon-shouye-shouye"></icon>
             <p>首页</p>
@@ -22,6 +22,12 @@
     import Icon from '../common/Icon.vue'
     export default {
         name: 'footer',
+        props: {
+            show: {
+                type: Boolean,
+                default: true
+            }
+        },
         components: {
             Icon
         }

@@ -10,7 +10,13 @@ export default new Vuex.Store({
     currentMenu: [],
     accessToken: localStorage.getItem('accessToken') || '',
     user: JSON.parse(localStorage.getItem('user')) || {},
-    loading: false
+    loading: false,
+    showFooter: true,
+    addressEdit: '',
+    checkAddress: {
+      index: 0,
+      item: null
+    }
   },
   // actions,
   // getters,
@@ -25,8 +31,17 @@ export default new Vuex.Store({
     },
     [types.CHANGE_LOADING](state) {
       state.loading = !state.loading
-    }
-
+    },
+    [types.SHOW_FOOTER](state) {
+      state.showFooter = !state.showFooter
+    },
+     [types.ADDRESS_EDIT](state, address) {
+      state.addressEdit = address
+     },
+     [types.CHECK_ADDRESS](state, {item, index}) {
+        state.checkAddress.item = item
+        state.checkAddress.index = index
+     }
   },
   actions: {
     saveAccssToken({commit}, code){
@@ -37,8 +52,16 @@ export default new Vuex.Store({
     },
     changeLoading({commit}){
       commit(types.CHANGE_LOADING)
-    }
-    
+    },
+    showFooter({commit}){
+       commit(types.SHOW_FOOTER)
+    },
+    saveAddress({commit},address){
+      commit(types.ADDRESS_EDIT, address)
+    },
+    checkAddress({commit},{item, index}){
+      commit(types.CHECK_ADDRESS, {item, index})
+    } 
   },
   modules: {
     cart

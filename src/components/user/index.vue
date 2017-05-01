@@ -87,6 +87,7 @@
                 </div>
                 <group class="my-order">
                     <cell title="我的地址"
+                    link="/addressManage?isManage=1"
                           is-link>
                         <icon icon="icon-dizhi1"
                               slot="icon"

@@ -14,21 +14,21 @@
            style="font-size:14px;">
         合肥
       </div>
-      <div slot="rightitems"
+      <router-link to="search" slot="rightitems"
            style="margin-right: 5px;">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
           <use xlink:href="#icon-sousuo"></use>
         </svg>
         <p class="zheader-icon-word">搜索</p>
-      </div>
-      <div slot="rightitems">
+      </router-link>
+      <router-link to="publishneed"slot="rightitems">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
           <use xlink:href="#icon-fabu"></use>
         </svg>
         <p class="zheader-icon-word">需求</p>
-      </div>
+      </router-link>
     </z-header>
     <!--头部结束-->
     <div class="z-container">
@@ -47,7 +47,9 @@
                v-for="item in items">
             <z-category :backcolor="item.backcolor"
                         :svgsrc="item.svgsrc"
-                        :categoryname="item.categoryname"></z-category>
+                        :categoryname="item.categoryname"
+                        :cid = "item.catId"
+                        ></z-category>
           </div>
         </div>
       </div>
@@ -105,16 +107,16 @@ export default {
     return {
       imgs: [],
       cateSvgs: [
-        [{ backcolor: '#4da4d1', svgsrc: '#icon-jiadian', categoryname: "家电服务" },
-        { backcolor: '#ec633f', svgsrc: '#icon-bangongshebei', categoryname: "办公设备" },
-        { backcolor: '#f5ce33', svgsrc: '#icon-dianshang', categoryname: "电商服务" },
-        { backcolor: '#8dc52c', svgsrc: '#icon-shangmenfuwu', categoryname: "上门服务" },
-        { backcolor: '#f25a59', svgsrc: '#icon-shenghuofuwu', categoryname: "生活服务" }],
-        [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新" },
-        { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易" },
-        { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯" },
-        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻" },
-        { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类" }]
+        [{ backcolor: '#4da4d1', svgsrc: '#icon-jiadian', categoryname: "家电服务", catId: 47},
+        { backcolor: '#ec633f', svgsrc: '#icon-bangongshebei', categoryname: "办公设备", catId: 48 },
+        { backcolor: '#f5ce33', svgsrc: '#icon-dianshang', categoryname: "电商服务", catId: 49 },
+        { backcolor: '#8dc52c', svgsrc: '#icon-shangmenfuwu', categoryname: "上门服务", catId: 50 },
+        { backcolor: '#f25a59', svgsrc: '#icon-shenghuofuwu', categoryname: "生活服务", catId: 51 }],
+        [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新", catId: 344 },
+        { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易", catId: 52 },
+        { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯", catId: 47 },
+        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻", catId: 47 },
+        { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0 }]
       ],
       news: [],
       catesItem: [{

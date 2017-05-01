@@ -17,6 +17,10 @@ import StoreUser from '@/components/user/StoreUser.vue'
 import Needs from '@/components/user/Needs.vue'
 import Near from '@/components/home/Near.vue'
 import AddressManage from '@/components/user/AddressManage.vue'
+import AddressEdit from '@/components/user/AddressEdit.vue'
+import PublishNeed from '@/components/user/PublishNeed.vue'
+import NeedsDetail from '@/components/user/NeedsDetail.vue'
+import EnsureOrder from '@/components/order/EnsureOrder.vue'
 
 Vue.use(Router)
 
@@ -93,7 +97,7 @@ export default new Router({
       component:StoreUser
     },
     {
-      path: '/needs',
+      path: '/needs/:cid',
       name: 'needs',
       component:Needs
     },
@@ -106,6 +110,26 @@ export default new Router({
       path: '/addressManage',
       name: 'addressManage',
       component:AddressManage
+    },
+    {
+      path: '/addressEdit',
+      name: 'addressEdit',
+      component:AddressEdit
+    },
+    {
+      path: '/publishneed',
+      name: 'publishneed',
+      component:PublishNeed
+    },
+    {
+      path: '/needsDetail/:id',
+      name: 'needsDetail',
+      component:NeedsDetail
+    },
+    {
+      path: '/ensureOrder',
+      name: 'ensureOrder',
+      component:EnsureOrder
     }
   ]
 })

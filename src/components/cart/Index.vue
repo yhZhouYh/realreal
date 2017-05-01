@@ -6,7 +6,8 @@
                   title="购物车">
         </z-header>
         <!--头部-->
-        <div class="z-container">
+        <div class="z-container"
+             ref="scroller">
             <blank v-if="!items.length"
                    :define="true">
                 <div>扎心了，老铁！去附近逛逛！</div>
@@ -15,23 +16,17 @@
                  v-else
                  v-for="(item,index) in items">
                 <div class="cart-item vux-1px-b zflex">
-                    <!--<z-check>
-                                <span slot="middle" class="zflex">
-                                    <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
-                                    <span class="cart-title">{{item.shopName}}</span>
-                                </span>
-                                <span slot="right" class="cart-right vux-1px-l gray">删除</span>
-                            </z-check>-->
                     <span slot="middle"
                           class="zflex zflex1">
-                                    <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
-                                    <span class="cart-title">{{item.shopName}}</span>
+                            <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
+                            <span class="cart-title">{{item.shopName}}</span>
                     </span>
                     <span slot="right"
-                          class="cart-right vux-1px-l gray" @click="deleteItem(item,index)">删除</span>
+                          class="cart-right vux-1px-l gray"
+                          @click="deleteItem(item,index)">删除</span>
                 </div>
                 <div class="cart-item vux-1px-b">
-                    <z-check :checked="item.isCheck"
+                    <z-check :checked="item.isCheck == 1"
                              :id="item.goodsId"
                              :value="item"
                              @change="change(item, index)">
@@ -46,7 +41,7 @@
                                     <z-number :item="item"
                                               @add="add"
                                               @minus="minus"
-                                              :currentNum="item.count"></z-number>
+                                              :currentNum="parseInt(item.cartNum)"></z-number>
                                 </div>
                             </div>
                         </div>
@@ -54,17 +49,23 @@
                 </div>
             </div>
         </div>
-        <div class="service-bottom zflex vux-1px-t" v-if="items.length">
+        <div class="service-bottom zflex vux-1px-t"
+             v-if="items.length">
             <div class="cart-total zflex1">合计：<span class="red">￥{{totalPrice | fixed(2)}}</span></div>
             <a href="javascript:;"
                class="buynow ripple"
-               v-touch-ripple @click="downOrder">下单</a>
+               v-touch-ripple
+               @click="downOrder">下单</a>
         </div>
         <confirm v-model="show"
                  title="你确定要删除么"
                  @on-confirm="onConfirm">
             <!--<p style="text-align:center;">你确定要删除么</p>-->
         </confirm>
+        <scroller :scroller="scroller"
+                  :loading="loading"
+                  @load="loadMore"
+                  loading-text="加载中" />
     </div>
 </template>
 <script>
@@ -74,7 +75,9 @@ import Icon from '../common/Icon'
 import ZNumber from '../service/Number.vue'
 import Blank from '@/components/common/Blank'
 import { Confirm } from 'vux'
-import {cartList, cartAdd} from '../../api'
+import { cartList, cartAdd, deletecartById, orderDown } from '../../api'
+import infiniteLoading from '../common/InfiniteScroll.vue'
+import { mapGetters } from 'vuex'
 export default {
     name: 'cart',
     components: {
@@ -83,62 +86,125 @@ export default {
         Icon,
         ZNumber,
         Blank,
-        Confirm
+        Confirm,
+        infiniteLoading
     },
     //需要vuex里购物车数据
     data() {
         return {
-            items: this.$store.state.cart.carts.items,
+            items: [],
             price: 90,
             show: false,
             deleteIndex: 0,
             currentItem: null,
             page: 1,
             limit: 10,
-            checkedItems: []
+            checkedItems: [],
+            scroller: null,
+            loading: false,
+            isover: false,
+            totalPrice: 0
         }
     },
-    created(){
-        cartList({userid: this.$store.state.user.userId,page: this.page, limit: this.limit}).then(res=>{
-            console.log(res)
+    destroyed() {
+        this.$store.dispatch('showFooter')
+    },
+    created() {
+        this.$store.dispatch('showFooter')
+        cartList({ userid: this.$store.state.user.userId, page: this.page, limit: this.limit }).then(res => {
+            this.items = res
+            this.$store.dispatch('checkout', res)
+            let price = 0
+            this.items.map((item, index) => {
+                if (item.isCheck == 1) {
+                    price += item.shopPrice * item.cartNum
+                }
+
+            })
+            this.totalPrice = price
         })
     },
-    computed: {
-        totalPrice() {
-            let totalPrice = 0
-            this.items.map((item, index) => {
-                if (item.isCheck) {
-                    this.checkedItems.push(item)
-                    totalPrice += item.shopPrice * item.count
-                }
-            })
-            console.log(totalPrice == 0)
-            return totalPrice 
-        }
+    mounted() {
+        this.scroller = this.$refs.scroller
     },
+    // computed: {
+    //     // ...mapGetters([
+    //     //     'cartTotalPrice',
+    //     // ])
+    //     totalPrice () {
+    //         let price = 0 
+    //         this.items.map((item, index) => {
+    //             price += item.shopPrice * item.cartNum
+    //         })
+    //         return price
+    //     }
+    // },
+    // computed: {
+    //     totalPrice() {
+    //         debugger
+    //         let totalPrice = 0
+    //         this.checkedItems = []
+    //         this.items.map((item, index) => {
+    //             if (item.isCheck) {
+    //                 this.checkedItems.push(item)
+    //                 totalPrice += item.shopPrice * item.cartNum
+    //             }
+    //         })
+    //         console.log(totalPrice == 0)
+    //         return totalPrice
+    //     }
+    // },
     methods: {
-        add(item) {
-            this.$store.dispatch('addToCart', item)
+        add(item, num) {
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: item.goodsId, buyNum: num, shopsId: item.shopId, isCheck: item.isCheck }).then(res => {
+                item.cartNum = num
+                this.totalPrice += parseFloat(item.shopPrice)
+            })
         },
-        minus(item) {
-            this.$store.dispatch('minusfromCart', item)
+        minus(item, num) {
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: item.goodsId, buyNum: num, shopsId: item.shopId, isCheck: item.isCheck }).then(res => {
+                item.cartNum = num
+                this.totalPrice -= parseFloat(item.shopPrice)
+            })
         },
         change(item, index) {
-            this.$store.dispatch('updateIsCheck', {item, index})
+
+            item.isCheck = item.isCheck == 1 ? 0 : 1
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: item.goodsId, buyNum: item.cartNum, shopsId: item.shopId, isCheck: item.isCheck }).then(res => {
+                if (item.isCheck == 1) {
+                    this.totalPrice += item.shopPrice * item.cartNum
+                } else {
+                    this.totalPrice -= item.shopPrice * item.cartNum
+                }
+            })
         },
-        onConfirm(){
-            debugger
-            this.$store.dispatch('deleteIndex',{item: this.currentItem, index: this.deleteIndex})
+        onConfirm() {
+            // this.$store.dispatch('deleteIndex', { item: this.currentItem, index: this.deleteIndex })
+            // this.items = this.$store.state.cart.carts.items
+            deletecartById({ userid: this.$store.state.user.userId, id: this.currentItem.cartId }).then(res => {
+                this.items.splice(this.deleteIndex, 1)
+                this.totalPrice -= this.currentItem.Price * this.currentItem.cartNum
+            })
         },
-        deleteItem(item, index){
+        deleteItem(item, index) {
             this.show = !this.show
             this.deleteIndex = index
             this.currentItem = item
         },
-        downOrder(){
-            this.checkedItems.map((item, inde)=>{
-                cartAdd({userid: this.$store.state.user.userId, goodsId: item.goodsId, buyNum: item.count, shopsId: item.shopId, isCheck: item.isCheck?1:0})
-            })
+        downOrder() {
+            orderDown()
+        },
+        loadMore() {
+            this.loading = true
+            if (!this.loading && !this.isover) {
+                cartList({ userid: this.$store.state.user.userId, page: ++this.page, limit: this.limit }).then(res => {
+                    this.loading = false
+                    this.items.concat(res)
+                    if (!res.length) {
+                        this.isover
+                    }
+                })
+            }
         }
     }
 }

@@ -75,9 +75,8 @@ function getdata(service, datas, loading) {
                     }
 
                 } else if (data.ret == 403) {
-                    debugger
                     console.log(router.app._route.name)
-                    router.push({name:'login',query:{redirect: router.app.$route.name}})
+                    router.replace({name:'login',query:{redirect: router.app.$route.name}})
                 }
                 reject(data)
             }
@@ -210,6 +209,54 @@ export function cartAdd(data) {
 export function getgoodsIndex(data) {
    return fetch('Index.GetRecommendsGoods', data, true)
 }
+
+
+//地址列表
+export function addressList(data) {
+   return fetch('User.MyAddress', data, true)
+}
+
+//新增/修改地址
+export function updateAddress(data) {
+   return fetch('User.SaveMyAddress', data, true)
+}
+
+//需求列表
+export function getNeedsByCid(data) {
+   return fetch('Requirement.ListR', data, true)
+}
+
+//需求详情
+export function getNeedsByNid(data) {
+   return fetch('Requirement.GetInfo', data, true)
+}
+
+//发布需求
+export function publishNeed(data) {
+   return fetch('Requirement.Add', data, true)
+}
+
+//热门标签
+export function hotKey(data) {
+   return fetch('Index.GetHotKeywords', data)
+}
+
+//搜索
+export function search(data) {
+   return fetch('Index.Search', data, true)
+}
+
+
+//删除购物车
+export function deletecartById(data) {
+   return fetch('Carts.Delete', data, true)
+}
+
+//下单
+export function orderDown(data) {
+   return fetch('Carts.Settlement', data, true)
+}
+
 
 
 

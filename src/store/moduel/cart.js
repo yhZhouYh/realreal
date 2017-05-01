@@ -7,18 +7,25 @@ let cartItem = {
 }
 
 const state = {
-    carts: JSON.parse(localStorage.getItem('carts')) || { items: [], quntity: 0 },
+    carts: JSON.parse(localStorage.getItem('carts')) || { items: [], quntity: 0, totalPrice: 0 },
     currentGoods: {}
 }
 
 const getters = {
     cartAllCounts: state => state.carts.quntity, //购物车总数量
+    cartTotalPrice: state => {
+        let totalprice = 0
+        state.carts.items.map((item,index) => {
+            totalprice += item.shopPrice * item.cartNum
+        })
+        return totalprice
+    }
 }
 
 const actions = {
     checkout({ commit, state }, items) {
-        const savedCartItems = [...state.items] //复制购物车商品
-        commit(types.CHECKOUT_REQUEST)
+        //const savedCartItems = [...state.items] //复制购物车商品
+        commit(types.CHECKOUT_REQUEST, items)
         //购买逻辑
     },
     addToCart({ commit, state }, item) {
@@ -43,18 +50,21 @@ const mutations = {
     [types.ADD_TO_CART](state, item) {
         const record = state.carts.items.find(p => p.goodsId === item.goodsId) //找到符合条件的第一个项目
         if (!record) {
-            item.count = 1
+            item.cartNum = 1
             item.isCheck = true
             state.carts.items.push(item)
         } else {
-            record.count++
+            // record.cartNum++ 修改购物车逻辑
+            record.cartNum = item.cartNum
         }
-        state.carts.quntity++
+        state.carts.quntity = state.carts.items.length
+        state.carts.totalPrice = item.shopPrice * item.cartNum
         localStorage.setItem('carts', JSON.stringify(state.carts))
     },
-    [types.CHECKOUT_REQUEST](state) {
+    [types.CHECKOUT_REQUEST](state, items) {
         // 清空购物车
-        state.items = []
+        // state.items = []
+        state.carts.items = items
     },
 
     [types.DELETE_FROM_NUMBER](state, item) {
@@ -68,8 +78,9 @@ const mutations = {
                 return
             } else {
                 state.carts.quntity--
-                detail.count--
-                if (detail.count == 0) {
+                detail.cartNum--
+                state.carts.totalPrice = item.shopPrice * item.cartNum
+                if (detail.cartNum == 0) {
                     state.carts.items.splice(index, 1)
                 }
             }
@@ -84,13 +95,13 @@ const mutations = {
     [types.UPDATE_CHECK](state, {item, index}) {
         item.isCheck = !item.isCheck
         state.carts.items[index] = item
+        state.carts.totalPrice -= item.shopPrice * item.cartNum
         localStorage.setItem('carts', JSON.stringify(state.carts))
     },
     [types.DELETE_INDEX](state, {item, index}) {
-        debugger
-        state.carts.quntity -= item.count
+        state.carts.quntity -= item.cartNum
+        state.carts.totalPrice -= item.shopPrice * item.cartNum
         state.carts.items.splice(index, 1)
-        console.log(state.carts.quntity)
         localStorage.setItem('carts', JSON.stringify(state.carts))
     }
 
