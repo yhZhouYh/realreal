@@ -62,7 +62,7 @@ import ServiceItem from '../store/ServiceItem.vue'
 import StoreItem from './StoreItem.vue'
 import ZMenu from '../common/Menu.vue'
 import { getCategory, getGoodsByCid, getStoreById } from '../../api'
-import infiniteLoading from '../common/InfiniteScroll.vue'
+//import infiniteLoading from '../common/InfiniteScroll.vue'
 export default {
     name: 'serviceList',
     components: {
@@ -71,8 +71,7 @@ export default {
         ButtonTabItem,
         ServiceItem,
         StoreItem,
-        ZMenu,
-        infiniteLoading
+        ZMenu
     },
     data() {
         return {

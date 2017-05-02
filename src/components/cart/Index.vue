@@ -54,7 +54,6 @@
             <div class="cart-total zflex1">合计：<span class="red">￥{{totalPrice | fixed(2)}}</span></div>
             <a href="javascript:;"
                class="buynow ripple"
-               v-touch-ripple
                @click="downOrder">下单</a>
         </div>
         <confirm v-model="show"

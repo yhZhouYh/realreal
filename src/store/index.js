@@ -13,7 +13,7 @@ export default new Vuex.Store({
     loading: false,
     showFooter: true,
     addressEdit: '',
-    checkAddress: {
+    checkAddress: JSON.parse(localStorage.getItem('checkAddress')) || {
       index: 0,
       item: null
     }
@@ -41,6 +41,7 @@ export default new Vuex.Store({
      [types.CHECK_ADDRESS](state, {item, index}) {
         state.checkAddress.item = item
         state.checkAddress.index = index
+        localStorage.setItem('checkAddress', JSON.stringify({item, index}))
      }
   },
   actions: {

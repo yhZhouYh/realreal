@@ -76,7 +76,7 @@ export default {
                         _this.step = step_v - this.step
                     }
                     this.to(_this.step);
-                    if (this.autoPlay) {
+                    if (_this.autoPlay) {
                         _this.turnPlay(this.step)
                     }
                     return false
@@ -87,7 +87,7 @@ export default {
             }
             Transform(box)
             _this.touch = new AlloyTouch(options)
-            if (this.autoPlay) {
+            if (_this.autoPlay) {
                 _this.turnPlay(this.step)
             }
         }

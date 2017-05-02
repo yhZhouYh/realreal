@@ -13,7 +13,7 @@ const secret = '0d1750587901b3570a84b6b0ca4e8dde'
 let access_token = store.state.accessToken
 
 const API_ROOT = process.env.API_ROOT
-
+let func = ''
 
 
 async function fetch(service, data, loading = false) {
@@ -56,14 +56,16 @@ function getdata(service, datas, loading) {
                 } else if (data.ret == 402) {
                     const access_token = store.state.accessToken
                     const user = store.state.user
-                    if (access_token && user.id) {
-                        getdata('AccessToken.UpdateAccessToken', { access_token, userid: user.id }).then(res => {
-                            getdata(service, datas)
+                    if (access_token && user.userId) {
+                        fetch('AccessToken.UpdateAccessToken', { access_token, userid: user.userId }).then(res => {
+                            // store.dispatch('saveAccssToken', res)
+                            //debugger
+                           return fetch(service, datas)
                         })
-                    } else if (access_token && !user.id) {
-                        getdata('AccessToken.GetAccessToken', { appid, secret }).then(res => {
+                    } else if (access_token && !user.userId) {
+                        fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
                             store.dispatch('saveAccssToken', res)
-                            getdata(service, datas)
+                           return fetch(service, datas)
                         })
                     }else {
                         Vue.$vux.toast.show({
@@ -125,9 +127,8 @@ export function register(data) {
 }
 
 //登陆
-export function login(data) {
+export async function login(data) {
    fetch('Login.Login', data).then(user => {
-       console.log(router)
         store.dispatch('login', user)
         store.dispatch('saveAccssToken', user.token)
         if(router.app.$route.query.redirect){
@@ -135,7 +136,6 @@ export function login(data) {
         }else{
              router.push('/')
         }
-        
     })
 }
 
@@ -256,6 +256,13 @@ export function deletecartById(data) {
 export function orderDown(data) {
    return fetch('Carts.Settlement', data, true)
 }
+
+//订单列表
+export function orderIndex(data) {
+   return fetch('Orders.Index', data, true)
+}
+
+
 
 
 

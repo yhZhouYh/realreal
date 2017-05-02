@@ -36,7 +36,9 @@
       <div class="z-carousel-box">
         <tf-carousel :imgs="imgs"
                      display='adFile'
-                     :delay="4000"></tf-carousel>
+                     :delay="4000"
+                     autoPlay
+                     ></tf-carousel>
       </div>
       <!--轮播结束-->
       <!--分类圈圈开始-->
@@ -239,7 +241,7 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding-top: 0.85rem;
-  padding-bottom: 0.85rem;
+  padding-bottom: 1rem;
 }
 
 .z-page {

@@ -50,9 +50,11 @@ body{
   height: 100%;
 }
 
-.fade-enter-active,
+.fade-enter-active{
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
 .fade-leave-active {
-  transition: all 0.3s ease
+  transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .fade-leave-active,

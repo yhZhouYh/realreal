@@ -56,6 +56,32 @@ export default {
         }
 
     },
+    mounted() {
+        if (this.items.length) {
+            this.$nextTick(() => {
+                const { scroll, item } = this.$refs
+                Transform(scroll, true)
+                const scrollWidth = scroll.getBoundingClientRect().width
+                let itemWidths = 0
+                for (var i = 0, l = item.length; i < l; i++) {
+                    itemWidths += item[i].getBoundingClientRect().width
+                }
+                const min = itemWidths - scrollWidth + 10 * (item.length - 1) //计算每个元素宽度 + 间距
+                if (min > 0) { //当元素少得时候不触发
+                    let at = new AlloyTouch({
+                        touch: scroll,
+                        vertical: false,
+                        property: 'translateX',
+                        sensitivity: 1,
+                        min: -min,
+                        max: 0,
+                    })
+                }
+
+            })
+        }
+
+    },
     methods: {
         checkItem(item, index) {
             if (this.isChecked != index) {

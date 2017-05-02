@@ -23,14 +23,12 @@
 <script>
 import ZHeader from '@/components/common/ZHeader.vue'
 import needItem from './NeedItem'
-import infiniteLoading from '../common/InfiniteScroll.vue'
 import { getNeedsByCid } from '../../api'
 import Blank from '@/components/common/Blank'
 export default {
     components: {
         ZHeader,
         needItem,
-        infiniteLoading,
         Blank
     },
     data() {
@@ -40,7 +38,8 @@ export default {
             limit: 10,
             needs: [],
             loading: false,
-            isOver: false
+            isOver: false,
+            scroller: null
         }
     },
     mounted() {

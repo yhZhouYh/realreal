@@ -13,7 +13,7 @@
             </div>
              <a :href="'tel:'+need.userPhone" class="button-box login-button-box"
                  style="padding-top:1rem;">
-                <x-button @click.native="edit">立即联系</x-button>
+                <x-button>立即联系</x-button>
             </a>
         </div>
 
