@@ -3,11 +3,19 @@
          ref="container">
         <div class="tf-carousel-box"
              ref="box"
-             :style="{width: imgBoxWidth}">
+             :style="{width: imgBoxWidth}" v-if="display">
             <a href="javascript:;"
                class="carousel-img"
                v-for="item in imgs"
                :style="{width: imgItemWidth, backgroundImage: 'url(' + item[display] + ')'}"></a>
+        </div>
+          <div class="tf-carousel-box"
+             ref="box"
+             :style="{width: imgBoxWidth}" v-else>
+            <a href="javascript:;"
+               class="carousel-img"
+               v-for="item in imgs"
+               :style="{width: imgItemWidth, backgroundImage: 'url(' + item + ')'}"></a>
         </div>
         <div class="tf-carousel-nav">
             <a href="javascript:;"
@@ -22,13 +30,11 @@ import AlloyTouch from '../../assets/lib/alloy_touch'
 export default {
     props: {
         imgs: {
-            type: Array,
-            default: function (){
-                return []
-            }
+            type: Array
         },
         display: {
-            type: String
+            type: String,
+            default: ''
         },
         delay: {
             type: Number,
@@ -39,9 +45,13 @@ export default {
             dafault: true
         }
     },
+    data () {
+        return {}
+    },
     //props: ['imgs', 'delay', 'dotcolor'],
     watch: {
-        imgs () {
+        imgs() {
+            console.log(this.imgs)
             const box = this.$refs.box
             const containerWidth = this.$refs.container.getBoundingClientRect().width
             let _this = this

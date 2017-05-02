@@ -21,6 +21,8 @@ import AddressEdit from '@/components/user/AddressEdit.vue'
 import PublishNeed from '@/components/user/PublishNeed.vue'
 import NeedsDetail from '@/components/user/NeedsDetail.vue'
 import EnsureOrder from '@/components/order/EnsureOrder.vue'
+import Collect from '@/components/user/Collect.vue'
+
 
 Vue.use(Router)
 
@@ -32,7 +34,7 @@ export default new Router({
       component: Home
     },
      {
-      path: '/storeDetail',
+      path: '/storeDetail/:id',
       name: 'storeDetail',
       component: Store
     },
@@ -130,6 +132,11 @@ export default new Router({
       path: '/ensureOrder',
       name: 'ensureOrder',
       component:EnsureOrder
+    },
+    {
+      path: '/collectList',
+      name: 'collectList',
+      component:Collect
     }
   ]
 })

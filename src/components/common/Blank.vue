@@ -29,5 +29,8 @@
             width:2.16rem;
             padding-top: 1.5rem;
         }
+        div{
+            padding-bottom: 1.5rem;
+        }
     }
 </style>

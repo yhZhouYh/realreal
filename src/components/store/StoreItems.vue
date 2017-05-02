@@ -1,12 +1,15 @@
 <template>
     <div class="z-box store-items">
-        <check-card :items="items"></check-card>
+        <check-card :items="items" @checkItem="checkItem"></check-card>
         <service-item container=".z-store-detail"
                       v-for="item in serviceItems"
                       :item="item"
                       :key="item">
         </service-item>
-    
+          <blank v-if="!serviceItems.length"
+                   :define="true">
+                <div>暂无相关商品~</div>
+            </blank>   
     </div>
 </template>
 <script>
@@ -17,6 +20,11 @@
         components: {
             ServiceItem,
             CheckCard
+        },
+        methods: {
+            checkItem(item, index){
+                this.$emit('checkItem', item, index)
+            }
         }
     }
 </script>

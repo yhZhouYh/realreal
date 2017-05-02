@@ -26,7 +26,7 @@ async function fetch(service, data, loading = false) {
     return getdata(service, data, loading)
 }
 
-function getdata(service, datas, loading) {
+async function getdata(service, datas, loading) {
     const dataObj = {
         service,
         access_token: store.state.accessToken,
@@ -57,13 +57,13 @@ function getdata(service, datas, loading) {
                     const access_token = store.state.accessToken
                     const user = store.state.user
                     if (access_token && user.userId) {
-                        fetch('AccessToken.UpdateAccessToken', { access_token, userid: user.userId }).then(res => {
+                        return fetch('AccessToken.UpdateAccessToken', { access_token, userid: user.userId }).then(res => {
                             // store.dispatch('saveAccssToken', res)
                             //debugger
                            return fetch(service, datas)
                         })
                     } else if (access_token && !user.userId) {
-                        fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
+                        return fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
                             store.dispatch('saveAccssToken', res)
                            return fetch(service, datas)
                         })
@@ -127,7 +127,7 @@ export function register(data) {
 }
 
 //登陆
-export async function login(data) {
+export function login(data) {
    fetch('Login.Login', data).then(user => {
         store.dispatch('login', user)
         store.dispatch('saveAccssToken', user.token)
@@ -260,6 +260,31 @@ export function orderDown(data) {
 //订单列表
 export function orderIndex(data) {
    return fetch('Orders.Index', data, true)
+}
+
+//商店详情
+export function shopDetail(data) {
+   return fetch('Shops.GetInfo', data, true)
+}
+
+//获取商店分类
+export function shopCategory(data) {
+   return fetch('Shops.GetListCatsByShopId', data, true)
+}
+
+//根据商店分类获取商品
+export function shopGoodsByShopId(data) {
+   return fetch('Shops.Index', data, true)
+}
+
+//收藏
+export function collect(data){
+    return fetch('User.AddCollect', data, true)
+}
+
+//收藏列表
+export function collectList(data){
+    return fetch('User.MyCollect', data, true)
 }
 
 

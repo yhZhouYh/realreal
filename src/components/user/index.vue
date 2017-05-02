@@ -88,6 +88,7 @@
                     </div>-->
                 <group class="my-order">
                     <cell title="我的订单"
+                          link="/orderList"  
                           is-link>
                         <icon icon="icon-dingdan1"
                               slot="icon"
@@ -103,7 +104,7 @@
                               style="color:#afa1ee"></icon>
                     </cell>
                     <cell title="我的收藏"
-                          link="/addressManage?isManage=1"
+                          link="/collectList"
                           is-link>
                         <icon icon="icon-shoucang1"
                               slot="icon"

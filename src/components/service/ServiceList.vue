@@ -130,7 +130,8 @@ export default {
                 let middle = this.middle[this.isChecked]
                 if (!middle.isOver) {
                     this.loading = true
-                    getGoodsByCid({ id: this.$route.params.id, page: ++this.page, limit: this.limit, cid: this.currentCid }).then(res => {
+                    middle.page += 1
+                    getGoodsByCid({ id: this.$route.params.id, page: middle.page, limit: this.limit, cid: this.currentCid }).then(res => {
                         this.loading = false
                         middle.items.concat(res)
                         this.serviceItems = middle.items
@@ -151,7 +152,6 @@ export default {
                     })
                 }
             }
-
         },
         checkedItem(item, index) { //缓存处理
             this.isChecked = index
@@ -166,7 +166,6 @@ export default {
             } else {
                 this.serviceItems = this.middle[index].items
             }
-
         }
     }
 }

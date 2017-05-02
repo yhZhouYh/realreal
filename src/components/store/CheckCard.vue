@@ -8,7 +8,7 @@
                   ref="item"
                   :key="item"
                   @click.native="checkItem(item, index)"
-                  :class="{active: isChecked == index}">{{item}}</x-button>
+                  :class="{active: isChecked == index}">{{item.catName}}</x-button>
         <!--<span class="z-check-button vux-1px" v-for="item in items">{{item}}</span>-->
     </div>
 </template>
@@ -27,8 +27,9 @@ export default {
             isChecked: 0
         }
     },
-    mounted() {
-        this.$nextTick(() => {
+    watch : {
+        items () {
+            this.$nextTick(() => {
             const { scroll, item } = this.$refs
             Transform(scroll, true)
             const scrollWidth = scroll.getBoundingClientRect().width
@@ -49,11 +50,35 @@ export default {
             }
 
         })
+        }
     },
+    // mounted() {
+    //     this.$nextTick(() => {
+    //         const { scroll, item } = this.$refs
+    //         Transform(scroll, true)
+    //         const scrollWidth = scroll.getBoundingClientRect().width
+    //         let itemWidths = 0
+    //         for (var i = 0, l = item.length; i < l; i++) {
+    //             itemWidths += item[i].$el.getBoundingClientRect().width
+    //         }
+    //         const min = itemWidths - scrollWidth + 10 * (item.length - 1) //计算每个元素宽度 + 间距
+    //         if (min > 0) { //当元素少得时候不触发
+    //             let at = new AlloyTouch({
+    //                 touch: scroll,
+    //                 vertical: false,
+    //                 property: 'translateX',
+    //                 sensitivity: 1,
+    //                 min: -min,
+    //                 max: 0,
+    //             })
+    //         }
+
+    //     })
+    // },
     methods: {
         checkItem(item, index) {
             if(this.isChecked != index){
-                this.$emit('checkedItem', item)
+                this.$emit('checkItem', item, index)
             }
             this.isChecked = index
         }

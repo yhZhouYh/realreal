@@ -11,15 +11,15 @@
                         name="name"
                         @checkedItem="checkedItem"></z-menu>
             </div>
-             <blank v-if="!orderList.length"
-                       :define="true">
-                    <div>没有相关服务啦！</div>
-                </blank>
+            <blank v-if="!orderList.length"
+                   :define="true">
+                <div>暂无相关订单~</div>
+            </blank>
             <div class="z-box order-item"
                  v-for="item in orderList">
                 <div class="order-title zflex">
                     <!--<icon icon="icon-dianpu"
-                                              class="gray"></icon>-->
+                                                  class="gray"></icon>-->
                     <span class="store-title zflex1">订单状态</span>
                     <span class="red">{{status[item.orderStatus]}}</span>
                 </div>
@@ -28,7 +28,7 @@
                      v-touch-ripple>
                     <div class="service-img"
                          :style="{backgroundImage: 'url('+goods.goodsImg+')'}"></div>
-                    <span class="store-title zflex1">{{goods.name}}</span>
+                    <span class="store-title zflex1">{{goods.goodsName}}</span>
                     <div class="service-price">
                         <p>{{goods.goodsPrice}}元</p>
                         <p class="gray">x{{goods.goodsNum}}</p>
@@ -73,7 +73,7 @@ export default {
     },
     data() {
         return {
-            items: [{ name: '全部', type: 'all' }, { name: '待付款', type: 'waitPay' }, { name: '待取件', type: 'waitReceive' }, { name: '待评价', type: 'waitAppraise' }, { name: '已完成', type: 'finish' }, { name: '已取消', type: 'cancel' }, { name: '退款', type: 'abnormal' }],
+            items: [{ name: '全部', type: 'all' }, { name: '待付款', type: 'waitPay' }, { name: '待接收', type: 'waitReceive' }, { name: '待评价', type: 'waitAppraise' }, { name: '已完成', type: 'finish' }, { name: '已取消', type: 'cancel' }, { name: '退款', type: 'abnormal' }],
             middle: {},
             middleObj: {
                 page: 1,
@@ -116,7 +116,7 @@ export default {
             let middle = this.middle[this.isChecked]
             if (!middle.isOver) {
                 this.loading = true
-                middle.page　+= 1
+                middle.page 　+= 1
                 orderIndex({ userid: this.$store.state.user.userId, page: middle.page, limit: this.limit, type: this.currentType }).then(res => {
                     this.loading = false
                     middle.items.concat(res)
