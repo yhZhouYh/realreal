@@ -1,20 +1,21 @@
 <template>
     <div class="z-index-category">
-        <router-link to="{name:'serviceList',params:{id:item.id}}"
-           class="zflex z-category-header">
+        <router-link :to="{name:'serviceList',params:{id:cates.catId}}"
+                     class="zflex z-category-header">
             <div class="zflex1">{{cates.catName}}</div>
             <div class="">更多 <span class="z-arrow-right"></span></div>
         </router-link>
         <!--<scrollbar>-->
         <div class="category-scroll zflex"
              ref="scroll">
-            <a href="javascript:;"
-               class="category-items"
-               ref="item" v-for=" item in cates.items">
+            <router-link :to="{name:'service', params:{id: item.goodsId}}" :key="item.goodsId"
+                         class="category-items"
+                         ref="item"
+                         v-for=" item in cates.items">
                 <img :src="item.goodsImg"
                      alt="">
                 <!--<x-img :src="img"
-                                container=".z-index-category"></x-img>-->
+                                    container=".z-index-category"></x-img>-->
                 <p class="items-title">{{item.goodsName}}</p>
                 <p class="items-price">{{item.shopPrice}}元/{{item.goodsUnit}}</p>
                 <p class="items-store zflex">
@@ -24,7 +25,7 @@
                     </svg>
                     <span class="store-name zflex1 items-title">{{item.shopName}}</span>
                 </p>
-            </a>
+            </router-link>
         </div>
         <!--</scrollbar>-->
     </div>

@@ -1,5 +1,5 @@
 <template>
-    <a href="javascript:;"class="z-store-item" v-touch-ripple>
+    <router-link :to="{name:'storeDetail', params:{id: item.shopId}}"class="z-store-item" v-touch-ripple>
         <!--<div class="store-img back-img"
              :style="{backgroundImage:'url('+item.shopImg+')'}"></div>-->
              <img class="store-img back-img" :src="item.shopImg"></img>
@@ -10,8 +10,8 @@
                 <!--<span>已接单{{item.sale}}</span>-->
             </div>
         </div>
-    </a>
-</template>a
+    </router-link>
+</template>
 <script>
 export default {
     props: ['item']

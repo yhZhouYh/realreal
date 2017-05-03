@@ -125,20 +125,20 @@
                 </group>
     
                 <group>
-                    <cell title="关于我们"
+                    <cell title="关于我们" to="/newsDetail/16"
                           is-link>
                         <icon icon="icon-guanyuwomen01"
                               slot="icon"
                               :horizon="true"
                               style="color:#ce77d8"></icon>
                     </cell>
-                    <cell title="意见反馈"
+                    <!--<cell title="意见反馈"
                           is-link>
                         <icon icon="icon-shequ"
                               slot="icon"
                               :horizon="true"
                               style="color:#9dd2fa"></icon>
-                    </cell>
+                    </cell>-->
                     <cell title="联系客服"
                           is-link>
                         <icon icon="icon-fuwu"

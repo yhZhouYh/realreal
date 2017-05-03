@@ -10,14 +10,15 @@
                     <button-tab-item :value="1">商家</button-tab-item>
                 </button-tab>
             </div>
-            <div slot="rightitems"
-                 style="margin-right: 5px;">
+            <router-link to="search"
+                         slot="rightitems"
+                         style="margin-right: 5px;">
                 <svg class="zicon zheader-icon zflex"
                      aria-hidden="true">
-                    <use xlink:href="#real-icon-search"></use>
+                    <use xlink:href="#icon-sousuo"></use>
                 </svg>
                 <p class="zheader-icon-word">搜索</p>
-            </div>
+            </router-link>
         </z-header>
         <div class="z-container"
              ref="scroller">

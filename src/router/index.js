@@ -22,6 +22,8 @@ import PublishNeed from '@/components/user/PublishNeed.vue'
 import NeedsDetail from '@/components/user/NeedsDetail.vue'
 import EnsureOrder from '@/components/order/EnsureOrder.vue'
 import Collect from '@/components/user/Collect.vue'
+import NewsList from '@/components/user/News.vue'
+import NewsDetail from '@/components/user/NewsDetail.vue'
 
 
 Vue.use(Router)
@@ -137,6 +139,16 @@ export default new Router({
       path: '/collectList',
       name: 'collectList',
       component:Collect
+    },
+    {
+      path: '/newsList/:id',
+      name: 'newsList',
+      component:NewsList
+    },
+     {
+      path: '/newsDetail/:id',
+      name: 'newsDetail',
+      component:NewsDetail
     }
   ]
 })

@@ -1,11 +1,11 @@
 <template>
     <div class="service-bottom zflex vux-1px-t">
-        <a href="javascript:;"
+        <router-link :to="{name:'storeDetail', params:{id: item.shopId}}"
            class="itembox zflex vux-1px-r zflex-center">
             <icon icon="icon-dianpu"></icon>
             <div>店铺</div>
-        </a>
-        <a href="javascript:;"
+        </router-link>
+        <a :href="'tel:'+item.telephone"
            class="itembox zflex vux-1px-r zflex-center">
             <icon icon="icon-call-business"></icon>
             <div>联系商家</div>
@@ -37,6 +37,7 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'serviceBottom',
     // props: ['count'],
+    props: ['item'],
     components: {
         Icon,
         Badge

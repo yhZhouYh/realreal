@@ -14,15 +14,17 @@
            style="font-size:14px;">
         合肥
       </div>
-      <router-link to="search" slot="rightitems"
-           style="margin-right: 5px;">
+      <router-link to="search"
+                   slot="rightitems"
+                   style="margin-right: 5px;">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
           <use xlink:href="#icon-sousuo"></use>
         </svg>
         <p class="zheader-icon-word">搜索</p>
       </router-link>
-      <router-link to="publishneed"slot="rightitems">
+      <router-link to="publishneed"
+                   slot="rightitems">
         <svg class="zicon zheader-icon zflex"
              aria-hidden="true">
           <use xlink:href="#icon-fabu"></use>
@@ -37,8 +39,7 @@
         <tf-carousel :imgs="imgs"
                      display='adFile'
                      :delay="4000"
-                     autoPlay
-                     ></tf-carousel>
+                     autoPlay></tf-carousel>
       </div>
       <!--轮播结束-->
       <!--分类圈圈开始-->
@@ -50,28 +51,31 @@
             <z-category :backcolor="item.backcolor"
                         :svgsrc="item.svgsrc"
                         :categoryname="item.categoryname"
-                        :cid = "item.catId"
-                        ></z-category>
+                        :cid="item.catId"
+                        :url="item.url"></z-category>
           </div>
         </div>
       </div>
       <!--分类圈圈结束-->
       <!--news开始-->
       <div class="z-box">
-        <div class="zflex">
+        <router-link to="/newsList/8"
+                     class="zflex">
           <p style="color:#4fbafe">正证新闻：</p>
           <marquee class="zflex1">
             <marquee-item v-for="i in news"
                           :key="i"
                           class="align-middle">{{i.articleTitle}}</marquee-item>
           </marquee>
-        </div>
+        </router-link>
         <div class="zflex">
           <p style="color:#4fbafe">免费查询：</p>
-          <a href="javascript:;"
-             class="zflex1">电脑初步诊断查询>></a>
-          <a href="javascript:;"
-             class="zflex1">电脑型号查询>></a>
+          <router-link to="/newsList/20"
+                       href="javascript:;"
+                       class="zflex1">电脑初步诊断查询>></router-link>
+          <router-link to="/newsList/19"
+                       href="javascript:;"
+                       class="zflex1">电脑型号查询>></router-link>
         </div>
       </div>
       <!--news结束-->
@@ -79,8 +83,7 @@
   
       <div class="z-box"
            v-for="cates in catesItem">
-        <index-category :cates="cates"
-                        @click.native="go"></index-category>
+        <index-category :cates="cates"></index-category>
       </div>
       <!--各项分类结束-->
     </div>
@@ -109,16 +112,16 @@ export default {
     return {
       imgs: [],
       cateSvgs: [
-        [{ backcolor: '#4da4d1', svgsrc: '#icon-jiadian', categoryname: "家电服务", catId: 47},
-        { backcolor: '#ec633f', svgsrc: '#icon-bangongshebei', categoryname: "办公设备", catId: 48 },
-        { backcolor: '#f5ce33', svgsrc: '#icon-dianshang', categoryname: "电商服务", catId: 49 },
-        { backcolor: '#8dc52c', svgsrc: '#icon-shangmenfuwu', categoryname: "上门服务", catId: 50 },
-        { backcolor: '#f25a59', svgsrc: '#icon-shenghuofuwu', categoryname: "生活服务", catId: 51 }],
-        [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新", catId: 344 },
-        { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易", catId: 52 },
-        { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯", catId: 47 },
-        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻", catId: 47 },
-        { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0 }]
+        [{ backcolor: '#4da4d1', svgsrc: '#icon-jiadian', categoryname: "家电服务", catId: 47, url: '/needs/47' },
+        { backcolor: '#ec633f', svgsrc: '#icon-bangongshebei', categoryname: "办公设备", catId: 48, url: '/needs/48' },
+        { backcolor: '#f5ce33', svgsrc: '#icon-dianshang', categoryname: "电商服务", catId: 49, url: '/needs/49' },
+        { backcolor: '#8dc52c', svgsrc: '#icon-shangmenfuwu', categoryname: "上门服务", catId: 50, url: '/needs/50' },
+        { backcolor: '#f25a59', svgsrc: '#icon-shenghuofuwu', categoryname: "生活服务", catId: 51, url: '/needs/51' }],
+        [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新", catId: 344, url: '/needs/344' },
+        { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易", catId: 52, url: '/needs/52' },
+        { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯", catId: 47, url: '/newsList/17' },
+        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻", catId: 47, url: '/newsList/8' },
+        { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0, url: '/needs/0' }]
       ],
       news: [],
       catesItem: [{
@@ -223,12 +226,12 @@ export default {
 
   methods: {
     go() {
-      this.$router.push('/serviceList/48') 
+      this.$router.push('/serviceList/48')
     },
     getLoction() {
-       navigator.geolocation.getCurrentPosition(pos => {
-         console.log(position.coords.latitude, position.coords.longitude)
-       })
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos.coords.latitude, pos.coords.longitude)
+      })
     }
   }
 }
@@ -241,7 +244,7 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding-top: 0.85rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.8rem;
 }
 
 .z-page {

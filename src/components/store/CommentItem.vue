@@ -13,6 +13,7 @@
                 <p class="comment-core">
                     {{comment.content}}
                 </p>
+                <div class="comment-reply">商家回复：谢谢亲的关注</div>
             </div>
         </div>
          <icon :icon="icon" class="red"></icon>
@@ -54,9 +55,14 @@
         align-items: flex-start;
     }
     .comment-star, .comment-name{
-        font-size: 0.21rem;
+        font-size: 0.23rem;
     }
     .comment-content p{
         margin-bottom: 0.08rem;
+    }
+    .comment-reply{
+        background: #FFF2E8;
+        font-size: 0.26rem;
+        padding:0.1rem;
     }
 </style>

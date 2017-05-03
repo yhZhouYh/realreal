@@ -32,7 +32,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                    <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -42,10 +42,10 @@
             </div>
     
             <!--<group>
-                                                            <cell title="服务项目"
-                                                                  value="洗衣机上门维修"
-                                                                  :is-link="true"></cell>
-                                                        </group>-->
+                                                                <cell title="服务项目"
+                                                                      value="洗衣机上门维修"
+                                                                      :is-link="true"></cell>
+                                                            </group>-->
     
             <group>
                 <cell title="服务时间">
@@ -79,7 +79,8 @@
                  class="service-detail"></div>
         </div>
         <service-bottom @buynow="buynow"
-                        @addtocart="addtocart"></service-bottom>
+                        @addtocart="addtocart"
+                        :item="data"></service-bottom>
     </div>
 </template>
 <script>

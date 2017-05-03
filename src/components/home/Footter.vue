@@ -40,7 +40,7 @@
         width:100%;
         text-align: center;
         background: #fff;
-        line-height: 1.2;
+        line-height: 1.5;
         padding: 0.1rem 0;
         &.vux-1px-t{
             position: absolute;

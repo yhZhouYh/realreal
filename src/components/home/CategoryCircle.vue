@@ -1,6 +1,6 @@
 <template>
     <div class="z-categroty-contianer">
-        <router-link :to="{name: 'needs', params:{cid: cid}}" class="z-category-circle zflex zflex-center"
+        <router-link :to="url" class="z-category-circle zflex zflex-center"
            :style="{background: backcolor}">
             <svg class="zicon zheader-icon"
                  aria-hidden="true">
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    props: ['backcolor', 'svgsrc', 'categoryname', 'cid']
+    props: ['backcolor', 'svgsrc', 'categoryname', 'cid', 'url']
 }
 </script>
 <style lang="less">

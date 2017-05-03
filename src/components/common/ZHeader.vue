@@ -35,6 +35,7 @@
 }
 
 .z-header {
+    line-height: 1.4;
     font-size: 19px;
     height: 0.85rem;
     text-align: center;

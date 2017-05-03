@@ -10,19 +10,17 @@
                    type="radio"
                    class="z-check"
                    name="checkit"
-                   :value="value"
+                   :value="id"
                    :checked="checked"
                    :id="id"
-                   v-model="changeModel"
                    @change="change(value)">
             <input v-else
                    type="checkbox"
                    class="z-check"
                    name="checkit"
-                   :value="value"
+                   :value="id"
                    :checked="checked"
                    :id="id"
-                   v-model="changeModel"
                    @change="change(value)">
             <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
@@ -31,25 +29,24 @@
         </label>
     </div>
     <div class="z-checkbox zflex" v-else>
+    
         <label :for="id"
                class="check-label zflex">
             <input v-if="type && type =='radio'"
                    type="radio"
                    class="z-check"
                    name="checkit"
-                   :value="value"
+                   :value="id"
                    :checked="checked"
                    :id="id"
-                   v-model="changeModel"
                    @change="change(value)">
             <input v-else
                    type="checkbox"
                    class="z-check"
                    name="checkit"
-                   :value="value"
-                   :checked="checked"
+                   :value="id"
+                   :checked='checked'
                    :id="id"
-                   v-model="changeModel"
                    @change="change(value)">
             <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
@@ -68,7 +65,27 @@
 import Icon from '../common/Icon'
 export default {
     name: 'checkbox',
-    props: ['value', 'id', 'checked', 'model', 'type', 'position'],
+    props: {
+        value: {
+
+        },
+        id: {
+
+        },
+        checked: {
+            type: Boolean,
+            default: true
+        },
+        model:{
+
+        },
+        type: {
+
+        },
+        position: {
+
+        }
+    },
     components: {
         Icon
     },

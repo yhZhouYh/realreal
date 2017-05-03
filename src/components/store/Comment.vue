@@ -13,13 +13,20 @@
             <comment-item v-for="comment in comments"
                           :key="comment"
                           :comment="comment"></comment-item>
+            <scroller :scroller="scroller"
+                      :loading="loading"
+                      @load="loadMore"
+                      loading-text="加载中" />
+    
         </div>
     </div>
 </template>
 <script>
 import CommentItem from './CommentItem.vue'
+import {getValueByShopId, getValueByGoodsId} from '../../api'
 export default {
     name: 'comment',
+    props:['scroller', 'type'],
     components: {
         CommentItem
     },
@@ -37,8 +44,23 @@ export default {
                 { id: 1, name: '永远的小逗比', star: 4, time: '2017-3-3', content: '感觉很不错的样子哦，你也快来试试把', avatar: require('../../assets/imgs/avatar.jpg') },
                 { id: 1, name: '永远的小逗比', star: 4, time: '2017-3-3', content: '感觉很不错的样子哦，你也快来试试把', avatar: require('../../assets/imgs/avatar.jpg') },
                 { id: 1, name: '永远的小逗比', star: 4, time: '2017-3-3', content: '感觉很不错的样子哦，你也快来试试把', avatar: require('../../assets/imgs/avatar.jpg') }
-            ]
+            ],
+            loading: false,
+            middle: {},
+            middleObj: {
+                page: 1,
+                isOver: false,
+                items: []
+            }
         }
+    },
+    created () {
+        if(this.type =='shop'){
+            getValueByShopId({shopsId: this.$route.params.id, page: 1, limit: 10, type: "all"}).then(res => {
+                console.log(res)
+            })
+        }
+        
     },
     methods: {
         checkItem(item, index) {
@@ -47,6 +69,9 @@ export default {
             }
             this.isChecked = index
         }
+    },
+    mounted(){
+        console.log(this)
     }
 }
 </script>

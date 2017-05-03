@@ -7,19 +7,18 @@
                     :results="results"
                     v-model="value"
                     @on-change="searchList"
-                    @on-focus="onFocus"
                     ref="search"></search>
         </div>
     
         <div class="z-container"
              ref="scroller">
-            <div class="z-box" v-if="!serviceItems.length">
+            <div class="z-box"
+                 v-if="!serviceItems.length">
                 <p>热门标签</p>
                 <ul>
-                    <li class="cate-btns">洗衣机</li>
-                    <li class="cate-btns">洗衣机</li>
-                    <li class="cate-btns">洗衣机</li>
-                    <li class="cate-btns">洗衣机</li>
+                    <li class="cate-btns"
+                        v-for="item in keys"
+                        @click="searchBykey(item)">{{item}}</li>
                 </ul>
             </div>
             <div class="z-box"
@@ -37,9 +36,10 @@
     </div>
 </template>
 <script>
-import { Search } from 'vux'
+import { Search, debounce } from 'vux'
 import { hotKey, search } from '../../api'
 import ServiceItem from '../store/ServiceItem'
+
 export default {
     name: 'searchs',
     components: {
@@ -51,20 +51,34 @@ export default {
             results: [],
             value: '',
             page: 1,
-            limit: 20,
+            limit: 30,
             serviceItems: [],
             loading: false,
             isOver: false,
+            keys: [],
+            scroller: null,
+            timer: null,
+            _debounce: null,
             key: ''
         }
     },
     created() {
         hotKey().then(res => {
-            console.log(res)
+            this.keys = res
         })
+        this._debounce = debounce(() => {
+            search({ keyword: this.key, type: 2, page: this.page, limit: this.limit }).then(res => {
+                this.serviceItems = res
+            })
+        }, 500)
     },
     mounted() {
         this.scroller = this.$refs.scroller
+    },
+    beforeDestroyed(){
+        if(this._debounce){
+            this._debounce.cancel()
+        }
     },
     methods: {
         resultClick(item) {
@@ -86,20 +100,25 @@ export default {
         searchList(val) {
             this.page = 1
             this.key = val
-            search({ keyword: val, type: 2, page: this.page, limit: this.limit }).then(res => {
-                this.serviceItems = res
-            })
+            this._debounce()
         },
         loadMore() {
-            this.loading = true
-            if (!this.loading && !this.isover) {
+            if (!this.isOver) {
+                this.loading = true
                 search({ keyword: this.key, type: 2, page: ++this.page, limit: this.limit }).then(res => {
+                    this.loading = false
                     this.serviceItems.concat(res)
                     if (!res.length) {
-                        this.isover = true
+                        this.isOver = true
                     }
                 })
             }
+        },
+        searchBykey(val) {
+            this.page = 1
+            search({ keyword: val, type: 2, page: this.page, limit: this.limit }).then(res => {
+                this.serviceItems = res
+            })
         }
     }
 }

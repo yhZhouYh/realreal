@@ -287,8 +287,25 @@ export function collectList(data){
     return fetch('User.MyCollect', data, true)
 }
 
+//获取新闻列表
+export function newsList(data){
+    return fetch('Default.Index', data, true)
+}
 
+//获取新闻详情
+export function newsDetail(data){
+    return fetch('Default.GetInfo', data, true)
+}
 
+//获取商店评价
+export function getValueByShopId(data){
+    return fetch('Shops.ListAppraisesByShopsId', data, true)
+}
+
+//获取商品评价
+export function getValueByGoodsId(data){
+    return fetch('Goods.ListAppraisesByGoodsId', data, true)
+}
 
 
 
