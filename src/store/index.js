@@ -16,7 +16,8 @@ export default new Vuex.Store({
     checkAddress: JSON.parse(localStorage.getItem('checkAddress')) || {
       index: 0,
       item: null
-    }
+    },
+    currentOrder: {}
   },
   // actions,
   // getters,
@@ -42,6 +43,15 @@ export default new Vuex.Store({
         state.checkAddress.item = item
         state.checkAddress.index = index
         localStorage.setItem('checkAddress', JSON.stringify({item, index}))
+     },
+      [types.SAVE_ORDER](state, order) {
+        state.currentOrder = order
+     },
+     [types.LOGOUT](state){
+       state.user = {},
+       state.accessToken = ''
+       localStorage.removeItem('accessToken')
+       localStorage.removeItem('user')
      }
   },
   actions: {
@@ -62,6 +72,12 @@ export default new Vuex.Store({
     },
     checkAddress({commit},{item, index}){
       commit(types.CHECK_ADDRESS, {item, index})
+    },
+    saveOrder({commit}, order){
+      commit(types.SAVE_ORDER, order)
+    },
+    logout({commit}){
+      commit(types.LOGOUT)
     } 
   },
   modules: {

@@ -63,7 +63,7 @@
             </div>
             <!--商店详情-->
             <!--评论开始-->
-            <comment v-show="currentView == 2" :scroller="scroller"  type="shop"></comment>
+            <comment v-show="currentView == 2" :scroller="scroller"  type="shop" :canLoadMore="currentView == 2"></comment>
             <scroller :scroller="scroller"
                       :loading="loading"
                       @load="loadMore"
@@ -188,19 +188,6 @@ export default {
                     })
                 }
             }
-            // if (this.currentView == 2) {
-            //     debugger
-            //     if (!this.isOver2) {
-            //         this.loading = true
-            //         getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit }).then(res => {
-            //             this.loading = false
-            //             this.serviceItems.concat(res)
-            //             if (res.length == 0) {
-            //                 this.isOver2 = true
-            //             }
-            //         })
-            //     }
-            // }
         },
         checkItem(item, index) { //缓存处理
             this.isChecked = index

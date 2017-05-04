@@ -3,15 +3,17 @@
          ref="container">
         <div class="tf-carousel-box"
              ref="box"
-             :style="{width: imgBoxWidth}" v-if="display">
+             :style="{width: imgBoxWidth}"
+             v-if="display">
             <a href="javascript:;"
                class="carousel-img"
                v-for="item in imgs"
                :style="{width: imgItemWidth, backgroundImage: 'url(' + item[display] + ')'}"></a>
         </div>
-          <div class="tf-carousel-box"
+        <div class="tf-carousel-box"
              ref="box"
-             :style="{width: imgBoxWidth}" v-else>
+             :style="{width: imgBoxWidth}"
+             v-else>
             <a href="javascript:;"
                class="carousel-img"
                v-for="item in imgs"
@@ -45,113 +47,18 @@ export default {
             dafault: true
         }
     },
-    data () {
+    data() {
         return {}
     },
     //props: ['imgs', 'delay', 'dotcolor'],
     watch: {
         imgs() {
-            console.log(this.imgs)
-            const box = this.$refs.box
-            const containerWidth = this.$refs.container.getBoundingClientRect().width
-            let _this = this
-            const options = {
-                target: box,
-                touch: box,
-                vertical: false,
-                property: 'translateX',
-                min: -containerWidth * (this.imgs.length - 1),
-                max: 0,
-                step: containerWidth,
-                spring: true,
-                inertia: false,
-                touchStart() {
-                    if (_this.timer != null) {
-                        clearInterval(_this.timer)
-                        _this.timer = null
-                    }
-                },
-                touchEnd(evt, v, index) {
-                    var step_v = index * this.step * -1;
-                    var dx = v - step_v;
-                    if (v < this.min) {
-                        _this.step = this.min
-                    } else if (v > this.max) {
-                        _this.step = this.max
-                    } else if (Math.abs(dx) < 30) {
-                        _this.step = step_v
-                    } else if (dx > 0) {
-                        _this.step = step_v + this.step
-                    } else {
-                        _this.step = step_v - this.step
-                    }
-                    this.to(_this.step);
-                    if (_this.autoPlay) {
-                        _this.turnPlay(this.step)
-                    }
-                    return false
-                },
-                animationEnd(evt, v) {
-                    _this.currentPage = this.currentPage + 1
-                }
-            }
-            Transform(box)
-            _this.touch = new AlloyTouch(options)
-            if (_this.autoPlay) {
-                _this.turnPlay(this.step)
-            }
+            this.init()
         }
     },
     mounted() {
         this.$nextTick(() => {
-            // const box = this.$refs.box
-            // const containerWidth = this.$refs.container.getBoundingClientRect().width
-            // let _this = this
-            // const options = {
-            //     target: box,
-            //     touch: box,
-            //     vertical: false,
-            //     property: 'translateX',
-            //     min: -containerWidth * (this.imgs.length - 1),
-            //     max: 0,
-            //     step: containerWidth,
-            //     spring: true,
-            //     inertia: false,
-            //     touchStart() {
-            //         if (_this.timer != null) {
-            //             clearInterval(_this.timer)
-            //             _this.timer = null
-            //         }
-            //     },
-            //     touchEnd(evt, v, index) {
-            //         var step_v = index * this.step * -1;
-            //         var dx = v - step_v;
-            //         if (v < this.min) {
-            //             _this.step = this.min
-            //         } else if (v > this.max) {
-            //             _this.step = this.max
-            //         } else if (Math.abs(dx) < 30) {
-            //             _this.step = step_v
-            //         } else if (dx > 0) {
-            //             _this.step = step_v + this.step
-            //         } else {
-            //             _this.step = step_v - this.step
-            //         }
-            //         this.to(_this.step);
-            //         if (this.autoPlay) {
-            //             _this.turnPlay(this.step)
-            //         }
-            //         return false
-            //     },
-            //     animationEnd(evt, v) {
-            //         _this.currentPage = this.currentPage + 1
-            //     }
-            // }
-            // Transform(box)
-            // _this.touch = new AlloyTouch(options)
-            // if (this.autoPlay) {
-            //     _this.turnPlay(this.step)
-            // }
+            this.init()
 
         })
     },
@@ -190,6 +97,56 @@ export default {
                 }
                 this.touch.to(step)
             }, this.delay)
+        },
+        init() {
+            const box = this.$refs.box
+            const containerWidth = this.$refs.container.getBoundingClientRect().width
+            let _this = this
+            const options = {
+                target: box,
+                touch: box,
+                vertical: false,
+                property: 'translateX',
+                min: -containerWidth * (this.imgs.length - 1),
+                max: 0,
+                step: containerWidth,
+                spring: true,
+                inertia: false,
+                touchStart() {
+                    if (_this.timer != null) {
+                        clearInterval(_this.timer)
+                        _this.timer = null
+                    }
+                },
+                touchEnd(evt, v, index) {
+                    var step_v = index * this.step * -1;
+                    var dx = v - step_v;
+                    if (v < this.min) {
+                        _this.step = this.min
+                    } else if (v > this.max) {
+                        _this.step = this.max
+                    } else if (Math.abs(dx) < 30) {
+                        _this.step = step_v
+                    } else if (dx > 0) {
+                        _this.step = step_v + this.step
+                    } else {
+                        _this.step = step_v - this.step
+                    }
+                    this.to(_this.step);
+                    if (this.autoPlay) {
+                        _this.turnPlay(this.step)
+                    }
+                    return false
+                },
+                animationEnd(evt, v) {
+                    _this.currentPage = this.currentPage + 1
+                }
+            }
+            Transform(box)
+            _this.touch = new AlloyTouch(options)
+            if (this.autoPlay) {
+                _this.turnPlay(this.step)
+            }
         }
     }
 }

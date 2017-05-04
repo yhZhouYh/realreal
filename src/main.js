@@ -43,3 +43,18 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app-box')
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.state.accessToken && store.state.user.userId) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    }
+  } else {
+    next()
+  }
+})

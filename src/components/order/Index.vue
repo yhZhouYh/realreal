@@ -19,13 +19,15 @@
                  v-for="item in orderList">
                 <div class="order-title zflex">
                     <!--<icon icon="icon-dianpu"
-                                                  class="gray"></icon>-->
+                                                                  class="gray"></icon>-->
                     <span class="store-title zflex1">订单状态</span>
                     <span class="red">{{status[item.orderStatus]}}</span>
                 </div>
-                <div class="orderList-detail zflex"
-                     v-for="goods in item.goods"
-                     v-touch-ripple>
+                <router-link :to="{name:'service', params:{id: goods.goodsId}}"
+                             class="orderList-detail zflex"
+                             v-for="goods in item.goods"
+                             :key="goods.goodsId"
+                             v-touch-ripple>
                     <div class="service-img"
                          :style="{backgroundImage: 'url('+goods.goodsImg+')'}"></div>
                     <span class="store-title zflex1">{{goods.goodsName}}</span>
@@ -33,21 +35,30 @@
                         <p>{{goods.goodsPrice}}元</p>
                         <p class="gray">x{{goods.goodsNum}}</p>
                     </div>
-                </div>
+                </router-link>
                 <div class="orderList-time gray zflex vux-1px-b">
                     <span class="time zflex1">{{item.createTime}}</span>
                     <span>总价：<span class="red">{{item.goodsMoney}}</span>元</span>
                 </div>
                 <div class="orderList-btns">
                     <x-button :mini="true"
-                              v-if="item.orderStatus == -2"
                               :plain="true"
                               class="z-check-button"
-                              v-touch-ripple>取消订单</x-button>
+                              @click.native="godetail(item)">查看详情</x-button>
+                    <x-button :mini="true"
+                              v-if="item.orderStatus == -2"
+                              :plain="true"
+                              class="z-check-button">取消订单</x-button>
                     <x-button :mini="true"
                               :plain="true"
                               class="z-check-button active"
-                              v-touch-ripple>立即支付</x-button>
+                              v-if="item.orderStatus == -2">立即支付</x-button>
+                    <x-button :mini="true"
+                              :plain="true"
+                              class="z-check-button active"
+                              v-if="item.orderStatus == 2 && item.isAppraise == 0"
+                              @click.native="valueIt(item)">评价</x-button>
+    
                 </div>
             </div>
             <scroller :scroller="scroller"
@@ -116,7 +127,7 @@ export default {
             let middle = this.middle[this.isChecked]
             if (!middle.isOver) {
                 this.loading = true
-                middle.page 　+= 1
+                middle.page += 1
                 orderIndex({ userid: this.$store.state.user.userId, page: middle.page, limit: this.limit, type: this.currentType }).then(res => {
                     this.loading = false
                     middle.items.concat(res)
@@ -141,7 +152,14 @@ export default {
             } else {
                 this.orderList = this.middle[index].items
             }
-
+        },
+        godetail(item) {
+            this.$store.dispatch('saveOrder', item)
+            this.$router.push('orderDetail')
+        },
+        valueIt(item) {
+            this.$store.dispatch('saveOrder', item)
+            this.$router.push({ name: 'appraise', params: { id: item.orderId } })
         }
     }
 

@@ -78,7 +78,7 @@ async function getdata(service, datas, loading) {
 
                 } else if (data.ret == 403) {
                     console.log(router.app._route.name)
-                    router.replace({name:'login',query:{redirect: router.app.$route.name}})
+                    router.replace({name:'login',query:{redirect: router.app.$route.fullPath}})
                 }
                 reject(data)
             }
@@ -110,7 +110,7 @@ function dealRes(res) {
         } else if (data.ret == 402) {
             saveAccessToken()
         } else if (data.ret == 403) {
-            router.push({path:'login', query:{redirect: router.app.$route.query.name}})
+            router.push({path:'login', query:{redirect: router.app.$route.fullPath}})
         }
         reject(data)
     }
@@ -305,6 +305,21 @@ export function getValueByShopId(data){
 //获取商品评价
 export function getValueByGoodsId(data){
     return fetch('Goods.ListAppraisesByGoodsId', data, true)
+}
+
+//获取购物车数量
+export function getCartNum(data){
+    return fetch('Carts.CountAbout', data, true)
+}
+
+//获取评价数量
+export function getValueNum(data){
+    return fetch('index.GetCountAppraise', data, true)
+}
+
+//评价
+export function valueIt(data){
+    return fetch('Orders.AddAppraise', data, true)
 }
 
 

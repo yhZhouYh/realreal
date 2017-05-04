@@ -12,13 +12,14 @@
                 <icon icon="icon-gouwuche"></icon>
     
                 <div class="badge-box"
-                     v-show="cartAllCounts">
-                    <badge :text="cartAllCounts"></badge>
+                     v-show="cartNum!=0">
+                    <badge :text="cartNum"></badge>
                 </div>
             </router-link>
         </z-header>
         <!--头部-->
-        <div class="z-container">
+        <div class="z-container"
+             ref="scroller">
             <!--轮播-->
             <div class="z-store-carousel">
                 <tf-carousel v-if="data.gallery"
@@ -32,7 +33,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                            <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -40,13 +41,6 @@
                               @minus="minus"></z-number>
                 </div>
             </div>
-    
-            <!--<group>
-                                                                <cell title="服务项目"
-                                                                      value="洗衣机上门维修"
-                                                                      :is-link="true"></cell>
-                                                            </group>-->
-    
             <group>
                 <cell title="服务时间">
                     <span slot="value"
@@ -73,7 +67,10 @@
                               @on-item-click="checkTabItem(index)">{{item.name}}</tab-item>
                 </tab>
             </sticky>
-            <comment v-show="currentView == 1"></comment>
+            <comment v-show="currentView == 1"
+                     :scroller="scroller"
+                     type="goods"
+                     :canLoadMore="currentView == 1?true : false"></comment>
             <div v-show="currentView == 0"
                  v-html="data.goodsDesc"
                  class="service-detail"></div>
@@ -92,7 +89,7 @@ import Tab from 'vux/src/components/tab/tab.vue'
 import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Comment from '../store/Comment'
 import ServiceBottom from './ServiceBottom'
-import { goodsDetail, cartAdd } from '../../api'
+import { goodsDetail, cartAdd, getCartNum } from '../../api'
 import Icon from '../common/Icon.vue'
 import Badge from 'vux/src/components/Badge'
 import { mapGetters } from 'vuex'
@@ -122,14 +119,19 @@ export default {
             ],
             data: {},
             currentView: 0,
-            cartNum: 1,
-            currentItem: {}
+            cartNum: 0,
+            currentItem: {},
+            num: 1,
+            scroller: null
         }
     },
     computed: {
         ...mapGetters([
             'cartAllCounts',
         ])
+    },
+    mounted() {
+        this.scroller = this.$refs.scroller
     },
     destroyed() {
         this.$store.dispatch('showFooter')
@@ -138,44 +140,45 @@ export default {
         this.$store.dispatch('showFooter')
         goodsDetail({ id: this.$route.params.id }).then(res => {
             this.data = res
-            ///const carts = this.$store.state.cart.carts
-            // this.currentItem = carts.items.find(p => p.goodsId === res.goodsId)
-            // if (this.currentItem) {
-            //     this.cartNum = this.currentItem.cartNum
-            // } else {
-            //     this.currentItem = this.data
-            // }
+        })
+        getCartNum({ userid: this.$store.state.user.userId }).then(res => {
+            this.cartNum = res.cartsNum
         })
     },
-    // mounted () {
-    //     // this.count = this.$store.dispatch('getCartItem', item).count
-    //     console.log(this.count)
-    // },
+
     methods: {
         checkTabItem(index) {
             this.currentView = index
         },
         add(item) {
             // this.$store.dispatch('addToCart', item)
-            this.cartNum++
+            this.num++
 
         },
         minus(item) {
             // this.$store.dispatch('minusfromCart', item)
-            this.cartNum--
+            this.num--
         },
         buynow() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.cartNum, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
-                this.data.cartNum = this.cartNum
-                this.$store.dispatch('addToCart', this.data)
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
+                // this.data.cartNum = this.cartNum
+                // this.$store.dispatch('addToCart', this.data)
+                this.cartNum = res.num
                 this.$router.push('/cart')
 
             })
         },
         addtocart() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.cartNum, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
-                this.data.cartNum = this.cartNum
-                this.$store.dispatch('addToCart', this.data)
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
+                // this.data.cartNum = this.cartNum
+                this.cartNum = res.num
+                // this.$store.dispatch('addToCart', this.data)
+                this.$vux.toast.show({
+                    text: '加入成功',
+                    position: 'bottom',
+                    width: 'auto',
+                    type: 'text'
+                })
             })
         }
     }

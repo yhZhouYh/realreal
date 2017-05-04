@@ -96,7 +96,7 @@ export default {
             deleteIndex: 0,
             currentItem: null,
             page: 1,
-            limit: 10,
+            limit: 20,
             checkedItems: [],
             scroller: null,
             loading: false,
@@ -162,7 +162,8 @@ export default {
             this.currentItem = item
         },
         downOrder() {
-            orderDown()
+            // orderDown()
+            this.$router.push('/ensureOrder')
         },
         loadMore() {
             this.loading = true

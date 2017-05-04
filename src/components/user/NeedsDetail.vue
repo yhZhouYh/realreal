@@ -21,7 +21,7 @@
 </template>
 <script>
     import ZHeader from '@/components/common/ZHeader.vue'
-    import {newsDetail} from '../../api'
+    import {getNeedsByNid} from '../../api'
     import {XButton} from 'vux'
     export default {
         components: {
@@ -35,9 +35,9 @@
         },
        
         created () {
-            newsDetail({id: this.$route.params.id}).then(res=>{
+            getNeedsByNid({id: this.$route.params.id}).then(res=>{
                 this.need = res
-                console.log(this.need.pic.length)
+                // console.log(this.need.pic.length)
             })
         }
     }   

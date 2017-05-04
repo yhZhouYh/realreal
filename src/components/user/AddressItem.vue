@@ -31,7 +31,7 @@
                             </z-checker>-->
             <icon icon="icon-moren"
                   class="isdefault red"
-                  v-if="addressItem.isDefault"></icon>
+                  v-if="addressItem.isDefault !=0"></icon>
         </div>
     </div>
 </template>

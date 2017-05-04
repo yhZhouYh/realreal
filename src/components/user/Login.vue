@@ -13,10 +13,10 @@
                     <icon icon="icon-shoujihao"
                           horizon
                           class="red"></icon>
-                    <x-input type="number"
+                    <x-input 
                              class="weui-input zflex1"
-                             placeholder="输入手机号"
-                             is-type="china-mobile"
+                             placeholder="输入手机号/昵称"
+
                              v-model.trim="mobile"
                              ref="username"
                              required></x-input>
@@ -37,7 +37,7 @@
                 <div class="forger-pass">
                     <router-link  to="register?id=reset">忘记密码?</router-link>
                 </div>
-                <divider style="font-size: 0.25rem;margin-top:2rem">社交账号</divider>
+                <!--<divider style="font-size: 0.25rem;margin-top:2rem">社交账号</divider>
                 <div class="zflex red">
                     <div class="itembox zflex1 zflex-center zflex-col">
                         <icon icon="icon-qq"></icon>
@@ -51,7 +51,7 @@
                         <icon icon="icon-xinlang"></icon>
                         <div>微博</div>
                     </div>
-                </div>
+                </div>-->
             </div>
     
         </div>

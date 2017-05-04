@@ -24,7 +24,8 @@ import EnsureOrder from '@/components/order/EnsureOrder.vue'
 import Collect from '@/components/user/Collect.vue'
 import NewsList from '@/components/user/News.vue'
 import NewsDetail from '@/components/user/NewsDetail.vue'
-
+import OrderDetail from '@/components/order/OrderDetail.vue'
+import Appraise from '@/components/order/Appraise.vue'
 
 Vue.use(Router)
 
@@ -35,7 +36,7 @@ export default new Router({
       name: 'home',
       component: Home
     },
-     {
+    {
       path: '/storeDetail/:id',
       name: 'storeDetail',
       component: Store
@@ -43,17 +44,20 @@ export default new Router({
     {
       path: '/service/:id',
       name: 'service',
-      component: Service
+      component: Service,
+      meta: { requiresAuth: true }
     },
     {
       path: '/cart',
       name: 'cart',
-      component: Cart
+      component: Cart,
+      meta: { requiresAuth: true }
     },
     {
       path: '/orderList',
       name: 'orderList',
-      component: OrderList
+      component: OrderList,
+      meta: { requiresAuth: true }
     },
     {
       path: '/serviceList/:id',
@@ -70,10 +74,10 @@ export default new Router({
       name: 'search',
       component: Search
     },
-     {
+    {
       path: '/user',
       name: 'user',
-      component: User
+      component: User,
     },
     {
       path: '/login',
@@ -88,67 +92,85 @@ export default new Router({
     {
       path: '/user-info',
       name: 'userInfo',
-      component: UserInfo
+      component: UserInfo,
+      meta: { requiresAuth: true }
     },
     {
       path: '/apply',
       name: 'apply',
-      component:Apply
+      component: Apply
     },
     {
       path: '/storeUser',
       name: 'storeUser',
-      component:StoreUser
+      component: StoreUser
     },
     {
       path: '/needs/:cid',
       name: 'needs',
-      component:Needs
+      component: Needs,
     },
     {
       path: '/near',
       name: 'near',
-      component:Near
+      component: Near
     },
     {
       path: '/addressManage',
       name: 'addressManage',
-      component:AddressManage
+      component: AddressManage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/addressEdit',
       name: 'addressEdit',
-      component:AddressEdit
+      component: AddressEdit,
+      meta: { requiresAuth: true }
     },
     {
       path: '/publishneed',
       name: 'publishneed',
-      component:PublishNeed
+      component: PublishNeed,
+      meta: { requiresAuth: true }
     },
     {
       path: '/needsDetail/:id',
       name: 'needsDetail',
-      component:NeedsDetail
+      component: NeedsDetail
     },
     {
       path: '/ensureOrder',
       name: 'ensureOrder',
-      component:EnsureOrder
+      component: EnsureOrder,
+      meta: { requiresAuth: true }
     },
     {
       path: '/collectList',
       name: 'collectList',
-      component:Collect
+      component: Collect,
+      meta: { requiresAuth: true }
     },
     {
       path: '/newsList/:id',
       name: 'newsList',
-      component:NewsList
+      component: NewsList
     },
-     {
+    {
       path: '/newsDetail/:id',
       name: 'newsDetail',
-      component:NewsDetail
+      component: NewsDetail
+    },
+    {
+      path: '/orderDetail',
+      name: 'orderDetail',
+      component: OrderDetail,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/appraise/:id',
+      name: 'appraise',
+      component: Appraise,
+      meta: { requiresAuth: true }
     }
   ]
 })

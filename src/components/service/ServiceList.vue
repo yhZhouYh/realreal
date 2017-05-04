@@ -141,17 +141,6 @@ export default {
                         }
                     })
                 }
-            } else {
-                if (!this.isOver2) {
-                    this.loading = true
-                    getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit }).then(res => {
-                        this.loading = false
-                        this.serviceItems.concat(res)
-                        if (res.length == 0) {
-                            this.isOver2 = true
-                        }
-                    })
-                }
             }
         },
         checkedItem(item, index) { //缓存处理

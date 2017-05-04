@@ -12,7 +12,7 @@
       </div>
       <div slot="leftitems"
            style="font-size:14px;">
-        合肥
+        南宁
       </div>
       <router-link to="search"
                    slot="rightitems"
@@ -124,88 +124,7 @@ export default {
         { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0, url: '/needs/0' }]
       ],
       news: [],
-      catesItem: [{
-        catesId: '1',
-        catesName: '家电服务',
-        items: [
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          }
-        ]
-      },
-      {
-        catesId: '2',
-        catesName: '家电服务',
-        items: [
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          }
-        ]
-      },
-      {
-        catesId: '3',
-        catesName: '家电服务',
-        items: [
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          },
-          {
-            card: require('../../assets/imgs/test.png'),
-            title: '专业师傅维修电视',
-            price: '30',
-            unit: '次',
-            name: '刚刚维修'
-          }
-        ]
-      }
-      ]
+      catesItem: []
     }
   },
   created() {

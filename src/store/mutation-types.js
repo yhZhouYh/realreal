@@ -13,6 +13,9 @@ export const SAVE_ACCESSTOKEN = 'SAVE_ACCESSTOKEN' //保存
 //用户相关
 export const SAVE_USER = 'SAVE_USER'
 
+//退出登录
+export const LOGOUT = 'LOGOUT'
+
 //全局loading
 export const CHANGE_LOADING = 'CHANGE_LOADING'
 
@@ -24,3 +27,6 @@ export const ADDRESS_EDIT = 'ADDRESS_EDIT'
 
 //选中地址
 export const CHECK_ADDRESS = 'CHECK_ADDRESS'
+
+//保存当前订单
+export const SAVE_ORDER = 'SAVE_ORDER'
