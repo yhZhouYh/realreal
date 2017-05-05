@@ -68,7 +68,7 @@ export default {
         return {
             user: this.$store.state.user,
             showloading: false,
-            avatar: this.user && this.user.userPhoto ? this.user.userPhoto : require('../../assets/imgs/avatar.jpg'),
+            avatar: this.$store.state.user.userPhoto ? this.$store.state.user.userPhoto: require('../../assets/imgs/avatar.jpg'),
             selected: 1,
             uploaderAvatar: ''
         }
@@ -130,6 +130,7 @@ export default {
                 uploader({ upfile: event.target.result, type: 'users' }).then(photo => {
                     _this.showloading = !this.showloading
                     _this.uploaderAvatar = photo
+                    _this.avatar = photo
                     _this.user.userPhoto = photo
                     _this.$store.dispatch('login', _this.user)
                 })

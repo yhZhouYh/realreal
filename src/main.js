@@ -22,7 +22,7 @@ Vue.component('blank', Blank)
 // import InfiniteLoading from 'vue-infinite-loading';
 // Vue.component('infiniteLoading', InfiniteLoading)
 // Vue.use(VueTouchRipple)
-//import './assets/fonts/iconfont' //引入图标字体 svg形式
+import './assets/fonts/iconfont' //引入图标字体 svg形式
 
 //绑定fastclick
 FastClick.attach(document.body)
