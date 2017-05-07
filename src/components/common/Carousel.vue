@@ -58,8 +58,9 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.init()
-
+            if (imgs.length) {
+                this.init()
+            }
         })
     },
     data() {

@@ -58,5 +58,10 @@
 
 	<permission name="hardware" />
 
+
+	 <feature name="baiduLocation">
+    	<param name="apiKey" value="8uBt9y54pwbH5EXH3YlMs4f0tnWZMwvd" />
+    </feature>
+
 </widget>
 

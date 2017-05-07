@@ -140,7 +140,21 @@ export default {
 
   },
   mounted() {
-    this.getLoction()
+    // this.getLoction()
+    if (api) {
+      const baiduLocation = api.require('baiduLocation');
+      baiduLocation.startLocation({
+        accuracy: '100m',
+        filter: 1,
+        autoStop: true
+      }, function (ret, err) {
+        if (ret.status) {
+          alert(JSON.stringify(ret));
+        } else {
+          alert(JSON.stringify(err));
+        }
+      });
+    }
   },
 
   methods: {
