@@ -1,67 +1,62 @@
- <widget id="A6948405735883"  version="0.0.1">
+<?xml version="1.0"?>
 
-    <name>mytest</name>
+-<widget version="0.0.1" id="A6948405735883">
 
-    <description>
+<name>mytest</name>
 
-        Example For APICloud.
+<description> Example For APICloud. </description>
 
-    </description>
+<author href="http://www.apicloud.com" email="developer@apicloud.com"> Developer </author>
 
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+<content src="index.html"/>
 
-        Developer
+<access origin="*"/>
 
-    </author>
+<preference value="false" name="pageBounce"/>
 
-    <content src="index.html" />
+<preference value="rgba(0,0,0,0.0)" name="appBackground"/>
 
-    <access origin="*" />
+<preference value="rgba(0,0,0,0.0)" name="windowBackground"/>
 
-    <preference name="pageBounce" value="false"/>
+<preference value="rgba(0,0,0,0.0)" name="frameBackgroundColor"/>
 
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+<preference value="true" name="hScrollBarEnabled"/>
 
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+<preference value="true" name="vScrollBarEnabled"/>
 
-	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+<preference value="true" name="autoLaunch"/>
 
-	<preference name="hScrollBarEnabled" value="true"/>
+<preference value="false" name="fullScreen"/>
 
-	<preference name="vScrollBarEnabled" value="true"/>
+<preference value="true" name="autoUpdate"/>
 
-	<preference name="autoLaunch" value="true"/>
+<preference value="false" name="smartUpdate"/>
 
-	<preference name="fullScreen" value="false"/>
+<preference value="true" name="debug"/>
 
-	<preference name="autoUpdate" value="true" />
+<preference value="true" name="statusBarAppearance"/>
 
-	<preference name="smartUpdate" value="false" />
+<permission name="readPhoneState"/>
 
-	<preference name="debug" value="true"/>
+<permission name="camera"/>
 
-	<preference name="statusBarAppearance" value="true"/>
+<permission name="record"/>
 
-	<permission name="readPhoneState" />
+<permission name="location"/>
 
-	<permission name="camera" />
+<permission name="fileSystem"/>
 
-	<permission name="record" />
+<permission name="internet"/>
 
-	<permission name="location" />
+<permission name="bootCompleted"/>
 
-	<permission name="fileSystem" />
-
-	<permission name="internet" />
-
-	<permission name="bootCompleted" />
-
-	<permission name="hardware" />
+<permission name="hardware"/>
 
 
-	 <feature name="baiduLocation">
-    	<param name="apiKey" value="8uBt9y54pwbH5EXH3YlMs4f0tnWZMwvd" />
-    </feature>
+-<feature name="baiduLocation">
+
+<param value="8uBt9y54pwbH5EXH3YlMs4f0tnWZMwvd" name="apiKey"/>
+
+</feature>
 
 </widget>
-
