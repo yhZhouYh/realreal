@@ -120,7 +120,7 @@ export default {
         [{ backcolor: '#ce1c1a', svgsrc: '#icon-444', categoryname: "以旧换新", catId: 344, url: '/needs/344' },
         { backcolor: '#4ddf74', svgsrc: '#icon-tongcheng', categoryname: "同城交易", catId: 52, url: '/needs/52' },
         { backcolor: '#8185a0', svgsrc: '#icon-xingyezixun', categoryname: "行业资讯", catId: 47, url: '/newsList/17' },
-        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "证正新闻", catId: 47, url: '/newsList/8' },
+        { backcolor: '#e1b77d', svgsrc: '#icon-fuwu', categoryname: "正证新闻", catId: 47, url: '/newsList/8' },
         { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0, url: '/needs/0' }]
       ],
       news: [],
@@ -141,7 +141,7 @@ export default {
   },
   mounted() {
     // this.getLoction()
-    if (api) {
+    apiready = function () {
       const baiduLocation = api.require('baiduLocation');
       baiduLocation.startLocation({
         accuracy: '100m',

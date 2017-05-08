@@ -58,7 +58,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            if (imgs.length) {
+            if (this.imgs.length) {
                 this.init()
             }
         })

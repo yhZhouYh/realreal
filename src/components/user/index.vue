@@ -148,7 +148,7 @@
                               style="color:#9dead8"></icon>
                     </cell>
                 </group>
-                <div class="login-button-box" style="margin-top:1rem;">
+                <div class="login-button-box" style="margin-top:1rem;" v-if="user.userId">
                     <x-button class="login-button"
                               @click.native="logout">退出登录</x-button>
                 </div>
