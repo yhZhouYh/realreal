@@ -12,7 +12,7 @@
       </div>
       <div slot="leftitems"
            style="font-size:14px;">
-        南宁
+        {{city}}
       </div>
       <router-link to="search"
                    slot="rightitems"
@@ -124,7 +124,8 @@ export default {
         { backcolor: '#c8c8c8', svgsrc: '#icon-quanbufenlei', categoryname: "全部分类", catId: 0, url: '/needs/0' }]
       ],
       news: [],
-      catesItem: []
+      catesItem: [],
+      city: ''
     }
   },
   created() {
@@ -141,20 +142,22 @@ export default {
   },
   mounted() {
     // this.getLoction()
-    window.apiready = function () {
-      const baiduLocation = api.require('baiduLocation');
-      baiduLocation.startLocation({
-        accuracy: '100m',
-        filter: 1,
-        autoStop: true
-      }, function (ret, err) {
-        if (ret.status) {
-          alert(JSON.stringify(ret));
+    const loc = this.$store.state.currentLocation
+    console.error(loc.city)
+    if (loc.city) {
+      this.city = loc.city
+    } else {
+      let locationsave = {}
+      window.apiready = () => {
+        const map = api.require('bMap')
+        if (window.userAgent.indexOf('Android') > -1 || window.userAgent.indexOf('Adr') > -1) {
+          this.getLocation(map)
         } else {
-          alert(JSON.stringify(err));
+          this.getLocationByIos(map)
         }
-      });
+      }
     }
+
   },
 
   methods: {
@@ -164,6 +167,49 @@ export default {
     getLoction() {
       navigator.geolocation.getCurrentPosition(pos => {
         console.log(pos.coords.latitude, pos.coords.longitude)
+      })
+    },
+    showToast(text) {
+      this.$vux.toast.show({
+        text: text,
+        position: 'bottom',
+        width: 'auto',
+        type: 'text'
+      })
+    },
+    getLocation(map) {
+      map.getLocation({ accuracy: '100m', autoStop: true, filter: 1 }, (pos, poserr) => {
+        if (pos.status) {
+          locationsave.longitude = pos.lon
+          locationsave.latitude = pos.lat
+          this.$store.dispatch('saveLocation', locationsave)
+          console.error(JSON.stringify(pos))
+          map.getNameFromCoords({ lon: pos.lon, lat: pos.lat }, (location, locerr) => {
+            if (location.status) {
+              console.error(JSON.stringify(location))
+              this.city = location.city
+              locationsave.city = location.city
+              this.$store.dispatch('saveLocation', locationsave)
+            } else {
+              console.error(locerr.code)
+              console.error('获取位置信息')
+              this.showToast('未获取到位置信息')
+            }
+          })
+        } else {
+          console.error(poserr.code)
+          console.error('定位服务失败')
+          this.showToast('定位服务失败')
+        }
+      })
+    },
+    getLocationByIos(map) {
+      map.initMapSDK((init) => {
+        if (init.status) {
+          this.getLocation(map)
+        } else {
+          console.error('地图初始化失败')
+        }
       })
     }
   }
@@ -177,7 +223,7 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding-top: 0.85rem;
-  padding-bottom: 1.8rem;
+  padding-bottom: 1.1rem;
 }
 
 .z-page {

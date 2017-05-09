@@ -1,21 +1,21 @@
 <template>
-    <div :class="{'vux-1px-b': showBorder}" class="z-header zflex"
-         >
+    <div :class="{'vux-1px-b': showBorder}"
+         class="z-header zflex">
         <span class="z-header-left zflex zflex1">
-                    <div class="z-arrow zflex" :style="{color: arrowColor}" @click="goback(url)">
-                        <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
-                            <use xlink:href="#icon-fanhui"></use>
-                        </svg>
-                         <span class="leftwords" v-show="showBack">{{backWords}}</span>
+                        <div class="z-arrow zflex" :style="{color: arrowColor}" @click="goback(url)">
+                            <svg class="zicon zheader-icon" aria-hidden="true" v-show="showArrow">
+                                <use xlink:href="#icon-fanhui"></use>
+                            </svg>
+                             <span class="leftwords" v-show="showBack">{{backWords}}</span>
     </div>
     <slot name="leftitems"></slot>
     </span>
     <span class="z-header-middle">{{title}}
-        <slot name="middleitems" v-if="!title"></slot>
-    </span>
-    <span class="z-header-right zflex zflex1">
-            <slot name="rightitems"></slot>
+            <slot name="middleitems" v-if="!title"></slot>
         </span>
+    <span class="z-header-right zflex zflex1">
+                <slot name="rightitems"></slot>
+            </span>
     </div>
 </template>
 
@@ -38,18 +38,18 @@
     line-height: 1.4;
     font-size: 19px;
     height: 0.85rem;
-    text-align: center;
+    text-align: center; 
     padding: 0.08rem 0.2rem;
-    box-sizing: border-box;
-    //background: rgba(0, 0, 0, 0);
+    // padding: 25px 0.2rem 0.1rem;
+    box-sizing: border-box; //background: rgba(0, 0, 0, 0);
     background: #fff;
     position: absolute;
     width: 100%;
     top: 0;
     z-index: 100;
-    left:0;
+    left: 0;
     transition: all ease 0.3s;
-    &.vux-1px-b{
+    &.vux-1px-b {
         position: absolute;
     }
 }
@@ -59,10 +59,11 @@
     position: relative;
 }
 
-.z-header-right{
+.z-header-right {
     // text-align: right;
     justify-content: flex-end;
 }
+
 .zheader-icon {
     font-size: 0.4rem;
 }
@@ -108,17 +109,17 @@ export default {
         }
     },
     methods: {
-        goback (url) {
-          if(this.$route && url){
-            this.$router.push(url)
-          }else if(this.$route &&　!url){
-              this.$router.go(-1)
-          }else if(!this.$route && url){
-              location.href='#/' + url
-          }else{
-              historu.go(-1)
-          }
-          this.$emit('goback')
+        goback(url) {
+            if (this.$route && url) {
+                this.$router.push(url)
+            } else if (this.$route && 　!url) {
+                this.$router.go(-1)
+            } else if (!this.$route && url) {
+                location.href = '#/' + url
+            } else {
+                historu.go(-1)
+            }
+            this.$emit('goback')
         }
     }
 

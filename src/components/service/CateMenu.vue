@@ -73,6 +73,7 @@ export default {
     box-shadow: none;
     color: #000;
     border-radius: 0;
+    outline: none;
     &.checked {
         border-left: 2px solid rgb(231, 64, 55);
     }

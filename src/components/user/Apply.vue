@@ -187,6 +187,11 @@
                     <a slot="middle">我同意<span>《正证网入驻协议》</span></a>
                 </checker>
             </div>
+            <!--<div class="login-button-box">
+                <x-button class="login-button"
+                          @click.native="user">我是维修员</x-button>
+            </div>-->
+
             <div class="login-button-box">
                 <x-button class="login-button"
                           @click.native="apply">确认提交</x-button>
@@ -401,5 +406,11 @@ export default {
 
 .v-transfer-dom .vux-popup-picker-header {
     color: #E64340;
+}
+.z-apply{
+    .login-button{
+        border-radius: 0;
+        margin-bottom: 1.5rem;
+    }
 }
 </style>

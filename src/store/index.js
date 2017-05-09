@@ -17,7 +17,8 @@ export default new Vuex.Store({
       index: 0,
       item: null
     },
-    currentOrder: {}
+    currentOrder: {},
+    currentLocation: {}
   },
   // actions,
   // getters,
@@ -52,6 +53,9 @@ export default new Vuex.Store({
        state.accessToken = ''
        localStorage.removeItem('accessToken')
        localStorage.removeItem('user')
+     },
+     [types.SAVE_LOCATION](state,location){
+       state.currentLocation = location
      }
   },
   actions: {
@@ -78,6 +82,9 @@ export default new Vuex.Store({
     },
     logout({commit}){
       commit(types.LOGOUT)
+    },
+    saveLocation({commit}, location){
+      commit(types.SAVE_LOCATION, location)
     } 
   },
   modules: {

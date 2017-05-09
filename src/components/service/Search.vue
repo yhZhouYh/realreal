@@ -125,7 +125,8 @@ export default {
 </script>
 <style>
 .z-search .cate-btns {
-    width: 23%;
+    width: auto;
     margin: 0.3rem 0.5% 0;
+    padding: 0 0.2rem;
 }
 </style>
