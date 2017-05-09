@@ -141,7 +141,7 @@ export default {
   },
   mounted() {
     // this.getLoction()
-    apiready = function () {
+    window.apiready = function () {
       const baiduLocation = api.require('baiduLocation');
       baiduLocation.startLocation({
         accuracy: '100m',
