@@ -76,7 +76,8 @@ export default {
             addmodel: [],
             addressData: ChinaAddressV3Data,
             userAddress: '',
-            isDefault: false
+            isDefault: false,
+            addressId: 0
         }
     },
     created(){
@@ -88,6 +89,7 @@ export default {
                 this.userPhone = addressEdit.userPhone
                 this.userAddress = addressEdit.userAddress
                 this.isDefault = addressEdit.isDefault
+                this.addressId = addressEdit.addressId
             }
         }
     },
@@ -97,11 +99,7 @@ export default {
             this.showToast = true
         },
         edit() {
-            let addressId = 0
             let validMobile = this.$refs.userPhone.valid
-            if (this.$route.query.edit) {
-                addressId = 1
-            }
             if(!validMobile){
                 this.validToast('手机号码格式不正确')
                 return
@@ -114,7 +112,7 @@ export default {
                 areaIdPath: this.addmodel.join('_') + '_',
                 areaId: this.addmodel[2],
                 userid: this.$store.state.user.userId,
-                addressId
+                addressId: this.addressId
                 
             }
           

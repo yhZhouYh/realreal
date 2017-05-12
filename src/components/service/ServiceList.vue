@@ -129,7 +129,7 @@ export default {
         loadMore() {
             if (this.selected == 0) {
                 let middle = this.middle[this.isChecked]
-                if (!middle.isOver) {
+                if (!middle.isOver && !this.loading) {
                     this.loading = true
                     middle.page += 1
                     getGoodsByCid({ id: this.$route.params.id, page: middle.page, limit: this.limit, cid: this.currentCid }).then(res => {
@@ -138,6 +138,17 @@ export default {
                         this.serviceItems = middle.items
                         if (res.length == 0) {
                             middle.isOver = true
+                        }
+                    })
+                }
+            } else {
+                if (!this.isOver2 && !this.loading) {
+                    this.loading = true
+                    getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit }).then(res => {
+                        this.loading = false
+                        this.storeItems.concat(res)
+                        if (res.length == 0) {
+                            this.isOver2 = true
                         }
                     })
                 }
@@ -160,7 +171,7 @@ export default {
     }
 }
 </script>
-<style lang="less" scrope>
+<style lang="less" scope>
 .z-button-tab {
     width: 3rem;
     margin: 0 auto;

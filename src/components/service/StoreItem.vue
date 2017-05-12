@@ -6,7 +6,7 @@
         <div class="store-desc">
             <p>{{item.shopName}}</p>
             <div class="zflex gray storeSale">
-                <span class="zflex1">已接单{{item.sale}}</span>
+                <!--<span class="zflex1">已接单{{item.sale}}</span>-->
                 <!--<span>已接单{{item.sale}}</span>-->
             </div>
         </div>
@@ -31,6 +31,7 @@ export default {
 .store-img {
     height: 3.45rem;
     width: 100%;
+    overflow: hidden;
 }
 
 .back-img {

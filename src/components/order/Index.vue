@@ -16,18 +16,17 @@
                 <div>暂无相关订单~</div>
             </blank>
             <div class="z-box order-item"
-                 v-for="item in orderList">
+                 v-for="(item, index) in orderList">
                 <div class="order-title zflex">
                     <!--<icon icon="icon-dianpu"
-                                                                  class="gray"></icon>-->
+                                                                                      class="gray"></icon>-->
                     <span class="store-title zflex1">订单状态</span>
                     <span class="red">{{status[item.orderStatus]}}</span>
                 </div>
                 <router-link :to="{name:'service', params:{id: goods.goodsId}}"
                              class="orderList-detail zflex"
                              v-for="goods in item.goods"
-                             :key="goods.goodsId"
-                             v-touch-ripple>
+                             :key="goods.goodsId">
                     <div class="service-img"
                          :style="{backgroundImage: 'url('+goods.goodsImg+')'}"></div>
                     <span class="store-title zflex1">{{goods.goodsName}}</span>
@@ -48,7 +47,8 @@
                     <x-button :mini="true"
                               v-if="item.orderStatus == -2"
                               :plain="true"
-                              class="z-check-button">取消订单</x-button>
+                              class="z-check-button"
+                              @click.native="cancel(item, index)">取消订单</x-button>
                     <x-button :mini="true"
                               :plain="true"
                               class="z-check-button active"
@@ -65,6 +65,11 @@
                       :loading="loading"
                       @load="loadMore"
                       loading-text="加载中" />
+            <confirm v-model="show"
+                     title="你确定要取消该订单么"
+                     @on-confirm="onConfirm">
+                <!--<p style="text-align:center;">你确定要删除么</p>-->
+            </confirm>
         </div>
     </div>
 </template>
@@ -72,15 +77,16 @@
 import ZHeader from '@/components/common/ZHeader.vue'
 import Menu from '../common/Menu.vue'
 import Icon from '../common/Icon'
-import XButton from 'vux/src/components/x-button'
-import { orderIndex } from '../../api'
+import { XButton, Confirm } from 'vux'
+import { orderIndex, cancelOrder } from '../../api'
 export default {
     name: 'orderList',
     components: {
         ZHeader,
         ZMenu: Menu,
         Icon,
-        XButton
+        XButton,
+        Confirm
     },
     data() {
         return {
@@ -105,7 +111,10 @@ export default {
                 '0': '待接收',
                 '1': '待接收',
                 '2': '已完成'
-            }
+            },
+            show: false,
+            cancelItem: {},
+            cancelIndex: ''
         }
     },
 
@@ -125,13 +134,13 @@ export default {
     methods: {
         loadMore() {
             let middle = this.middle[this.isChecked]
-            if (!middle.isOver) {
+            if (!middle.isOver && !this.loading) {
                 this.loading = true
                 middle.page += 1
                 orderIndex({ userid: this.$store.state.user.userId, page: middle.page, limit: this.limit, type: this.currentType }).then(res => {
                     this.loading = false
                     middle.items.concat(res)
-                    this.serviceItems = middle.items
+                    this.orderList = middle.items
                     if (res.length == 0) {
                         middle.isOver = true
                     }
@@ -160,6 +169,21 @@ export default {
         valueIt(item) {
             this.$store.dispatch('saveOrder', item)
             this.$router.push({ name: 'appraise', params: { id: item.orderId } })
+        },
+        onConfirm() {
+            cancelOrder({ userid: this.$store.state.user.userId, orderId: this.cancelItem.orderId }).then(res => {
+                this.orderList.splice(this.cancelIndex, 1)
+                //如果已经点过菜单 已取消就添加一条
+                debugger
+                if (this.middle['cancel']) {
+                    this.middle['cancel'].items.unshift(this.cancelItem)
+                }
+            })
+        },
+        cancel(item, index) {
+            this.show = !this.show
+            this.cancelItem = item
+            this.cancelIndex = index
         }
     }
 

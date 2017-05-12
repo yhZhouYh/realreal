@@ -26,6 +26,7 @@ import NewsList from '@/components/user/News.vue'
 import NewsDetail from '@/components/user/NewsDetail.vue'
 import OrderDetail from '@/components/order/OrderDetail.vue'
 import Appraise from '@/components/order/Appraise.vue'
+import PayStatus from '@/components/order/PayStatus.vue'
 
 Vue.use(Router)
 
@@ -171,6 +172,11 @@ export default new Router({
       name: 'appraise',
       component: Appraise,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/paystatus/:id',
+      name: 'paystatus',
+      component: PayStatus
     }
   ]
 })

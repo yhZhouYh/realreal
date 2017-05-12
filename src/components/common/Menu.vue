@@ -102,6 +102,7 @@ export default {
     box-shadow: none;
     color: #000;
     border-radius: 0;
+    outline: none;
     &:last-child {
         margin-right: 0;
     }

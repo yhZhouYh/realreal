@@ -35,8 +35,13 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     ))
     //自行处理 将生成的文件复制进入widget，处理apicloud 打包问题
     var bb = ora('正在复制处理到widget文件夹...').start()
-    shell.cp('-Rf', path.join(config.build.assetsRoot,'/*'), path.resolve(__dirname, '../widget'));
-    console.log(chalk.cyan('复制完成'))
-    bb.stop()
+    var cppath = path.resolve(__dirname, '../widget')
+    rm(path.join(cppath, 'static'), err => {
+      if (err) throw console.warn(err)
+      shell.cp('-Rf', path.join(config.build.assetsRoot, '/*'), cppath);
+      console.log(chalk.cyan('复制完成'))
+      bb.stop()
+    })
+
   })
 })

@@ -19,16 +19,16 @@
                  v-if="isManage">
                 <span style="padding-right:0.2rem;"
                       @click="edit(addressItem)">编辑</span>
-                <span>删除</span>
+                <span @click="deleteAddr(addressItem, index)">删除</span>
             </div>
             <!--<z-checker class="add-bottom"
-                                       v-if="isManage">
-                                <span slot="middle">默认地址</span>
-                                <div slot="right">
-                                    <span style="padding-right:0.2rem;">编辑</span>
-                                    <span>删除</span>
-                                </div>
-                            </z-checker>-->
+                                           v-if="isManage">
+                                    <span slot="middle">默认地址</span>
+                                    <div slot="right">
+                                        <span style="padding-right:0.2rem;">编辑</span>
+                                        <span>删除</span>
+                                    </div>
+                                </z-checker>-->
             <icon icon="icon-moren"
                   class="isdefault red"
                   v-if="addressItem.isDefault !=0"></icon>
@@ -39,6 +39,7 @@
 import ZChecker from '../cart/CheckBox'
 import Icon from '../common/Icon'
 import { ChinaAddressV3Data, Value2nameFilter } from 'vux'
+
 export default {
     name: 'addressItem',
     props: {
@@ -85,10 +86,13 @@ export default {
         },
         checkItem(item, index) {
             if (!this.$route.query.isManage) {
-                this.$store.dispatch('checkAddress', {item, index})
+                this.$store.dispatch('checkAddress', { item, index })
                 this.$emit('checkedItem')
                 this.isChecked = index
             }
+        },
+        deleteAddr(addr,index) {
+            this.$emit('deleteAdd', addr,index)
         }
     }
 }

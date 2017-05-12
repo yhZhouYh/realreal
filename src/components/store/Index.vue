@@ -4,11 +4,11 @@
         <z-header :showBack="true"
                   backWords=""
                   :title="shop.shopName">
-        <span slot="rightitems">
-       <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
-       <icon icon="icon-tuijianicon" @click.native="collect" v-show="nocollect"></icon>
-    </span>
-    </z-header>
+            <span slot="rightitems">
+               <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+               <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+            </span>
+        </z-header>
         <!--头部结束-->
         <!--轮播开始-->
         <div class="z-container"
@@ -23,13 +23,13 @@
             <!--轮播结束-->
             <!--友情提示开始-->
             <div class="z-box">
-                <div class="z-storedetail-remind zflex">
+                <!--<div class="z-storedetail-remind zflex">
                     <span>友情提示: </span>
                     <span class="remind-items zflex1">
-                                                <p> 1.维修需要时间，请耐心等待。</p>
-                                                <p> 2.自行送件到维修店，可免上门服务费哟。</p>
-                                             </span>
-                </div>
+                    <p> 1.维修需要时间，请耐心等待。</p>
+                    <p> 2.自行送件到维修店，可免上门服务费哟。</p>
+                    </span>
+                </div>-->
             </div>
             <!--友情提示结束-->
             <!--详情 简介 评价-->
@@ -63,7 +63,10 @@
             </div>
             <!--商店详情-->
             <!--评论开始-->
-            <comment v-show="currentView == 2" :scroller="scroller"  type="shop" :canLoadMore="currentView == 2"></comment>
+            <comment v-show="currentView == 2"
+                     :scroller="scroller"
+                     type="shop"
+                     :canLoadMore="currentView == 2"></comment>
             <scroller :scroller="scroller"
                       :loading="loading"
                       @load="loadMore"
@@ -89,7 +92,7 @@ import StoreDetail from './StoreDetail.vue'
 import pull from '../filters/pull'
 import Comment from './Comment.vue'
 import Icon from '../common/Icon'
-import { shopDetail, shopCategory, shopGoodsByShopId, collect} from '../../api'
+import { shopDetail, shopCategory, shopGoodsByShopId, collect, isCollect } from '../../api'
 export default {
     name: 'storeDetail',
     components: {
@@ -140,7 +143,7 @@ export default {
             isOver2: false,
             page2: 1,
             collected: false,
-            nocollect: true
+            // nocollect: true
         }
     },
     created() {
@@ -164,6 +167,11 @@ export default {
                 })
             } else {
                 this.serviceItems = this.middle[index].items
+            }
+        })
+        isCollect({ userid: this.$store.state.user.userId, type: 1, id: this.$route.params.id }).then(res => {
+            if (res) {
+                this.collected = true
             }
         })
     },
@@ -203,16 +211,24 @@ export default {
                 this.serviceItems = this.middle[index].items
             }
         },
-        collect(){
-            collect({userid: this.$store.state.user.userId, id:this.shop.shopId,type: 1}).then(res=>{
-                if(res == 1){
-                    this.collected = true
-                    this.nocollect= false
-                }else{
-                    this.collected = false
-                    this.nocollect= true
+        collect() {
+            collect({ userid: this.$store.state.user.userId, id: this.shop.shopId, type: 1 }).then(res => {
+                this.collected = !this.collected
+                if (this.collected) {
+                    this.$vux.toast.show({
+                        text: '收藏成功',
+                        position: 'bottom',
+                        width: 'auto',
+                        type: 'text'
+                    })
+                } else {
+                    this.$vux.toast.show({
+                        text: '取消收藏',
+                        position: 'bottom',
+                        width: 'auto',
+                        type: 'text'
+                    })
                 }
-                
             })
         }
     }

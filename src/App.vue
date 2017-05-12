@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <transition name="fade"
-                mode="out-in">      
+    <transition :name="direction" :mode="mode">
+      <navigation>
         <router-view></router-view>
+      </navigation>
     </transition>
     <circle-loading :showloading="$store.state.loading"></circle-loading>
     <Z-footer :show="$store.state.showFooter"></Z-footer>
@@ -14,11 +15,15 @@ import CircleLoading from '@/components/common/CircleLoading'
 import ZFooter from '@/components/home/Footter'
 export default {
   name: 'app',
-  // data () {
-  //   return {
-  //     showloading: this.$store.state.loading
-  //   }
-  // },
+  computed: {
+    direction () {
+      return this.$store.state.navigation.direction
+    },
+    mode () {
+      console.log(1)
+       return this.direction == 'forward'? 'out-in' : ''
+    }   
+  },
   components: {
     CircleLoading,
     ZFooter
@@ -29,9 +34,10 @@ export default {
 <style lang="less">
 @import '~vux/src/styles/reset.less';
 @import './assets/styles/1px.less';
-*{
+* {
   box-sizing: border-box;
 }
+
 body,
 html {
   height: 100%;
@@ -39,28 +45,87 @@ html {
   background-color: #f4f4f4;
 }
 
-body{
-  max-width:720px;
-  margin:0 auto;
+body {
+  max-width: 720px;
+  margin: 0 auto;
   position: relative;
 }
+
 #app {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.fade-enter-active{
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.fade-leave-active {
-  transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+.forward-enter, .forword-leave-active{
+  opacity: 0;
+  transform: translate3d(0, 25%, 0)
 }
 
-.fade-leave-active,
-.fade-enter {
+.forward-enter-active {
+  transition: all 0.3s ease;
+}
+.forward-leave-active {
+  transition: all 0.1s ease;
+}
+.forward-enter{
+  transform: translateX(20px);
+  // opacity: 0;
+}
+.forward-leave-active{
+  transform: translateX(-20px);
   opacity: 0;
 }
+
+.back-enter-active {
+  transition: all .3s ease;
+}
+.back-leave-active {
+  transition: all .3s ease;
+}
+.back-leave-active {
+  z-index:100;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+
+// .forward-leave-active {
+//   transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+// }
+
+
+// .back-leave{
+//   z-index:10
+// }
+
+// .back-leave-active{
+//   opacity: 0;
+//   transform: translate3d(0, 25%, 0)
+// }
+
+
+// .forward-enter-active {
+//   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+// }
+
+// .back-leave-active {
+//   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+// }
+
+
+
+
+
+// .fade-leave-active,
+// .fade-enter {
+//   opacity: 0;
+// }
+// .fade-enter,
+// .fade-enter {
+//   opacity: 0;
+//   transform: translate3d(0, 25%, 0)
+// }
 
 // .fade-enter{
 //   opacity: 0;
@@ -164,21 +229,22 @@ a {
 
 
 
+
+
 /*the animation definition*/
 
-@-webkit-keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0)
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none
-  }
-}
-
+// @-webkit-keyframes fadeInUp {
+//   0% {
+//     opacity: 0;
+//     -webkit-transform: translate3d(0, 100%, 0);
+//     transform: translate3d(0, 100%, 0)
+//   }
+//   100% {
+//     opacity: 1;
+//     -webkit-transform: none;
+//     transform: none
+//   }
+// }
 @keyframes fadeInUp {
   0% {
     opacity: 0;

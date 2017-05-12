@@ -102,6 +102,7 @@ export default {
                     width: 'auto',
                     type: 'text'
                 })
+                this.$router.go(-1)
             })
             // if(){
             //     this.$vux.toast.show({

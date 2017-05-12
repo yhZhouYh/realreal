@@ -6,9 +6,9 @@
                   :showBorder="false"
                   title="我的账户">
             <!--<div slot="rightitems"
-                                                     style="margin-right: 5px;">
-                                                     <icon icon=""></icon>
-                                                </div>-->
+                                                                     style="margin-right: 5px;">
+                                                                     <icon icon=""></icon>
+                                                                </div>-->
             <router-link to="user-info"
                          slot="rightitems"
                          style="color: #fff">
@@ -28,64 +28,64 @@
                 </div>
             </div>
             <!--<div class="user-focus zflex">
-                            <div class="user-focus-iem zflex zflex1 zflex-center">
-                                <icon icon="icon-shoucang"
-                                      style="color:#f89aaa"></icon>
-                                <div class="user-focus-desc">
-                                    <div class="red">5个</div>
-                                    <div>收藏</div>
-                                </div>
-                            </div>
-                            <div class="user-focus-iem zflex zflex1 zflex-center vux-1px-l vux-1px-r">
-                                <icon icon="icon-0051"
-                                      style="color:#eaa00d"></icon>
-                                <div class="user-focus-desc">
-                                    <div class="red">5个</div>
-                                    <div>钱包</div>
-                                </div>
-                            </div>
-                            <div class="user-focus-iem zflex zflex1 zflex-center">
-                                <icon icon="icon-youhui"
-                                      style="color:#4cb2f2"></icon>
-                                <div class="user-focus-desc">
-                                    <div class="red">5个</div>
-                                    <div>优惠</div>
-                                </div>
-                            </div>
-                        </div>-->
+                                            <div class="user-focus-iem zflex zflex1 zflex-center">
+                                                <icon icon="icon-shoucang"
+                                                      style="color:#f89aaa"></icon>
+                                                <div class="user-focus-desc">
+                                                    <div class="red">5个</div>
+                                                    <div>收藏</div>
+                                                </div>
+                                            </div>
+                                            <div class="user-focus-iem zflex zflex1 zflex-center vux-1px-l vux-1px-r">
+                                                <icon icon="icon-0051"
+                                                      style="color:#eaa00d"></icon>
+                                                <div class="user-focus-desc">
+                                                    <div class="red">5个</div>
+                                                    <div>钱包</div>
+                                                </div>
+                                            </div>
+                                            <div class="user-focus-iem zflex zflex1 zflex-center">
+                                                <icon icon="icon-youhui"
+                                                      style="color:#4cb2f2"></icon>
+                                                <div class="user-focus-desc">
+                                                    <div class="red">5个</div>
+                                                    <div>优惠</div>
+                                                </div>
+                                            </div>
+                                        </div>-->
     
             <div class="">
                 <!--<group>
-                                <cell title="我的订单"
-                                      is-link>
-                                    <icon icon="icon-dingdan1"
-                                          slot="icon"
-                                          :horizon="true" style="color:#fab37d"></icon>
-                                </cell>
-                            </group>-->
+                                                <cell title="我的订单"
+                                                      is-link>
+                                                    <icon icon="icon-dingdan1"
+                                                          slot="icon"
+                                                          :horizon="true" style="color:#fab37d"></icon>
+                                                </cell>
+                                            </group>-->
                 <!--<div class="order-menu zflex">
-                                <router-link to="/orderList"
-                                   class="itembox zflex1 zflex-center zflex-col">
-                                    <icon icon="icon-daifukuan"></icon>
-                                    <div>待付款</div>
-                                    <div class="reddot"></div>
-                                </router-link>
-                                <a href="javascript:;"
-                                   class="itembox zflex1 zflex-center zflex-col">
-                                    <icon icon="icon-daiqujian"></icon>
-                                    <div>待取件</div>
-                                </a>
-                                <a href="javascript:;"
-                                   class="itembox zflex1 zflex-center zflex-col">
-                                    <icon icon="icon-buoumaotubiao41"></icon>
-                                    <div>维修中</div>
-                                </a>
-                                <a href="javascript:;"
-                                   class="itembox zflex1 zflex-center zflex-col">
-                                    <icon icon="icon-daipingjia"></icon>
-                                    <div>待评价</div>
-                                </a>
-                            </div>-->
+                                                <router-link to="/orderList"
+                                                   class="itembox zflex1 zflex-center zflex-col">
+                                                    <icon icon="icon-daifukuan"></icon>
+                                                    <div>待付款</div>
+                                                    <div class="reddot"></div>
+                                                </router-link>
+                                                <a href="javascript:;"
+                                                   class="itembox zflex1 zflex-center zflex-col">
+                                                    <icon icon="icon-daiqujian"></icon>
+                                                    <div>待取件</div>
+                                                </a>
+                                                <a href="javascript:;"
+                                                   class="itembox zflex1 zflex-center zflex-col">
+                                                    <icon icon="icon-buoumaotubiao41"></icon>
+                                                    <div>维修中</div>
+                                                </a>
+                                                <a href="javascript:;"
+                                                   class="itembox zflex1 zflex-center zflex-col">
+                                                    <icon icon="icon-daipingjia"></icon>
+                                                    <div>待评价</div>
+                                                </a>
+                                            </div>-->
                 <group class="my-order">
                     <cell title="我的订单"
                           link="/orderList"
@@ -94,6 +94,8 @@
                               slot="icon"
                               :horizon="true"
                               style="color:#fab37d"></icon>
+                        <badge :text="noPayNum"
+                               v-if="noPayNum !=0"></badge>
                     </cell>
                     <cell title="我的地址"
                           link="/addressManage?isManage=1"
@@ -110,6 +112,16 @@
                               slot="icon"
                               :horizon="true"
                               style="color:#afa1ee"></icon>
+                    </cell>
+                    <cell title="我的购物车"
+                          link="/cart"
+                          is-link>
+                        <icon icon="icon-gouwuche"
+                              slot="icon"
+                              :horizon="true"
+                              style="color:#5e97e6"></icon>
+                        <badge :text="cartNum"
+                               v-if="cartNum!=0"></badge>
                     </cell>
                 </group>
     
@@ -134,21 +146,27 @@
                               style="color:#ce77d8"></icon>
                     </cell>
                     <!--<cell title="意见反馈"
-                                  is-link>
-                                <icon icon="icon-shequ"
-                                      slot="icon"
-                                      :horizon="true"
-                                      style="color:#9dd2fa"></icon>
-                            </cell>-->
-                    <cell title="联系客服"
-                          is-link>
-                        <icon icon="icon-fuwu"
-                              slot="icon"
-                              :horizon="true"
-                              style="color:#9dead8"></icon>
-                    </cell>
+                                                  is-link>
+                                                <icon icon="icon-shequ"
+                                                      slot="icon"
+                                                      :horizon="true"
+                                                      style="color:#9dd2fa"></icon>
+                                            </cell>-->
+                   
+                        <cell  :href="'tel:'+15655140883"
+                              is-link>
+                            <icon icon="icon-fuwu"
+                                  slot="icon"
+                                  :horizon="true"
+                                  style="color:#9dead8"></icon>
+
+                                 <a :href="'tel:'+phone" slot="after-title" style="width:100%;display:block">联系客服</a> 
+                        </cell>
+                   
                 </group>
-                <div class="login-button-box" style="margin-top:1rem;" v-if="user.userId">
+                <div class="login-button-box"
+                     style="margin-top:1rem;"
+                     v-if="user.userId">
                     <x-button class="login-button"
                               @click.native="logout">退出登录</x-button>
                 </div>
@@ -161,14 +179,17 @@
 import ZHeader from '@/components/common/ZHeader.vue'
 import Icon from '../common/Icon'
 import _throttle from 'lodash.throttle'
-import XButton from 'vux/src/components/x-button'
+import { getCartNum, getPhone } from '../../api'
+import { XButton } from 'vux'
+import Badge from 'vux/src/components/Badge'
 export default {
     name: 'user-index',
     components: {
         // Wave
         ZHeader,
         Icon,
-        XButton
+        XButton,
+        Badge
     },
     computed: {
         username() {
@@ -187,10 +208,22 @@ export default {
             changeHeader: true,
             showBorder: false,
             arrowColor: '#fff',
-            user: this.$store.state.user
+            user: this.$store.state.user,
+            cartNum: 0,
+            noPayNum: 0,
+            phone: 0
         }
     },
-    mounted() {
+    created() {
+        getPhone({ field: 'serviceTel' }).then(res => {
+            this.phone = res.fieldValue
+        })
+        if (this.$store.state.user.userId) {
+            getCartNum({ userid: this.$store.state.user.userId }).then(res => {
+                this.cartNum = res.cartsNum
+                this.noPayNum = res.noPayNum
+            })
+        }
 
     },
     methods: {
@@ -216,7 +249,7 @@ export default {
         gopass() {
             this.$router.push({ name: 'register', query: { id: 'reset' } })
         },
-        logout(){
+        logout() {
             this.$store.dispatch('logout')
             this.$router.push('login')
         }
@@ -234,12 +267,6 @@ export default {
     height: 3rem;
     margin-top: -0.85rem;
 }
-
-
-
-
-
-
 
 
 

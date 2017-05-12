@@ -11,11 +11,11 @@
                       link="addressManage"
                       is-link>
                     <span slot="after-title">
-                                                    {{currentAddr.userPhone}}
-                                                </span>
+                                    {{currentAddr.userPhone}}
+                                 </span>
                     <span slot="inline-desc">
-                                                    {{currentAddr.areaList | value2name}} {{currentAddr.userAddress}}
-                                                </span>
+                                    {{currentAddr.areaList | value2name}} {{currentAddr.userAddress}}
+                                </span>
                 </cell>
                 <cell v-else
                       title="选择地址"
@@ -29,8 +29,8 @@
                 <div class="cart-item vux-1px-b zflex">
                     <span slot="middle"
                           class="zflex zflex1">
-                                                                    <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
-                                                                    <span class="cart-title">{{item.shopName}}</span>
+                                        <icon icon="icon-dianpu" :vertical="false" class="gray"></icon>
+                                        <span class="cart-title">{{item.shopName}}</span>
                     </span>
                 </div>
                 <div class="cart-item vux-1px-b">
@@ -50,13 +50,13 @@
             <div class="checkPay gray">选择支付方式</div>
             <div class="z-box">
                 <!--<div class="order-checker vux-1px-b">
-                    <z-checker :value="1"
-                               :model="checker"
-                               :id="1"
-                               type="radio"
-                               position="right">
-                        <span></span>货到付款</z-checker>
-                </div>-->
+                                            <z-checker :value="1"
+                                                       :model="checker"
+                                                       :id="1"
+                                                       type="radio"
+                                                       position="right">
+                                                <span></span>货到付款</z-checker>
+                                        </div>-->
                 <div class="order-checker">
                     <z-checker :value="2"
                                :model="checker"
@@ -66,11 +66,11 @@
                                position="right">支付宝</z-checker>
                 </div>
                 <!--<div class="order-checker">
-                                <z-checker :value="3"
-                                           :model="checker"
-                                           :id="3"
-                                           type="radio">微信</z-checker>
-                            </div>-->
+                                                        <z-checker :value="3"
+                                                                   :model="checker"
+                                                                   :id="3"
+                                                                   type="radio">微信</z-checker>
+                                                    </div>-->
             </div>
             <group>
                 <x-textarea placeholder="如有特殊需求，请留言"
@@ -89,7 +89,7 @@
 <script>
 import ZHeader from '@/components/common/ZHeader.vue'
 import Icon from '@/components/common/Icon.vue'
-import { addressList, cartList, orderDown } from '../../api'
+import { addressList, cartList, orderDown, orderPay } from '../../api'
 import { ChinaAddressV3Data, Value2nameFilter, XTextarea } from 'vux'
 import ZChecker from '../cart/CheckBox'
 export default {
@@ -102,7 +102,7 @@ export default {
     },
     data() {
         return {
-            currentAddr: this.$store.state.checkAddress.item ? this.$store.state.checkAddress.item : null,
+            currentAddr: this.$store.state.checkAddress.item ? this.$store.state.checkAddress.item : '',
             items: [],
             page: 1,
             limit: 50,
@@ -134,7 +134,52 @@ export default {
     },
     methods: {
         orderDown() {
-            orderDown({ userid: this.$store.state.user.userId, addressId: this.currentAddr.addressId, payType: this.checker,orderRemarks: this.orderRemarks })
+            if (this.currentAddr) {
+                orderDown({ userid: this.$store.state.user.userId, addressId: this.currentAddr.addressId, payType: this.checker, orderRemarks: this.orderRemarks }).then(res => {
+                    return orderPay({ userid: this.$store.state.user.userId, orderId: res.orderId, payType: this.checker })
+                }).then(order => {
+                    if (window.api) {
+                        console.error(order)
+                        const aliPay = api.require('aliPay')
+                        aliPay.payOrder({
+                            orderInfo: order
+                        }, (ret, error) => {
+                            alert(ret.code)
+                            if (ret.code == '9000') {
+                                this.$router.replace({ name: 'paystatus', params: { id: 1 } })
+                            } else {
+                                this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
+                            }
+                        })
+                    }
+                    window.apiready = () => {
+                        console.error(order)
+
+                        //测试环境验证支付宝正确性
+                        // aliPay.pay({
+                        //     subject: '正证订单',
+                        //     body: '正证订单支付',
+                        //     amount: res.totalMoney.toFixed(2),
+                        //     tradeNO: res.orderNo
+                        // }, (ret, error) => {
+                        //     console.error(ret.code)
+                        //     if(ret.code == '9000'){
+                        //         this.$router.replace({name: 'paystatus', params:{id: 1}})
+                        //     }else{
+                        //          this.$router.replace({name: 'paystatus', params:{id: ret.code}})
+                        //     }
+                        // })
+                    }
+                })
+            } else {
+                this.$vux.toast.show({
+                    text: '请选择地址',
+                    position: 'bottom',
+                    width: 'auto',
+                    type: 'text'
+                })
+            }
+
         }
     }
 }

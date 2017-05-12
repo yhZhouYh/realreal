@@ -146,7 +146,7 @@ export function uploader({upfile, type}) {
 
 //忘记密码
 export function forgetPass(data) {
-   return fetch('Login.Register', data)
+   return fetch('Login.FrogetDo', data)
 }
 
 //编辑用户信息
@@ -321,6 +321,39 @@ export function getValueNum(data){
 export function valueIt(data){
     return fetch('Orders.AddAppraise', data, true)
 }
+
+//删除地址
+export function deleteAddr(data){
+    return fetch('User.SaveAddressField', data, true)
+}
+
+//是否收藏
+export function isCollect(data){
+    return fetch('User.IsCollect', data)
+}
+
+//获取附近商家
+export function getNearShops(data){
+    return fetch('Shops.GetShopsByPoint', data, true)
+}
+
+//取消订单
+export function cancelOrder(data){
+    return fetch('Carts.UnsetSettlement', data, true)
+}
+
+//订单支付
+export function orderPay(data){
+    return fetch('Orders.Pay', data, true)
+}
+
+//获取客服电话
+export function getPhone(data){
+    return fetch('Default.GetConfig', data, true)
+}
+
+
+
 
 
 

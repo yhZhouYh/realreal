@@ -4,6 +4,11 @@
         <z-header :showBack="true"
                   backWords=""
                   :title="data.shopName">
+            <span slot="rightitems"
+                  style="padding-right:0.15rem">
+                           <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+                           <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+                        </span>
             <router-link to="/cart"
                          slot="rightitems"
                          style="margin-right: 5px;"
@@ -33,7 +38,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                            <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -89,7 +94,7 @@ import Tab from 'vux/src/components/tab/tab.vue'
 import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Comment from '../store/Comment'
 import ServiceBottom from './ServiceBottom'
-import { goodsDetail, cartAdd, getCartNum } from '../../api'
+import { goodsDetail, cartAdd, getCartNum, isCollect, collect } from '../../api'
 import Icon from '../common/Icon.vue'
 import Badge from 'vux/src/components/Badge'
 import { mapGetters } from 'vuex'
@@ -122,7 +127,8 @@ export default {
             cartNum: 0,
             currentItem: {},
             num: 1,
-            scroller: null
+            scroller: null,
+            collected: false
         }
     },
     computed: {
@@ -143,6 +149,11 @@ export default {
         })
         getCartNum({ userid: this.$store.state.user.userId }).then(res => {
             this.cartNum = res.cartsNum
+        })
+        isCollect({ userid: this.$store.state.user.userId, type: 0, id: this.$route.params.id }).then(res => {
+            if (res) {
+                this.collected = true
+            }
         })
     },
 
@@ -179,6 +190,26 @@ export default {
                     width: 'auto',
                     type: 'text'
                 })
+            })
+        },
+        collect() {
+            collect({ userid: this.$store.state.user.userId, id: this.$route.params.id , type: 0 }).then(res => {
+                this.collected = !this.collected
+                if (this.collected) {
+                    this.$vux.toast.show({
+                        text: '收藏成功',
+                        position: 'bottom',
+                        width: 'auto',
+                        type: 'text'
+                    })
+                } else {
+                    this.$vux.toast.show({
+                        text: '取消收藏',
+                        position: 'bottom',
+                        width: 'auto',
+                        type: 'text'
+                    })
+                }
             })
         }
     }

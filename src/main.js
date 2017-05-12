@@ -13,11 +13,14 @@ import VueTouchRipple from 'vue-touch-ripple'
 import './api'
 import Scroller from 'muse-ui/src/infiniteScroll/infiniteScroll.vue'
 import Blank from '@/components/common/Blank'
+import Navigation from './assets/lib/navigator/index'
 
 Vue.component('group', Group)
 Vue.component('cell', Cell)
 Vue.component('scroller', Scroller)
 Vue.component('blank', Blank)
+
+Vue.use(Navigation, {router, store})
 
 // import InfiniteLoading from 'vue-infinite-loading';
 // Vue.component('infiniteLoading', InfiniteLoading)
@@ -43,6 +46,7 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app-box')
+
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

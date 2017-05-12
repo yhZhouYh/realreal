@@ -5,8 +5,7 @@
                   :title="title">
             <div slot="rightitems"
                  @click="ensuer"
-                 v-if="!$route.query.isManage"
-                 >
+                 v-if="!$route.query.isManage" style="font-size:0.26rem;">
                 确认选择
             </div>
         </z-header>
@@ -15,20 +14,28 @@
                    :define="true">
                 <div>还没有地址哦，赶紧添加！</div>
             </blank>
-            <addressItem :addressLists="addressLists"
-                         @checkaddress="checkaddress(item)"></addressItem>
+            <div class="address-item-box">
+                <addressItem :addressLists="addressLists"
+                             @checkaddress="checkaddress(item)"
+                             @deleteAdd="deleteAdd"></addressItem>
+            </div>
             <div class="button-box login-button-box"
                  v-if="$route.query.isManage || !addressLists.length">
                 <x-button @click.native="addAddress">添加地址</x-button>
             </div>
         </div>
+        <confirm v-model="show"
+                 title="你确定要删除么"
+                 @on-confirm="onConfirm">
+            <!--<p style="text-align:center;">你确定要删除么</p>-->
+        </confirm>
     </div>
 </template>
 <script>
 import ZHeader from '@/components/common/ZHeader.vue'
 import AddressItem from './AddressItem'
-import { XButton, Value2nameFilter } from 'vux'
-import { addressList } from '../../api'
+import { XButton, Value2nameFilter, Confirm } from 'vux'
+import { addressList, deleteAddr } from '../../api'
 import Blank from '@/components/common/Blank.vue'
 
 export default {
@@ -37,12 +44,15 @@ export default {
         ZHeader,
         AddressItem,
         XButton,
-        Blank
+        Blank,
+        Confirm
     },
     data() {
         return {
             addressLists: [],
             title: this.$route.query.isManage ? '地址管理' : '选择地址',
+            show: false,
+            deleteItem: {}
         }
     },
     created() {
@@ -74,7 +84,17 @@ export default {
         },
         ensuer() {
             this.$router.go(-1)
-        }
+        },
+        deleteAdd(addr, index) {
+            this.show= !this.show
+            this.deleteItem = addr
+            this.deleteIndex = index
+        },
+          onConfirm() {
+            deleteAddr({ userid: this.$store.state.user.userId, field: 'dataFlag', value: 0,addressId: this.deleteItem.addressId }).then(res => {
+                this.addressLists.splice(this.deleteIndex, 1)
+            })
+        },
     }
 
 }
@@ -86,5 +106,9 @@ export default {
     left: 0;
     right: 0;
     bottom: 0.3rem;
+}
+
+.address-item-box {
+    padding-bottom: 2rem;
 }
 </style>
