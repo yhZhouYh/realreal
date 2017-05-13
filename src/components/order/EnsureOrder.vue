@@ -135,22 +135,37 @@ export default {
     methods: {
         orderDown() {
             if (this.currentAddr) {
+                let orderInfos = ''
                 orderDown({ userid: this.$store.state.user.userId, addressId: this.currentAddr.addressId, payType: this.checker, orderRemarks: this.orderRemarks }).then(res => {
+                    orderInfos = res
                     return orderPay({ userid: this.$store.state.user.userId, orderId: res.orderId, payType: this.checker })
                 }).then(order => {
                     if (window.api) {
                         console.error(order)
                         const aliPay = api.require('aliPay')
-                        aliPay.payOrder({
-                            orderInfo: order
+                        aliPay.pay({
+                            subject: '正证订单',
+                            body: '正证订单支付',
+                            amount: orderInfos.totalMoney.toFixed(2),
+                            tradeNO: orderInfos.orderNo
                         }, (ret, error) => {
-                            alert(ret.code)
-                            if (ret.code == '9000') {
-                                this.$router.replace({ name: 'paystatus', params: { id: 1 } })
-                            } else {
-                                this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
+                            console.error(ret.code)
+                            if(ret.code == '9000'){
+                                this.$router.replace({name: 'paystatus', params:{id: 1}})
+                            }else{
+                                 this.$router.replace({name: 'paystatus', params:{id: ret.code}})
                             }
                         })
+                        // aliPay.payOrder({
+                        //     orderInfo: order
+                        // }, (ret, error) => {
+                        //     alert(ret.code)
+                        //     if (ret.code == '9000') {
+                        //         this.$router.replace({ name: 'paystatus', params: { id: 1 } })
+                        //     } else {
+                        //         this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
+                        //     }
+                        // })
                     }
                     window.apiready = () => {
                         console.error(order)
