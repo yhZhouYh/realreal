@@ -118,6 +118,7 @@ export default {
           
             updateAddress(data).then(res => {
                 this.validToast('操作成功')
+                this.$router.replace({name:'addressManage', query:{isManage: 1}})
             })
         }
     }

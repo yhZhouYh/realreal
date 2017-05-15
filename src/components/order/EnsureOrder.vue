@@ -89,7 +89,7 @@
 <script>
 import ZHeader from '@/components/common/ZHeader.vue'
 import Icon from '@/components/common/Icon.vue'
-import { addressList, cartList, orderDown, orderPay } from '../../api'
+import { addressList, cartList, orderDown, orderPay, changeOrderStatus } from '../../api'
 import { ChinaAddressV3Data, Value2nameFilter, XTextarea } from 'vux'
 import ZChecker from '../cart/CheckBox'
 export default {
@@ -147,10 +147,12 @@ export default {
                             subject: '正证订单',
                             body: '正证订单支付',
                             amount: orderInfos.totalMoney.toFixed(2),
-                            tradeNO: orderInfos.orderNo
+                            tradeNO: orderInfos.orderunique,
+                            out_trade_no:  orderInfos.orderunique
                         }, (ret, error) => {
                             console.error(ret.code)
                             if(ret.code == '9000'){
+                                changeOrderStatus({userid: this.$store.state.user.userId, orderunique: orderInfos.orderunique})
                                 this.$router.replace({name: 'paystatus', params:{id: 1}})
                             }else{
                                  this.$router.replace({name: 'paystatus', params:{id: ret.code}})
@@ -164,24 +166,6 @@ export default {
                         //         this.$router.replace({ name: 'paystatus', params: { id: 1 } })
                         //     } else {
                         //         this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
-                        //     }
-                        // })
-                    }
-                    window.apiready = () => {
-                        console.error(order)
-
-                        //测试环境验证支付宝正确性
-                        // aliPay.pay({
-                        //     subject: '正证订单',
-                        //     body: '正证订单支付',
-                        //     amount: res.totalMoney.toFixed(2),
-                        //     tradeNO: res.orderNo
-                        // }, (ret, error) => {
-                        //     console.error(ret.code)
-                        //     if(ret.code == '9000'){
-                        //         this.$router.replace({name: 'paystatus', params:{id: 1}})
-                        //     }else{
-                        //          this.$router.replace({name: 'paystatus', params:{id: ret.code}})
                         //     }
                         // })
                     }

@@ -352,6 +352,10 @@ export function getPhone(data){
     return fetch('Default.GetConfig', data, true)
 }
 
+//改变订单状态  暂时
+export function changeOrderStatus(data){
+    return fetch('Orders.ChangStatus', data, true)
+}
 
 
 

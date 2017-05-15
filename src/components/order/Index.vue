@@ -19,7 +19,7 @@
                  v-for="(item, index) in orderList">
                 <div class="order-title zflex">
                     <!--<icon icon="icon-dianpu"
-                                                                                      class="gray"></icon>-->
+                                                                                          class="gray"></icon>-->
                     <span class="store-title zflex1">订单状态</span>
                     <span class="red">{{status[item.orderStatus]}}</span>
                 </div>
@@ -52,7 +52,8 @@
                     <x-button :mini="true"
                               :plain="true"
                               class="z-check-button active"
-                              v-if="item.orderStatus == -2">立即支付</x-button>
+                              v-if="item.orderStatus == -2"
+                              @click.native="pay(item)">立即支付</x-button>
                     <x-button :mini="true"
                               :plain="true"
                               class="z-check-button active"
@@ -78,7 +79,7 @@ import ZHeader from '@/components/common/ZHeader.vue'
 import Menu from '../common/Menu.vue'
 import Icon from '../common/Icon'
 import { XButton, Confirm } from 'vux'
-import { orderIndex, cancelOrder } from '../../api'
+import { orderIndex, cancelOrder, changeOrderStatus } from '../../api'
 export default {
     name: 'orderList',
     components: {
@@ -184,6 +185,37 @@ export default {
             this.show = !this.show
             this.cancelItem = item
             this.cancelIndex = index
+        },
+        pay(orderInfos) {
+            if (window.api) {
+                console.error(orderInfos)
+                const aliPay = api.require('aliPay')
+                aliPay.pay({
+                    subject: '正证订单',
+                    body: '正证订单支付',
+                    amount: orderInfos.totalMoney.toFixed(2),
+                    tradeNO: orderInfos.orderunique,
+                    out_trade_no: orderInfos.orderunique
+                }, (ret, error) => {
+                    console.error(ret.code)
+                    if (ret.code == '9000') {
+                        changeOrderStatus({userid: this.$store.state.user.userId, orderunique: orderInfos.orderunique})
+                        this.$router.replace({ name: 'paystatus', params: { id: 1 } })
+                    } else {
+                        this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
+                    }
+                })
+                // aliPay.payOrder({
+                //     orderInfo: order
+                // }, (ret, error) => {
+                //     alert(ret.code)
+                //     if (ret.code == '9000') {
+                //         this.$router.replace({ name: 'paystatus', params: { id: 1 } })
+                //     } else {
+                //         this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
+                //     }
+                // })
+            }
         }
     }
 

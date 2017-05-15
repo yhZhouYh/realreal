@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         loadMore() {
-            if (!this.isOver) {
+            if (!this.isOver && !this.loading) {
                 this.loading = true
                 getNeedsByCid({ catid: this.$route.params.cid, page: ++this.page, limit: this.limit }).then(res => {
                     this.loading = false

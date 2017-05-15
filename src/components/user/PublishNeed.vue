@@ -135,6 +135,7 @@ export default {
             }
             publishNeed(obj).then(res => {
                this.validToast('发布成功')
+               this.$router.replace({name: 'needs', params: {id: 0}})
             })
         },
         validToast(text) {
