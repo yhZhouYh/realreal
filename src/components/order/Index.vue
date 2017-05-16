@@ -19,7 +19,7 @@
                  v-for="(item, index) in orderList">
                 <div class="order-title zflex">
                     <!--<icon icon="icon-dianpu"
-                                                                                          class="gray"></icon>-->
+                                                                                                  class="gray"></icon>-->
                     <span class="store-title zflex1">订单状态</span>
                     <span class="red">{{status[item.orderStatus]}}</span>
                 </div>
@@ -49,6 +49,11 @@
                               :plain="true"
                               class="z-check-button"
                               @click.native="cancel(item, index)">取消订单</x-button>
+                    <x-button :mini="true"
+                              v-if="item.orderStatus == 1"
+                              :plain="true"
+                              class="z-check-button"
+                              @click.native="ensureOrder(item, index)">确认订单</x-button>
                     <x-button :mini="true"
                               :plain="true"
                               class="z-check-button active"
@@ -91,7 +96,7 @@ export default {
     },
     data() {
         return {
-            items: [{ name: '全部', type: 'all' }, { name: '待付款', type: 'waitPay' }, { name: '待接收', type: 'waitReceive' }, { name: '待评价', type: 'waitAppraise' }, { name: '已完成', type: 'finish' }, { name: '已取消', type: 'cancel' }, { name: '退款', type: 'abnormal' }],
+            items: [{ name: '全部', type: 'all' }, { name: '待付款', type: 'waitPay' }, { name: '待确认', type: 'payed' }, { name: '待接收', type: 'waitReceive' }, { name: '已完成', type: 'finish' }, { name: '待评价', type: 'waitAppraise' }, { name: '已取消', type: 'cancel' }],
             middle: {},
             middleObj: {
                 page: 1,
@@ -175,11 +180,18 @@ export default {
             cancelOrder({ userid: this.$store.state.user.userId, orderId: this.cancelItem.orderId }).then(res => {
                 this.orderList.splice(this.cancelIndex, 1)
                 //如果已经点过菜单 已取消就添加一条
-                debugger
                 if (this.middle['cancel']) {
                     this.middle['cancel'].items.unshift(this.cancelItem)
                 }
             })
+        },
+        ensureOrder(item, index) {
+            changeOrderStatus({ userid: this.$store.state.user.userId, orderunique: item.orderunique, type: 2 }).then(res => {
+                this.orderList.splice(index, 1)
+            })
+            if (this.middle['cancel']) {
+                this.middle['cancel'].items.unshift(item)
+            }
         },
         cancel(item, index) {
             this.show = !this.show
@@ -188,18 +200,18 @@ export default {
         },
         pay(orderInfos) {
             if (window.api) {
-                console.error(orderInfos)
+                console.error(JSON.stringify(orderInfos))
                 const aliPay = api.require('aliPay')
                 aliPay.pay({
                     subject: '正证订单',
                     body: '正证订单支付',
-                    amount: orderInfos.totalMoney.toFixed(2),
-                    tradeNO: orderInfos.orderunique,
+                    amount: orderInfos.totalMoney,
+                    tradeNO: orderInfos.orderunique + Date.parse(new Date()),
                     out_trade_no: orderInfos.orderunique
                 }, (ret, error) => {
                     console.error(ret.code)
                     if (ret.code == '9000') {
-                        changeOrderStatus({userid: this.$store.state.user.userId, orderunique: orderInfos.orderunique})
+                        changeOrderStatus({ userid: this.$store.state.user.userId, orderunique: orderInfos.orderunique, type: 1 })
                         this.$router.replace({ name: 'paystatus', params: { id: 1 } })
                     } else {
                         this.$router.replace({ name: 'paystatus', params: { id: ret.code } })
