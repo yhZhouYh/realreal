@@ -5,7 +5,7 @@
                 v-for="(item, index) in items"
                 ref="item"
                 @click="checkItem(item, index)"
-                :class="{red: isChecked == index}">{{item[name]}}</button>
+                :class="{red: isChecked == index}"><span>{{item[name]}}</span><slot></slot></button>
     </div>
 </template>
 <script>

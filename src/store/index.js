@@ -18,7 +18,8 @@ export default new Vuex.Store({
       item: null
     },
     currentOrder: {},
-    currentLocation: {}
+    currentLocation: {},
+    servieTime: ''
   },
   // actions,
   // getters,
@@ -37,55 +38,62 @@ export default new Vuex.Store({
     [types.SHOW_FOOTER](state) {
       state.showFooter = !state.showFooter
     },
-     [types.ADDRESS_EDIT](state, address) {
+    [types.ADDRESS_EDIT](state, address) {
       state.addressEdit = address
-     },
-     [types.CHECK_ADDRESS](state, {item, index}) {
-        state.checkAddress.item = item
-        state.checkAddress.index = index
-        localStorage.setItem('checkAddress', JSON.stringify({item, index}))
-     },
-      [types.SAVE_ORDER](state, order) {
-        state.currentOrder = order
-     },
-     [types.LOGOUT](state){
-       state.user = {},
-       state.accessToken = ''
-       localStorage.removeItem('accessToken')
-       localStorage.removeItem('user')
-     },
-     [types.SAVE_LOCATION](state,location){
-       state.currentLocation = location
-     }
+    },
+    [types.CHECK_ADDRESS](state, { item, index }) {
+      state.checkAddress.item = item
+      state.checkAddress.index = index
+      localStorage.setItem('checkAddress', JSON.stringify({ item, index }))
+    },
+    [types.SAVE_ORDER](state, order) {
+      state.currentOrder = order
+    },
+    [types.LOGOUT](state) {
+      state.user = {},
+        state.accessToken = ''
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('user')
+    },
+    [types.SAVE_LOCATION](state, location) {
+      state.currentLocation = location
+    },
+    [types.SAVE_TIME](state, time) {
+      state.servieTime = time
+    }
   },
   actions: {
-    saveAccssToken({commit}, code){
+    saveAccssToken({ commit }, code) {
       commit(types.SAVE_ACCESSTOKEN, code)
     },
-    login({commit}, user){
+    login({ commit }, user) {
       commit(types.SAVE_USER, user)
     },
-    changeLoading({commit}){
+    changeLoading({ commit }) {
       commit(types.CHANGE_LOADING)
     },
-    showFooter({commit}){
-       commit(types.SHOW_FOOTER)
+    showFooter({ commit }) {
+      commit(types.SHOW_FOOTER)
     },
-    saveAddress({commit},address){
+    saveAddress({ commit }, address) {
       commit(types.ADDRESS_EDIT, address)
     },
-    checkAddress({commit},{item, index}){
-      commit(types.CHECK_ADDRESS, {item, index})
+    checkAddress({ commit }, { item, index }) {
+      commit(types.CHECK_ADDRESS, { item, index })
     },
-    saveOrder({commit}, order){
+    saveOrder({ commit }, order) {
       commit(types.SAVE_ORDER, order)
     },
-    logout({commit}){
+    logout({ commit }) {
       commit(types.LOGOUT)
     },
-    saveLocation({commit}, location){
+    saveLocation({ commit }, location) {
       commit(types.SAVE_LOCATION, location)
-    } 
+    },
+    saveServiceTime({ commit }, time) {
+      commit(types.SAVE_TIME, time)
+    }
+
   },
   modules: {
     cart

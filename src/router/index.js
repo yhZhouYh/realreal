@@ -27,6 +27,7 @@ import NewsDetail from '@/components/user/NewsDetail.vue'
 import OrderDetail from '@/components/order/OrderDetail.vue'
 import Appraise from '@/components/order/Appraise.vue'
 import PayStatus from '@/components/order/PayStatus.vue'
+import ServiceTime from '@/components/service/ServiceTime.vue'
 
 Vue.use(Router)
 
@@ -177,6 +178,11 @@ export default new Router({
       path: '/paystatus/:id',
       name: 'paystatus',
       component: PayStatus
+    },
+     {
+      path: '/serviceTime',
+      name: 'serviceTime',
+      component: ServiceTime
     }
   ]
 })

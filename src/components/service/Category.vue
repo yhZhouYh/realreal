@@ -13,7 +13,6 @@
             </router-link div>
         </z-header>
         <div class="z-container zflex">
-    
             <div class="z-ver-menu">
                 <cate-menu :items="items" @checkedItem="checkedItem"></cate-menu>
             </div>

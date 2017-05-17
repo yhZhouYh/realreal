@@ -33,3 +33,6 @@ export const SAVE_ORDER = 'SAVE_ORDER'
 
 //保存当前坐标
 export const SAVE_LOCATION = 'SAVE_LOCATION'
+
+//保存服务时间
+export const SAVE_TIME = 'SAVE_TIME'
