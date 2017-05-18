@@ -183,12 +183,12 @@ export default {
         loadMore() {
             if (this.currentView == 0) {
                 let middle = this.middle[this.isChecked]
-                if (!middle.isOver) {
+                if (!middle.isOver && !this.loading) {
                     this.loading = true
                     middle.page += 1
                     shopGoodsByShopId({ id: this.currentCid, page: middle.page, limit: this.limit }).then(res => {
                         this.loading = false
-                        middle.items.concat(res)
+                        middle.items = middle.items.concat(res)
                         this.serviceItems = middle.items
                         if (res.length == 0) {
                             middle.isOver = true

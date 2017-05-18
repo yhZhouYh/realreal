@@ -51,7 +51,7 @@ export default {
                 this.loading = true
                 getNeedsByCid({ catid: this.$route.params.cid, page: ++this.page, limit: this.limit }).then(res => {
                     this.loading = false
-                    this.needs.concat(res)
+                    this.needs = this.needs.concat(res)
                     if (!res.length) {
                         this.isOver = true
                     }

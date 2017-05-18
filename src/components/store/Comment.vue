@@ -114,13 +114,13 @@ export default {
         loadMore() {
             if (this.canLoadMore) {
                 let middle = this.middle[this.currentType]
-                if (!middle.isOver) {
+                if (!middle.isOver && !this.loading) {
                     this.loading = true
                     middle.page += 1
                     if (this.type == 'shop') {
                         getValueByShopId({ shopsId: this.$route.params.id, page: middle.page, limit: 20, type: this.currentType }).then(res => {
                             this.loading = false
-                            middle.items.concat(res)
+                            middle.items = middle.items.concat(res)
                             this.comments = middle.items
                             if (res.length == 0) {
                                 middle.isOver = true

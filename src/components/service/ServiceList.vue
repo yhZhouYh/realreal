@@ -134,7 +134,7 @@ export default {
                     middle.page += 1
                     getGoodsByCid({ id: this.$route.params.id, page: middle.page, limit: this.limit, cid: this.currentCid }).then(res => {
                         this.loading = false
-                        middle.items.concat(res)
+                        middle.items = middle.items.concat(res)
                         this.serviceItems = middle.items
                         if (res.length == 0) {
                             middle.isOver = true
@@ -146,7 +146,7 @@ export default {
                     this.loading = true
                     getStoreById({ id: this.$route.params.id, page: ++this.page2, limit: this.limit }).then(res => {
                         this.loading = false
-                        this.storeItems.concat(res)
+                        this.storeItems = this.storeItems.concat(res)
                         if (res.length == 0) {
                             this.isOver2 = true
                         }

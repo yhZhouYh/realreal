@@ -167,10 +167,10 @@ export default {
         },
         loadMore() {
             this.loading = true
-            if (!this.isover) {
+            if (!this.isover && !this.loading) {
                 cartList({ userid: this.$store.state.user.userId, page: ++this.page, limit: this.limit }).then(res => {
                     this.loading = false
-                    this.items.concat(res)
+                    this.items = this.items.concat(res)
                     if (!res.length) {
                         this.isover
                     }

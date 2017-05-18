@@ -145,7 +145,7 @@ export default {
                 middle.page += 1
                 orderIndex({ userid: this.$store.state.user.userId, page: middle.page, limit: this.limit, type: this.currentType }).then(res => {
                     this.loading = false
-                    middle.items.concat(res)
+                    middle.items = middle.items.concat(res)
                     this.orderList = middle.items
                     if (res.length == 0) {
                         middle.isOver = true

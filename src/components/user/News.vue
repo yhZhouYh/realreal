@@ -78,11 +78,11 @@ export default {
     },
     methods: {
         loadMore() {
-            if (!this.isOver) {
+            if (!this.isOver && !this.loading) {
                 this.loading = true
                 newsList({ classid: this.$route.params.id, page: ++this.page, limit: this.limit }).then(res => {
                     this.loading = false
-                    this.newsList.concat(res)
+                    this.newsList = this.newsList.concat(res)
                     if (!res.length) {
                         this.isOver = true
                     }
