@@ -6,9 +6,9 @@
                   :title="data.shopName">
             <span slot="rightitems"
                   style="padding-right:0.15rem">
-                           <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
-                           <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
-                        </span>
+                               <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+                               <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+                            </span>
             <router-link to="/cart"
                          slot="rightitems"
                          style="margin-right: 5px;"
@@ -38,7 +38,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                                            <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -47,9 +47,11 @@
                 </div>
             </div>
             <group>
-                <cell title="服务时间">
+                <cell title="服务时间"
+                      is-link
+                      :link="{name:'serviceTime', query:{stime:data.serviceTimeArray[0],etime:data.serviceTimeArray[1]}}">
                     <span slot="value"
-                          class="red">最近可约 {{data.serviceTime}}</span>
+                          class="red">{{serviceTime}}</span>
     
                 </cell>
             </group>
@@ -114,10 +116,6 @@ export default {
     },
     data() {
         return {
-            imgs: [{ url: require('../../assets/imgs/img1.jpg') },
-            { url: require('../../assets/imgs/img2.jpg') },
-            { url: require('../../assets/imgs/img3.jpg') },
-            { url: require('../../assets/imgs/img4.jpg') }],
             tabItems: [
                 { id: 1, name: '详情' },
                 { id: 2, name: '评论' },
@@ -128,7 +126,8 @@ export default {
             currentItem: {},
             num: 1,
             scroller: null,
-            collected: false
+            collected: false,
+            serviceTime: this.$store.state.servieTime || ''
         }
     },
     computed: {
@@ -146,6 +145,9 @@ export default {
         this.$store.dispatch('showFooter')
         goodsDetail({ id: this.$route.params.id }).then(res => {
             this.data = res
+            if (!this.serviceTime) {
+                this.serviceTime = this.data.serviceTime
+            }
         })
         getCartNum({ userid: this.$store.state.user.userId }).then(res => {
             this.cartNum = res.cartsNum
@@ -171,7 +173,7 @@ export default {
             this.num--
         },
         buynow() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
                 // this.data.cartNum = this.cartNum
                 // this.$store.dispatch('addToCart', this.data)
                 this.cartNum = res.num
@@ -180,7 +182,7 @@ export default {
             })
         },
         addtocart() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1 }).then(res => {
+            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
                 // this.data.cartNum = this.cartNum
                 this.cartNum = res.num
                 // this.$store.dispatch('addToCart', this.data)
@@ -193,7 +195,7 @@ export default {
             })
         },
         collect() {
-            collect({ userid: this.$store.state.user.userId, id: this.$route.params.id , type: 0 }).then(res => {
+            collect({ userid: this.$store.state.user.userId, id: this.$route.params.id, type: 0 }).then(res => {
                 this.collected = !this.collected
                 if (this.collected) {
                     this.$vux.toast.show({

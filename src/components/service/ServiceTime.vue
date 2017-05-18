@@ -3,21 +3,29 @@
         <z-header :showBack="true"
                   backWords=""
                   title="选择服务时间">
-                  <div style="font-size:0.3rem" slot="rightitems">确定</div>
+            <div style="font-size:0.3rem"
+                 slot="rightitems"
+                 @click="ensure">确定</div>
         </z-header>
-        <div class="z-container" style="background:#fff">
+        <div class="z-container"
+             style="background:#fff">
             <div class="menu-box">
                 <z-menu :items="items"
                         name="week"
-                        @checkedItem="checkItem"
-                        ></z-menu>
+                        @checkedItem="checkItem"></z-menu>
                 <ul class="z-box">
-                    <li v-for="(item,index) in timearr" :class="{checkit: isChecked == index}" @click="checkit(item, index)" v-if="currentIndex !=0">{{item}}</li>
-                    <li v-for="(item,index) in timearrToday" :class="{checkit: isChecked == index}" @click="checkit(item, index)" v-if="currentIndex == 0">{{item}}</li>
-                     <blank v-if="!timearr.length || !timearrToday.length"
-                       :define="true">
-                    <div>服务时间貌似爆炸了！</div>
-                </blank>
+                    <li v-for="(item,index) in timearr"
+                        :class="{checkit: isChecked == index}"
+                        @click="checkit(item, index)"
+                        v-if="currentIndex !=0">{{item}}</li>
+                    <li v-for="(item,index) in timearrToday"
+                        :class="{checkit: isChecked == index}"
+                        @click="checkit(item, index)"
+                        v-if="currentIndex == 0">{{item}}</li>
+                    <blank v-if="!timearr.length || !timearrToday.length"
+                           :define="true">
+                        <div>服务时间貌似爆炸了！</div>
+                    </blank>
                 </ul>
             </div>
         </div>
@@ -50,22 +58,23 @@ export default {
             stime: this.$route.query.stime,
             etime: this.$route.query.etime,
             currentIndex: 0,
-            currentItem: ''
+            currentItem: '',
+            current: ''
         }
     },
     created() {
-       this.items = this.getDayItems()
-       this.currentItem = this.items[0]
-       let h = new Date().getHours()
-       let min = new Date().getMinutes()
-       if(min>30){
-           h+=1
-           min = '00'
-       }else{
-           min = '30' 
-       }
-       this.timearrToday = this.getArea(h+':'+ min, '23:00')
-       this.timearr = this.getArea('8:30','23:00')
+        this.items = this.getDayItems()
+        this.currentItem = this.items[0]
+        let h = new Date().getHours()
+        let min = new Date().getMinutes()
+        if (min > 30) {
+            h += 1
+            min = '00'
+        } else {
+            min = '30'
+        }
+        this.timearrToday = this.getArea(h + ':' + min, this.etime)
+        this.timearr = this.getArea(this.stime, this.etime)
     },
     methods: {
         getDayItems() {
@@ -94,29 +103,42 @@ export default {
         },
         getArea(stime, etime) {
             let date = new Date().toLocaleDateString()
-            let sd =  Date.parse(new Date(date + ' ' + stime))
+            let sd = Date.parse(new Date(date + ' ' + stime))
             let ed = Date.parse(new Date(date + ' ' + etime))
             let area = ed - sd
             let n = area / (30 * 60 * 1000)
             let arr = []
             for (var i = 0; i <= n; i++) {
-                var t = sd + i* 30 * 60 * 1000
+                var t = sd + i * 30 * 60 * 1000
                 var hours = new Date(t).getHours()
                 var min = new Date(t).getMinutes()
-                if(min<10){
+                if (min < 10) {
                     min = '0' + min
                 }
-                arr.push(hours+ ':' + min)
+                arr.push(hours + ':' + min)
             }
             return arr
         },
-        checkit(item, index){
+        checkit(item, index) {
             this.isChecked = index
-            this.$store.dispatch('saveServiceTime', this.currentItem.date + ' '+ item)
+            this.current = this.currentItem.date + ' ' + item
+            this.$store.dispatch('saveServiceTime', this.current)
         },
-        checkItem(item, index){
+        checkItem(item, index) {
             this.currentIndex = index
             this.currentItem = item
+        },
+        ensure() {
+            if (this.current) {
+                this.$router.go(-1)
+            } else {
+                this.$vux.toast.show({
+                    text: '请选择服务时间',
+                    position: 'bottom',
+                    width: 'auto',
+                    type: 'text'
+                })
+            }
         }
     }
 }
