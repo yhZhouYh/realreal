@@ -28,6 +28,10 @@
                               :key="item">
                 </service-item>
             </div>
+             <blank v-if="!serviceItems.length && this.value"
+                       :define="true">
+                    <div>暂无搜索结果</div>
+                </blank>
             <scroller :scroller="scroller"
                       :loading="loading"
                       @load="loadMore"
@@ -100,7 +104,9 @@ export default {
         searchList(val) {
             this.page = 1
             this.key = val
-            this._debounce()
+            if(this.value){
+                this._debounce()
+            }   
         },
         loadMore() {
             if (!this.isOver) {
