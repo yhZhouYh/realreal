@@ -11,7 +11,7 @@
         </svg>
       </div>
       <div slot="leftitems"
-           style="font-size:14px;">
+           class="left-items">
         {{city}}
       </div>
       <router-link to="search"
@@ -125,7 +125,7 @@ export default {
       ],
       news: [],
       catesItem: [],
-      city: ''
+      city: '暂无'
     }
   },
   created() {
@@ -149,70 +149,70 @@ export default {
     } else {
       let locationsave = {}
       window.apiready = () => {
-      const map = api.require('bMap')
-      if (window.navigator.userAgent.indexOf('Android') > -1 || window.navigator.userAgent.indexOf('Adr') > -1) {
-        this.getLocation(map, locationsave)
-      } else {
-        this.getLocationByIos(map, locationsave)
+        const map = api.require('bMap')
+        if (window.navigator.userAgent.indexOf('Android') > -1 || window.navigator.userAgent.indexOf('Adr') > -1) {
+          this.getLocation(map, locationsave)
+        } else {
+          this.getLocationByIos(map, locationsave)
+        }
       }
     }
-  }
 
-},
+  },
 
-methods: {
-  go() {
-    this.$router.push('/serviceList/48')
-  },
-  getLoction() {
-    navigator.geolocation.getCurrentPosition(pos => {
-      console.log(pos.coords.latitude, pos.coords.longitude)
-    })
-  },
-  showToast(text) {
-    this.$vux.toast.show({
-      text: text,
-      position: 'bottom',
-      width: 'auto',
-      type: 'text'
-    })
-  },
-  getLocation(map, locationsave) {
-    map.getLocation({ accuracy: '100m', autoStop: true, filter: 1 }, (pos, poserr) => {
-      if (pos.status) {
-        locationsave.longitude = pos.lon
-        locationsave.latitude = pos.lat
-        this.$store.dispatch('saveLocation', locationsave)
-        console.error(JSON.stringify(pos))
-        map.getNameFromCoords({ lon: pos.lon, lat: pos.lat }, (location, locerr) => {
-          if (location.status) {
-            console.error(JSON.stringify(location))
-            this.city = location.city
-            locationsave.city = location.city
-            this.$store.dispatch('saveLocation', locationsave)
-          } else {
-            console.error(locerr.code)
-            console.error('获取位置信息')
-            this.showToast('未获取到位置信息')
-          }
-        })
-      } else {
-        console.error(poserr.code)
-        console.error('定位服务失败')
-        this.showToast('定位服务失败')
-      }
-    })
-  },
-  getLocationByIos(map, locationsave) {
-    map.initMapSDK((init) => {
-      if (init.status) {
-        this.getLocation(map, locationsave)
-      } else {
-        console.error('地图初始化失败')
-      }
-    })
+  methods: {
+    go() {
+      this.$router.push('/serviceList/48')
+    },
+    getLoction() {
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos.coords.latitude, pos.coords.longitude)
+      })
+    },
+    showToast(text) {
+      this.$vux.toast.show({
+        text: text,
+        position: 'bottom',
+        width: 'auto',
+        type: 'text'
+      })
+    },
+    getLocation(map, locationsave) {
+      map.getLocation({ accuracy: '100m', autoStop: true, filter: 1 }, (pos, poserr) => {
+        if (pos.status) {
+          locationsave.longitude = pos.lon
+          locationsave.latitude = pos.lat
+          this.$store.dispatch('saveLocation', locationsave)
+          console.error(JSON.stringify(pos))
+          map.getNameFromCoords({ lon: pos.lon, lat: pos.lat }, (location, locerr) => {
+            if (location.status) {
+              console.error(JSON.stringify(location))
+              this.city = location.city
+              locationsave.city = location.city
+              this.$store.dispatch('saveLocation', locationsave)
+            } else {
+              console.error(locerr.code)
+              console.error('获取位置信息')
+              this.showToast('未获取到位置信息')
+            }
+          })
+        } else {
+          console.error(poserr.code)
+          console.error('定位服务失败')
+          this.showToast('定位服务失败')
+        }
+      })
+    },
+    getLocationByIos(map, locationsave) {
+      map.initMapSDK((init) => {
+        if (init.status) {
+          this.getLocation(map, locationsave)
+        } else {
+          console.error('地图初始化失败')
+        }
+      })
+    }
   }
-}
 }
 </script>
 
@@ -258,5 +258,15 @@ methods: {
 
 .red {
   color: #f9261d;
+}
+
+.left-items {
+  width: 1.1rem;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  font-size: 0.27rem;
 }
 </style>

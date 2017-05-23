@@ -28,7 +28,7 @@ import OrderDetail from '@/components/order/OrderDetail.vue'
 import Appraise from '@/components/order/Appraise.vue'
 import PayStatus from '@/components/order/PayStatus.vue'
 import ServiceTime from '@/components/service/ServiceTime.vue'
-
+import SearchPos from '@/components/home/SearchPos.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -183,6 +183,11 @@ export default new Router({
       path: '/serviceTime',
       name: 'serviceTime',
       component: ServiceTime
+    },
+     {
+      path: '/searchPos',
+      name: 'searchPos',
+      component: SearchPos
     }
   ]
 })
