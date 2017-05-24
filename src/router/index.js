@@ -41,7 +41,8 @@ export default new Router({
     {
       path: '/storeDetail/:id',
       name: 'storeDetail',
-      component: Store
+      component: Store,
+      meta: { requiresAuth: true }
     },
     {
       path: '/service/:id',

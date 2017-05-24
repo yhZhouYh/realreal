@@ -132,9 +132,9 @@ export function login(data) {
         store.dispatch('login', user)
         store.dispatch('saveAccssToken', user.token)
         if(router.app.$route.query.redirect){
-            router.push(router.app.$route.query.redirect)
+            router.replace(router.app.$route.query.redirect)
         }else{
-             router.push('/')
+             router.replace('/')
         }
     })
 }

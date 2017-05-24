@@ -2,7 +2,7 @@
     <div class="z-page z-apply">
         <z-header :showBack="true"
                   backWords=""
-                  title="申请入驻">
+                  :title="title">
         </z-header>
         <div class="z-container">
             <group v-if="$route.query.store">
@@ -13,7 +13,8 @@
                 <x-input title="公司名称"
                          required
                          placeholder="请输入您的公司名称"
-                         v-model="companyName"></x-input>
+                         v-model="companyName"
+                         ></x-input>
                 <x-input title="联系姓名"
                          required
                          placeholder="请输入联系人姓名"
@@ -90,10 +91,6 @@
                          required
                          placeholder="请输入您的店铺名称"
                          v-model="shopName"></x-input>
-                <x-input title="公司名称"
-                         required
-                         placeholder="请输入您的公司名称"
-                         v-model="companyName"></x-input>
                 <x-input title="联系姓名"
                          required
                          placeholder="请输入联系人姓名"
@@ -177,10 +174,10 @@
                          required
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
-                <x-input title="开户银行支行名称"
+                <!--<x-input title="开户银行支行名称"
                          required
                          placeholder="请输入开户银行支行名称"
-                         v-model="bankId"></x-input>
+                         v-model="bankId"></x-input>-->
             </group>
             <div class="apply-checker">
                 <checker>
@@ -247,6 +244,11 @@ export default {
             idCart: ''
         }
     },
+    computed: {
+        title(){
+            return this.$route.query.store? '商家申请入驻' : '维修员申请入驻'
+        }
+    },
     methods: {
         apply() {
             let dataobj = {
@@ -265,7 +267,7 @@ export default {
                 OrganizationCodeImgurl: this.OrganizationCodeImgurl,
                 bankUserName: this.bankUserName,
                 bankAccount: this.bankAccount,
-                bankId: this.bankId,
+                // bankId: this.bankId,
                 idCart: this.idCart,
                 cartImgZ: this.cartImgZ,
                 cartImgF: this.cartImgF,
@@ -274,6 +276,7 @@ export default {
             if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.bankId && this.shopName && this.addmodel.length) {
                 apply(dataobj).then(res => {
                     this.validToast('申请成功，等待审核')
+                    this.$router.go(-2)
                 })
             } else {
                 this.validToast('请完善资料')

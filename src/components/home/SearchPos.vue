@@ -37,7 +37,7 @@
                       @click.native="checkAdd(item)"
                       is-link></cell>
             </group>
-            <blank v-if="!searchArr.length && this.keyword"
+            <blank v-if="!searchArr.length && keyword && !loading"
                    :define="true">
                 <div>暂无定位信息</div>
             </blank>
@@ -122,6 +122,9 @@ export default {
                 this.pageIndex = 0
                 this.isOver = false
                 this.loading = false
+                if (state) {
+                    this.$store.dispatch('changeLoading')
+                }
                 if (window.bmap) {
                     this.$store.dispatch('changeLoading')
                     window.bmap.searchInCity({
@@ -140,7 +143,7 @@ export default {
                             this.totalPage = ret.totalPage
                         } else {
                             console.warn(ret.code)
-                             var state = this.$store.state.loading
+                            var state = this.$store.state.loading
                             if (state) {
                                 this.$store.dispatch('changeLoading')
                             }
@@ -164,7 +167,7 @@ export default {
             this.$router.go(-1)
         },
         loadMore() {
-            if(this.pageIndex>= this.totalPage){
+            if (this.pageIndex >= this.totalPage) {
                 this.isOver = true
             }
             if (!this.isOver && !this.loading) {
@@ -179,7 +182,7 @@ export default {
                         this.loading = false
                         console.warn(JSON.stringify(ret))
                         this.searchArr = this.searchArr.concat(ret.results)
-                       
+
                     } else {
                         this.loading = false
                         console.warn(ret.code)
