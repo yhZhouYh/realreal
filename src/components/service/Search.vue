@@ -103,17 +103,19 @@ export default {
         },
         searchList(val) {
             this.page = 1
+            this.isOver = false
+            this.loading = false
             this.key = val
             if(this.value){
                 this._debounce()
             }   
         },
         loadMore() {
-            if (!this.isOver) {
+            if (!this.isOver && !this.loading) {
                 this.loading = true
                 search({ keyword: this.key, type: 2, page: ++this.page, limit: this.limit }).then(res => {
                     this.loading = false
-                    this.serviceItems.concat(res)
+                    this.serviceItems = this.serviceItems.concat(res)
                     if (!res.length) {
                         this.isOver = true
                     }

@@ -11,7 +11,7 @@
         </svg>
       </div>
       <div slot="leftitems"
-           class="left-items">
+           class="left-items" @click="gosearch">
         {{city}}
       </div>
       <router-link to="search"
@@ -143,17 +143,17 @@ export default {
   mounted() {
     // this.getLoction()
     const loc = this.$store.state.currentLocation
-    console.error(loc.city)
-    if (loc.city) {
-      this.city = loc.city
+    console.warn(loc.poi)
+    if (loc.poi) {
+      this.city = loc.poi
     } else {
       let locationsave = {}
       window.apiready = () => {
-        const map = api.require('bMap')
+        window.bmap = api.require('bMap')
         if (window.navigator.userAgent.indexOf('Android') > -1 || window.navigator.userAgent.indexOf('Adr') > -1) {
-          this.getLocation(map, locationsave)
+          this.getLocation(window.bmap, locationsave)
         } else {
-          this.getLocationByIos(map, locationsave)
+          this.getLocationByIos(window.bmap, locationsave)
         }
       }
     }
@@ -187,8 +187,10 @@ export default {
           map.getNameFromCoords({ lon: pos.lon, lat: pos.lat }, (location, locerr) => {
             if (location.status) {
               console.error(JSON.stringify(location))
-              this.city = location.city
+              this.city = location.poiList[0].name
               locationsave.city = location.city
+              locationsave.poi = this.city
+              locationsave.address = location.address
               this.$store.dispatch('saveLocation', locationsave)
             } else {
               console.error(locerr.code)
@@ -211,6 +213,9 @@ export default {
           console.error('地图初始化失败')
         }
       })
+    },
+    gosearch(){
+      this.$router.push('/searchPos')
     }
   }
 }

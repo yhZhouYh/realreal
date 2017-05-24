@@ -64,6 +64,7 @@ export default {
                     width: 'auto',
                     type: 'text'
                 })
+                this.$router.go(-1)
             }).catch(error => {
                 this.$vux.toast.show({
                     text: '网络异常',

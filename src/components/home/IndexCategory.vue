@@ -42,11 +42,6 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            img: require('../../assets/imgs/img1.jpg')
-        }
-    },
     components: {
         //  XImg
     },
