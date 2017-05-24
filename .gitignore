@@ -3,6 +3,5 @@ node_modules/
 npm-debug.log
 yarn-error.log
 widget/
-wc.db
 .vscode
 .svn
