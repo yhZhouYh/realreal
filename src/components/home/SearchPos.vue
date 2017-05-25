@@ -122,6 +122,7 @@ export default {
                 this.pageIndex = 0
                 this.isOver = false
                 this.loading = false
+                var state = this.$store.state.loading
                 if (state) {
                     this.$store.dispatch('changeLoading')
                 }

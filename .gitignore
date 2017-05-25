@@ -5,3 +5,4 @@ yarn-error.log
 widget/
 .vscode
 .svn
+dist/

@@ -39,7 +39,7 @@
                             v-model="selected">
                         <option selected
                                 value="1">男</option>
-                        <option value="0">女</option>
+                        <option value="0" >女</option>
                     </select>
                 </cell>
                 <!--<x-input title="手机号码" type="number"
@@ -69,7 +69,7 @@ export default {
             user: this.$store.state.user,
             showloading: false,
             avatar: this.$store.state.user.userPhoto ? this.$store.state.user.userPhoto: require('../../assets/imgs/avatar.jpg'),
-            selected: 1,
+            selected:  this.$store.state.user.userSex,
             uploaderAvatar: ''
         }
     },
@@ -102,6 +102,7 @@ export default {
                     width: 'auto',
                     type: 'text'
                 })
+                this.$store.state.user.userSex = this.selected
                 this.$router.go(-1)
             })
             // if(){

@@ -88,7 +88,7 @@ export default {
                 this.addmodel = addressEdit.areaList
                 this.userPhone = addressEdit.userPhone
                 this.userAddress = addressEdit.userAddress
-                this.isDefault = addressEdit.isDefault
+                this.isDefault = addressEdit.isDefault == 1 ? true : false
                 this.addressId = addressEdit.addressId
             }
         }

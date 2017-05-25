@@ -81,10 +81,10 @@
                          required
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
-                <x-input title="开户银行支行名称"
+                <!--<x-input title="开户银行支行名称"
                          required
                          placeholder="请输入开户银行支行名称"
-                         v-model="bankId"></x-input>
+                         v-model="bankId"></x-input>-->
             </group>
             <group v-else>
                 <x-input title="店铺名称"
@@ -273,7 +273,7 @@ export default {
                 cartImgF: this.cartImgF,
                 qualificationsImg: this.qualificationsImg
             }
-            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.bankId && this.shopName && this.addmodel.length) {
+            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.shopName && this.addmodel.length) {
                 apply(dataobj).then(res => {
                     this.validToast('申请成功，等待审核')
                     this.$router.go(-2)
