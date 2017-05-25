@@ -101,7 +101,8 @@ export default new Router({
     {
       path: '/apply',
       name: 'apply',
-      component: Apply
+      component: Apply,
+      meta: { requiresAuth: true }
     },
     {
       path: '/storeUser',
