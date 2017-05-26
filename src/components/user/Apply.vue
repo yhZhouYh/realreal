@@ -13,8 +13,7 @@
                 <x-input title="公司名称"
                          required
                          placeholder="请输入您的公司名称"
-                         v-model="companyName"
-                         ></x-input>
+                         v-model="companyName"></x-input>
                 <x-input title="联系姓名"
                          required
                          placeholder="请输入联系人姓名"
@@ -82,9 +81,9 @@
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
                 <!--<x-input title="开户银行支行名称"
-                         required
-                         placeholder="请输入开户银行支行名称"
-                         v-model="bankId"></x-input>-->
+                             required
+                             placeholder="请输入开户银行支行名称"
+                             v-model="bankId"></x-input>-->
             </group>
             <group v-else>
                 <x-input title="店铺名称"
@@ -175,20 +174,20 @@
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
                 <!--<x-input title="开户银行支行名称"
-                         required
-                         placeholder="请输入开户银行支行名称"
-                         v-model="bankId"></x-input>-->
+                             required
+                             placeholder="请输入开户银行支行名称"
+                             v-model="bankId"></x-input>-->
             </group>
             <div class="apply-checker">
-                <checker @change="change" checked>
+                <checker @change="change">
                     <a slot="middle">我同意<span>《正证网入驻协议》</span></a>
                 </checker>
             </div>
             <!--<div class="login-button-box">
-                <x-button class="login-button"
-                          @click.native="user">我是维修员</x-button>
-            </div>-->
-
+                    <x-button class="login-button"
+                              @click.native="user">我是维修员</x-button>
+                </div>-->
+    
             <div class="login-button-box">
                 <x-button class="login-button"
                           @click.native="apply">确认提交</x-button>
@@ -246,8 +245,8 @@ export default {
         }
     },
     computed: {
-        title(){
-            return this.$route.query.store? '商家申请入驻' : '维修员申请入驻'
+        title() {
+            return this.$route.query.store ? '商家申请入驻' : '维修员申请入驻'
         }
     },
     methods: {
@@ -309,7 +308,7 @@ export default {
             }
             reader.readAsDataURL(file)
         },
-        change(val,checked){
+        change(val, checked) {
             this.checked = checked
         }
 
@@ -414,8 +413,9 @@ export default {
 .v-transfer-dom .vux-popup-picker-header {
     color: #E64340;
 }
-.z-apply{
-    .login-button{
+
+.z-apply {
+    .login-button {
         border-radius: 0;
         margin-bottom: 1.5rem;
     }

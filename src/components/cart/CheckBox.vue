@@ -11,17 +11,17 @@
                    class="z-check"
                    name="checkit"
                    :value="id"
-                   :checked="checked"
+                   :checked="checkede"
                    :id="id"
-                   @change="change(value)">
+                   @change="change(value,checked)">
             <input v-else
                    type="checkbox"
                    class="z-check"
                    name="checkit"
                    :value="id"
-                   :checked="checked"
+                   :checked="checkede"
                    :id="id"
-                   @change="change(value)">
+                   @change="change(value,checked)">
             <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
             <icon icon="icon-yuanxingweixuanzhong"
@@ -37,7 +37,7 @@
                    class="z-check"
                    name="checkit"
                    :value="id"
-                   :checked="checked"
+                   :checked="checkede"
                    :id="id"
                    @change="change(value,checked)">
             <input v-else
@@ -45,7 +45,7 @@
                    class="z-check"
                    name="checkit"
                    :value="id"
-                   :checked='checked'
+                   :checked='checkede'
                    :id="id"
                    @change="change(value,checked)">
             <icon icon="icon-yuanxingxuanzhongfill"
@@ -100,6 +100,7 @@ export default {
     methods: {
         change(value, checked) {
             this.checkede =!this.checkede
+            console.log(this.checkede)
             this.$emit('change', value,this.checkede)
         }
     }
