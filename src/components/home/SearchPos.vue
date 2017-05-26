@@ -1,6 +1,7 @@
 <template>
     <div class="z-page z-search-pos">
         <div class="zflex search-pos-box">
+            
             <div class="search-pos-city">
                 <x-address :list="addressData"
                            title=""
@@ -20,7 +21,8 @@
         </div>
         <div class="z-container"
              ref="scroller">
-            <group v-if="location.address">
+            <group class="pos-current"
+                   v-if="location.address">
                 <cell title="当前定位"
                       :value="location.address">
                     <icon icon="icon-weizhi"
@@ -160,6 +162,9 @@ export default {
 
             }, 500)
         },
+        goback(){
+            this.$router.go(-1)
+        },
         checkAdd(item) {
             this.location.poi = item.name
             this.location.longitude = item.lon
@@ -218,8 +223,28 @@ export default {
 }
 
 .z-search-pos {
+    .vux-cell-box{
+        &:before{
+            border:0;
+        }    
+    }
+    .goback{
+        margin-right: -0.2rem;
+        padding-left: 0.2rem;
+        // font-size:25px;
+        color:#FF9900;
+    }
     .weui-cells {
         margin-top: 0;
+    }
+    .pos-current {
+        .weui-cell__ft {
+            width: 4.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+        }
     }
 }
 

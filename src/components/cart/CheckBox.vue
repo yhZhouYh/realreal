@@ -39,7 +39,7 @@
                    :value="id"
                    :checked="checked"
                    :id="id"
-                   @change="change(value)">
+                   @change="change(value,checked)">
             <input v-else
                    type="checkbox"
                    class="z-check"
@@ -47,7 +47,7 @@
                    :value="id"
                    :checked='checked'
                    :id="id"
-                   @change="change(value)">
+                   @change="change(value,checked)">
             <icon icon="icon-yuanxingxuanzhongfill"
                   class="boxcheck red"></icon>
             <icon icon="icon-yuanxingweixuanzhong"
@@ -91,14 +91,16 @@ export default {
     },
     data() {
         return {
-            changeModel: this.model
+            changeModel: this.model,
+            checkede: this.checked
             //model: this.model,
             //  defaultType: this.type || 'checkbox'
         }
     },
     methods: {
-        change(value) {
-            this.$emit('change', value)
+        change(value, checked) {
+            this.checkede =!this.checkede
+            this.$emit('change', value,this.checkede)
         }
     }
 }

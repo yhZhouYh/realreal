@@ -12,7 +12,7 @@
                 <img :src='img'  v-for="img in need.pic" class="detail-img" v-else>
             </div>
              <a :href="'tel:'+need.userPhone" class="button-box login-button-box"
-                 style="padding-top:1rem;">
+                 style="padding-top:1rem;" v-if="$store.state.user.isShop == 1">
                 <x-button>立即联系</x-button>
             </a>
         </div>

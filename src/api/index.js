@@ -134,7 +134,7 @@ export function login(data) {
         if(router.app.$route.query.redirect){
             router.replace(router.app.$route.query.redirect)
         }else{
-             router.replace('/')
+             router.go(-1)
         }
     })
 }
@@ -355,6 +355,11 @@ export function getPhone(data){
 //改变订单状态  暂时
 export function changeOrderStatus(data){
     return fetch('Orders.ChangStatus', data, true)
+}
+
+//退出登录
+export function logout(data){
+    return fetch('User.Loginout', data, true)
 }
 
 

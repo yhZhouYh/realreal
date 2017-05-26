@@ -5,9 +5,9 @@
                   backWords=""
                   :title="shop.shopName">
             <span slot="rightitems">
-               <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
-               <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
-            </span>
+                   <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+                   <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+                </span>
         </z-header>
         <!--头部结束-->
         <!--轮播开始-->
@@ -24,12 +24,12 @@
             <!--友情提示开始-->
             <div class="z-box">
                 <!--<div class="z-storedetail-remind zflex">
-                    <span>友情提示: </span>
-                    <span class="remind-items zflex1">
-                    <p> 1.维修需要时间，请耐心等待。</p>
-                    <p> 2.自行送件到维修店，可免上门服务费哟。</p>
-                    </span>
-                </div>-->
+                        <span>友情提示: </span>
+                        <span class="remind-items zflex1">
+                        <p> 1.维修需要时间，请耐心等待。</p>
+                        <p> 2.自行送件到维修店，可免上门服务费哟。</p>
+                        </span>
+                    </div>-->
             </div>
             <!--友情提示结束-->
             <!--详情 简介 评价-->
@@ -92,7 +92,7 @@ import StoreDetail from './StoreDetail.vue'
 import pull from '../filters/pull'
 import Comment from './Comment.vue'
 import Icon from '../common/Icon'
-import { shopDetail, shopCategory, shopGoodsByShopId, collect, isCollect } from '../../api'
+import { shopDetail, shopCategory, shopGoodsByShopId, collect, isCollect} from '../../api'
 export default {
     name: 'storeDetail',
     components: {
@@ -149,7 +149,9 @@ export default {
     created() {
         shopDetail({ id: this.$route.params.id }).then(res => {
             this.shop = res
-            this.imgs = [...this.shop.shopAds]
+            if(this.shop.shopAds!=null){
+                this.imgs = [...this.shop.shopAds]
+            }
         })
         shopCategory({ id: this.$route.params.id }).then(res => {
             this.items = res
@@ -169,11 +171,14 @@ export default {
                 this.serviceItems = this.middle[index].items
             }
         })
-        isCollect({ userid: this.$store.state.user.userId, type: 1, id: this.$route.params.id }).then(res => {
-            if (res) {
-                this.collected = true
-            }
-        })
+        if (this.$store.state.user.userId) {
+            isCollect({ userid: this.$store.state.user.userId, type: 1, id: this.$route.params.id }).then(res => {
+                if (res) {
+                    this.collected = true
+                }
+            })
+        }
+
     },
     methods: {
         checkTabItem(index) {

@@ -41,14 +41,12 @@ export default new Router({
     {
       path: '/storeDetail/:id',
       name: 'storeDetail',
-      component: Store,
-      meta: { requiresAuth: true }
+      component: Store
     },
     {
       path: '/service/:id',
       name: 'service',
-      component: Service,
-      meta: { requiresAuth: true }
+      component: Service
     },
     {
       path: '/cart',

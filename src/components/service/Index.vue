@@ -6,9 +6,9 @@
                   :title="data.shopName">
             <span slot="rightitems"
                   style="padding-right:0.15rem">
-                               <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
-                               <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
-                            </span>
+                                       <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+                                       <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+                                    </span>
             <router-link to="/cart"
                          slot="rightitems"
                          style="margin-right: 5px;"
@@ -38,7 +38,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                                            <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                                                    <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -149,14 +149,17 @@ export default {
                 this.serviceTime = this.data.serviceTime
             }
         })
-        getCartNum({ userid: this.$store.state.user.userId }).then(res => {
-            this.cartNum = res.cartsNum
-        })
-        isCollect({ userid: this.$store.state.user.userId, type: 0, id: this.$route.params.id }).then(res => {
-            if (res) {
-                this.collected = true
-            }
-        })
+        if (this.$store.state.user.userId) {
+            getCartNum({ userid: this.$store.state.user.userId }).then(res => {
+                this.cartNum = res.cartsNum
+            })
+            isCollect({ userid: this.$store.state.user.userId, type: 0, id: this.$route.params.id }).then(res => {
+                if (res) {
+                    this.collected = true
+                }
+            })
+        }
+
     },
 
     methods: {
@@ -173,26 +176,35 @@ export default {
             this.num--
         },
         buynow() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
-                // this.data.cartNum = this.cartNum
-                // this.$store.dispatch('addToCart', this.data)
-                this.cartNum = res.num
-                this.$router.push('/cart')
+            if (this.$store.state.user.userId) {
+                cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
+                    // this.data.cartNum = this.cartNum
+                    // this.$store.dispatch('addToCart', this.data)
+                    this.cartNum = res.num
+                    this.$router.push('/cart')
 
-            })
+                })
+            } else {
+                this.$router.push('/login')
+            }
+
         },
         addtocart() {
-            cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
-                // this.data.cartNum = this.cartNum
-                this.cartNum = res.num
-                // this.$store.dispatch('addToCart', this.data)
-                this.$vux.toast.show({
-                    text: '加入成功',
-                    position: 'bottom',
-                    width: 'auto',
-                    type: 'text'
+            if (this.$store.state.user.userId) {
+                cartAdd({ userid: this.$store.state.user.userId, goodsId: this.data.goodsId, buyNum: this.num, shopsId: this.data.shopId, isCheck: 1, serviceTime: this.serviceTime }).then(res => {
+                    // this.data.cartNum = this.cartNum
+                    this.cartNum = res.num
+                    // this.$store.dispatch('addToCart', this.data)
+                    this.$vux.toast.show({
+                        text: '加入成功',
+                        position: 'bottom',
+                        width: 'auto',
+                        type: 'text'
+                    })
                 })
-            })
+            } else {
+                this.$router.push('/login')
+            }
         },
         collect() {
             collect({ userid: this.$store.state.user.userId, id: this.$route.params.id, type: 0 }).then(res => {

@@ -2,7 +2,7 @@
    <router-link :to="{name:'needsDetail', params: {id: need.id}}" class="z-box need-item">
         <div class="title">{{need.title}}</div>
         <div class="content gray">{{need.content}}</div>
-        <a :href="'tel:'+need.userPhone" class="need-user zflex">
+        <a :href="'tel:'+need.userPhone" class="need-user zflex" v-if="$store.state.user.isShop == 1">
            <span class="zflex1 gray">报告人：{{need.userName}}</span>
            <x-button class="contact">立即联系</x-button> 
         </a>

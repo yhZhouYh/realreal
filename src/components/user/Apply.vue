@@ -180,7 +180,7 @@
                          v-model="bankId"></x-input>-->
             </group>
             <div class="apply-checker">
-                <checker>
+                <checker @change="change" checked>
                     <a slot="middle">我同意<span>《正证网入驻协议》</span></a>
                 </checker>
             </div>
@@ -241,7 +241,8 @@ export default {
             cartImgZ: '',
             cartImgF: '',
             qualificationsImg: '',
-            idCart: ''
+            idCart: '',
+            checked: true
         }
     },
     computed: {
@@ -273,7 +274,7 @@ export default {
                 cartImgF: this.cartImgF,
                 qualificationsImg: this.qualificationsImg
             }
-            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.shopName && this.addmodel.length) {
+            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.shopName && this.addmodel.length && this.checked) {
                 apply(dataobj).then(res => {
                     this.validToast('申请成功，等待审核')
                     this.$router.go(-2)
@@ -307,6 +308,9 @@ export default {
                 })
             }
             reader.readAsDataURL(file)
+        },
+        change(val,checked){
+            this.checked = checked
         }
 
     }

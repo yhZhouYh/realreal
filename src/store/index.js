@@ -51,7 +51,7 @@ export default new Vuex.Store({
     },
     [types.LOGOUT](state) {
       state.user = {},
-        state.accessToken = ''
+      state.accessToken = ''
       localStorage.removeItem('accessToken')
       localStorage.removeItem('user')
     },
