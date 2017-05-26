@@ -6,9 +6,9 @@
                   :title="data.shopName">
             <span slot="rightitems"
                   style="padding-right:0.15rem">
-                                       <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
-                                       <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
-                                    </span>
+                                           <icon icon="icon-shoucang2" @click.native="collect" v-show="collected"></icon>
+                                           <icon icon="icon-tuijianicon" @click.native="collect" v-show="!collected"></icon>
+                                        </span>
             <router-link to="/cart"
                          slot="rightitems"
                          style="margin-right: 5px;"
@@ -38,7 +38,7 @@
                 <div class="service-detail-title">{{data.goodsName}}</div>
                 <div class="zflex">
                     <span class="service-price zflex1">
-                                                                    <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
+                                                                        <span class="price-big">{{data.shopPrice}}</span>元/{{data.goodsUnit}}
                     <span class="origin-price gray">原价{{data.marketPrice}}元</span></span>
                     </span>
                     <z-number :item="data"
@@ -207,24 +207,28 @@ export default {
             }
         },
         collect() {
-            collect({ userid: this.$store.state.user.userId, id: this.$route.params.id, type: 0 }).then(res => {
-                this.collected = !this.collected
-                if (this.collected) {
-                    this.$vux.toast.show({
-                        text: '收藏成功',
-                        position: 'bottom',
-                        width: 'auto',
-                        type: 'text'
-                    })
-                } else {
-                    this.$vux.toast.show({
-                        text: '取消收藏',
-                        position: 'bottom',
-                        width: 'auto',
-                        type: 'text'
-                    })
-                }
-            })
+            if (this.$store.state.user.userId) {
+                collect({ userid: this.$store.state.user.userId, id: this.$route.params.id, type: 0 }).then(res => {
+                    this.collected = !this.collected
+                    if (this.collected) {
+                        this.$vux.toast.show({
+                            text: '收藏成功',
+                            position: 'bottom',
+                            width: 'auto',
+                            type: 'text'
+                        })
+                    } else {
+                        this.$vux.toast.show({
+                            text: '取消收藏',
+                            position: 'bottom',
+                            width: 'auto',
+                            type: 'text'
+                        })
+                    }
+                })
+            } else {
+                this.$router.push('/login')
+            }
         }
     }
 }
