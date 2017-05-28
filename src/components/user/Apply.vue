@@ -71,15 +71,25 @@
                                @change="uploader($event, 'OrganizationCodeImgurl')">
                     </div>
                 </cell>
-                <x-input title="银行开户行"
+                <x-input title="持卡人姓名"
                          required
-                         placeholder="请输入银行开户行"
+                         placeholder="请输入持卡人姓名"
                          v-model="bankUserName"></x-input>
                 <x-input title="个人银行账号"
                          type="number"
                          required
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
+
+                <cell is-link>
+                    <span slot="icon" :class="{'weui-cell_warn': !selected}">选择银行</span>
+                    <select 
+                            class="weui-input weui-select"
+                            slot="after-title"
+                            v-model="selected">
+                        <option :value="item.bankId" v-for="item in banks">{{item.bankName}}</option>
+                    </select>
+                </cell>         
                 <!--<x-input title="开户银行支行名称"
                              required
                              placeholder="请输入开户银行支行名称"
@@ -164,15 +174,25 @@
                                @change="uploader($event, 'qualificationsImg')">
                     </div>
                 </cell>
-                <x-input title="银行开户行"
+                <x-input title="持卡人姓名"
                          required
-                         placeholder="请输入银行开户行"
+                         placeholder="请输入持卡人姓名"
                          v-model="bankUserName"></x-input>
                 <x-input title="个人银行账号"
                          type="number"
                          required
                          placeholder="请输入个人银行账号"
                          v-model="bankAccount"></x-input>
+
+                <cell is-link>
+                    <span slot="icon" :class="{'weui-cell_warn': !selected}">选择银行</span>
+                    <select 
+                            class="weui-input weui-select"
+                            slot="after-title"
+                            v-model="selected">
+                        <option :value="item.bankId" v-for="item in banks">{{item.bankName}}</option>
+                    </select>
+                </cell>  
                 <!--<x-input title="开户银行支行名称"
                              required
                              placeholder="请输入开户银行支行名称"
@@ -202,7 +222,7 @@
 <script>
 import ZHeader from '@/components/common/ZHeader.vue'
 import XInput from 'vux/src/components/X-input'
-import { getArea, apply, uploader } from '../../api'
+import { getArea, apply, uploader,banks } from '../../api'
 import XAddress from 'vux/src/components/x-address'
 //import vueArea from '@/components/common/Picker'
 import { ChinaAddressV3Data } from 'vux'
@@ -241,13 +261,21 @@ export default {
             cartImgF: '',
             qualificationsImg: '',
             idCart: '',
-            checked: true
+            checked: true,
+            banks: [],
+            selected: null
         }
     },
     computed: {
         title() {
             return this.$route.query.store ? '商家申请入驻' : '维修员申请入驻'
         }
+    },
+    created(){
+        banks().then(res => {
+            this.banks = res
+            console.log(this.banks)
+        })
     },
     methods: {
         apply() {
@@ -267,13 +295,13 @@ export default {
                 OrganizationCodeImgurl: this.OrganizationCodeImgurl,
                 bankUserName: this.bankUserName,
                 bankAccount: this.bankAccount,
-                // bankId: this.bankId,
+                bankId: this.selected,
                 idCart: this.idCart,
                 cartImgZ: this.cartImgZ,
                 cartImgF: this.cartImgF,
                 qualificationsImg: this.qualificationsImg
             }
-            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.shopName && this.addmodel.length && this.checked) {
+            if (this.contactName && this.contactPhone && this.address && this.bankUserName && this.bankAccount && this.shopName && this.addmodel.length && this.checked && this.selected) {
                 apply(dataobj).then(res => {
                     this.validToast('申请成功，等待审核')
                     this.$router.go(-2)

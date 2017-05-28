@@ -57,15 +57,15 @@ async function getdata(service, datas, loading) {
                     const access_token = store.state.accessToken
                     const user = store.state.user
                     if (access_token && user.userId) {
-                        return fetch('AccessToken.UpdateAccessToken', { access_token, userid: user.userId }).then(res => {
+                        fetch('AccessToken.UpdateAccessToken', { access_token, userid: user.userId }).then(res => {
                             // store.dispatch('saveAccssToken', res)
                             //debugger
-                           return fetch(service, datas)
+                           resolve(fetch(service, datas))
                         })
                     } else if (access_token && !user.userId) {
-                        return fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
+                         fetch('AccessToken.GetAccessToken', { appid, secret }).then(res => {
                             store.dispatch('saveAccssToken', res)
-                           return fetch(service, datas)
+                           resolve(fetch(service, datas))
                         })
                     }else {
                         Vue.$vux.toast.show({
@@ -362,6 +362,10 @@ export function logout(data){
     return fetch('User.Loginout', data, true)
 }
 
+//银行列表
+export function banks(data){
+    return fetch('Default.Bank', data, true)
+}
 
 
 
